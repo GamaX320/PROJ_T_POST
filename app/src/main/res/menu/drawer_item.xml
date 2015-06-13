@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_item_home"
+            android:checked="true"
+            android:icon="@drawable/ic_home"
+            android:title="@string/nav_item_home"/>
+        <item
+            android:id="@+id/navigation_item_post"
+            android:icon="@drawable/ic_post"
+            android:title="@string/nav_item_post"/>
+        <item
+            android:id="@+id/navigation_item_event"
+            android:icon="@drawable/ic_event"
+            android:title="@string/nav_item_event"/>
+        <item
+            android:id="@+id/navigation_item_bookmark"
+            android:icon="@drawable/ic_bookmark"
+            android:title="@string/nav_item_bookmark"/>
+        <item
+            android:id="@+id/navigation_item_subscription"
+            android:icon="@drawable/ic_subscription"
+            android:title="@string/nav_item_subscription"/>
+        <item
+            android:id="@+id/navigation_item_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/nav_item_settings"/>
+    </group>
+
+    <item android:title="Sub items">
+        <menu>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:title="Sub item 1" />
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:title="Sub item 2" />
+        </menu>
+    </item>
+</menu>
