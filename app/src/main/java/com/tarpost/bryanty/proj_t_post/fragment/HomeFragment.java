@@ -59,13 +59,15 @@ public class HomeFragment extends Fragment {
     //get all drawer item data
     private List<Information> getData(){
         List<Information> item= new ArrayList<>();
-        int[] icons= {R.drawable.ic_home, R.drawable.ic_post, R.drawable.ic_bookmark, R.drawable.ic_subscription, R.drawable.ic_settings};
+        int[] icons= {R.drawable.ic_home, R.drawable.ic_post, R.drawable.ic_bookmark, R.drawable.ic_subscription, R.drawable.ic_settings +
+                R.drawable.ic_home, R.drawable.ic_post, R.drawable.ic_bookmark, R.drawable.ic_subscription, R.drawable.ic_settings,R.drawable.avatar};
         String[] titles= getResources().getStringArray(R.array.navigation_drawer_item);
         String[] content= getResources().getStringArray(R.array.navigation_drawer_item);
 
         for(int a=0; a< icons.length && a< titles.length; a++){
             Information currentItem= new Information();
             currentItem.userAvatar= icons[a];
+            currentItem.userName= titles[a];
             currentItem.title= titles[a];
             currentItem.content= content[a];
             item.add(currentItem);

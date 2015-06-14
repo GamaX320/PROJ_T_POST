@@ -42,6 +42,7 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
         Information currentItem= item.get(position);
 
         holder.userAvatar.setImageResource(currentItem.userAvatar);
+        holder.userName.setText(currentItem.userName);
         holder.title.setText(currentItem.title);
         holder.content.setText(currentItem.content);
     }
@@ -61,6 +62,7 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
         public InformationViewHolder(View itemView) {
             super(itemView);
             userAvatar= (ImageView)itemView.findViewById(R.id.cardview_userAvatar);
+            userName= (TextView)itemView.findViewById(R.id.cardview_userName);
             title= (TextView)itemView.findViewById(R.id.cardview_title);
             content= (TextView)itemView.findViewById(R.id.cardview_content);
 
