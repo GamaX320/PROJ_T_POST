@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tarpost.bryanty.proj_t_post.activity.AddInformationActivity">
+
+    <!-- include app bar -->
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="14dp"
+        android:layout_below="@id/app_bar">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_bookmark"
+            android:layout_marginRight="10dp"
+            android:hint="Title" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_bookmark"
+            android:layout_marginRight="10dp"
+            android:hint="Content" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.AddInformationActivity"
+            android:label="@string/title_activity_add_information"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tarpost.bryanty.proj_t_post.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

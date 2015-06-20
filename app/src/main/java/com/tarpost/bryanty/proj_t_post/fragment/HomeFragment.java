@@ -1,15 +1,18 @@
 package com.tarpost.bryanty.proj_t_post.fragment;
 
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.tarpost.bryanty.proj_t_post.R;
+import com.tarpost.bryanty.proj_t_post.activity.AddInformationActivity;
 import com.tarpost.bryanty.proj_t_post.adapter.InformationAdapter;
 import com.tarpost.bryanty.proj_t_post.object.Information;
 
@@ -19,10 +22,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private RecyclerView rv_information;
     private InformationAdapter adapter;
+
+    private FloatingActionButton button_add;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -47,6 +52,11 @@ public class HomeFragment extends Fragment {
 //
 //        rv_information.setLayoutManager(new LinearLayoutManager(getActivity()));
         setupRecyclerView(rv_information);
+
+        //initial button add new
+        button_add= (FloatingActionButton)view.findViewById(R.id.button_add);
+        button_add.setOnClickListener(this);
+
         return view;
     }
 
@@ -76,4 +86,13 @@ public class HomeFragment extends Fragment {
         return item;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.button_add:
+                startActivity(new Intent(getActivity(), AddInformationActivity.class));
+                break;
+        }
+    }
 }

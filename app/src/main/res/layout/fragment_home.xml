@@ -12,10 +12,11 @@
 
     <!-- floating action button -->
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/floating_action_button_margin"
-        android:src="@drawable/ic_home_big"
+        android:src="@mipmap/ic_add"
         />
 </FrameLayout>
