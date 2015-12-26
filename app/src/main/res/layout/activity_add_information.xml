@@ -15,9 +15,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="14dp"
-        android:layout_below="@id/app_bar">
+        android:layout_below="@id/app_bar"
+        android:id="@+id/linearLayout">
 
         <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/informationTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:met_floatingLabel="normal"
@@ -26,12 +28,24 @@
             android:hint="Title" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/informationContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:met_floatingLabel="normal"
             app:met_iconLeft="@drawable/ic_bookmark"
             android:layout_marginRight="10dp"
             android:hint="Content" />
+
+        <!-- floating action button -->
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/button_add_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/floating_action_button_margin"
+            android:src="@mipmap/ic_add"
+            android:onClick="addInformation"
+            />
 
     </LinearLayout>
 

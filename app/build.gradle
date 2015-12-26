@@ -32,4 +32,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.3.0'
     //floating edit text
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    //volley library
+    compile 'com.mcxiaoke.volley:library:1.0.+'
 }
