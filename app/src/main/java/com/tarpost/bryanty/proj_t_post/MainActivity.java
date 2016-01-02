@@ -3,6 +3,7 @@ package com.tarpost.bryanty.proj_t_post;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -70,6 +71,10 @@ public class MainActivity extends ActionBarActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.action_login:
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);

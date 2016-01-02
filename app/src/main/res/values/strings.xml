@@ -24,7 +24,15 @@
         <item>Ali baba</item>
     </string-array>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_add_information">AddInformationActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <string name="text_select_image">Select Image</string>
+    <string name="text_email">Email</string>
+    <string name="text_password">Password</string>
+    <string name="text_login">Login</string>
+    <string name="text_signUp">Sign Up</string>
+
 </resources>
