@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import com.tarpost.bryanty.proj_t_post.fragment.BookmarksFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.HomeFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.MyPostsFragment;
+import com.tarpost.bryanty.proj_t_post.fragment.PostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.SubscriptionFragment;
 
 public class MainActivity extends ActionBarActivity {
@@ -111,6 +112,9 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case R.id.navigation_item_subscription:
                 fragment= new SubscriptionFragment();
+                break;
+            case R.id.navigation_item_testpost:
+                fragment= new PostsFragment();
                 break;
         }
 

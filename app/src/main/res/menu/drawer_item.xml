@@ -26,6 +26,11 @@
             android:id="@+id/navigation_item_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/nav_item_settings"/>
+
+        <item
+            android:id="@+id/navigation_item_testpost"
+            android:icon="@drawable/ic_settings"
+            android:title="Test Post"/>
     </group>
 
     <item android:title="Sub items">
