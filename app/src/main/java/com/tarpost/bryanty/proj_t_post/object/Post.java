@@ -9,8 +9,11 @@ public class Post {
 
     private Integer postId;
     private String creatorId, creatorName;
-    private String title, content;
+    private String title, content, imageUrl;
     private Date createDateTime, updateDateTime;
+
+    public Post() {
+    }
 
     public Integer getPostId() {
         return postId;
@@ -66,5 +69,13 @@ public class Post {
 
     public void setCreatorName(String creatorName) {
         this.creatorName = creatorName;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

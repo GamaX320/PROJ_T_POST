@@ -165,7 +165,7 @@ public class AddInformationActivity extends ActionBarActivity {
 
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
         byte[] imageBytes = outputStream.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;

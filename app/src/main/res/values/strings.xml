@@ -28,11 +28,22 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_add_information">AddInformationActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
 
+    <string name="text_error_required">This field required</string>
     <string name="text_select_image">Select Image</string>
     <string name="text_email">Email</string>
     <string name="text_password">Password</string>
     <string name="text_login">Login</string>
     <string name="text_signUp">Sign Up</string>
+    <string name="text_name">Name</string>
+    <string name="text_phoneNo">Phone No</string>
+    <string name="text_avatarPic">Avatar Picture</string>
+    <string name="text_coverPic">Cover Picture</string>
+    <string name="text_faculty">Faculty</string>
+    <string name="text_course">Course</string>
+    <string name="text_description">Description</string>
+
+
 
 </resources>

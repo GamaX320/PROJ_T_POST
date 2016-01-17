@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:met_floatingLabel="normal"
-            app:met_iconLeft="@drawable/ic_bookmark"
+            app:met_iconLeft="@drawable/ic_title"
             android:layout_marginRight="10dp"
             android:hint="Title" />
 
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:met_floatingLabel="normal"
-            app:met_iconLeft="@drawable/ic_bookmark"
+            app:met_iconLeft="@drawable/ic_post"
             android:layout_marginRight="10dp"
             android:hint="Content" />
 
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/floating_action_button_margin"
-            android:src="@mipmap/ic_add"
+            android:src="@mipmap/ic_done"
             android:onClick="addInformation"
             />
 

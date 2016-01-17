@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.tarpost.bryanty.proj_t_post.R;
+import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.object.Information;
 import com.tarpost.bryanty.proj_t_post.object.Post;
 
@@ -46,6 +49,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.userName.setText(currentItem.getCreatorName());
         holder.title.setText(currentItem.getTitle());
         holder.content.setText(currentItem.getContent());
+
+        if( currentItem.getImageUrl() != null && !currentItem.getImageUrl().isEmpty()){
+            ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
+            holder.image.setImageUrl(currentItem.getImageUrl(),imageLoader);
+        }
+
     }
 
     @Override
@@ -59,6 +68,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         TextView userName;
         TextView title;
         TextView content;
+        NetworkImageView image;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -66,6 +76,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             userName= (TextView)itemView.findViewById(R.id.textView_userName);
             title= (TextView)itemView.findViewById(R.id.textView_title);
             content= (TextView)itemView.findViewById(R.id.textView_content);
+            image= (NetworkImageView)itemView.findViewById(R.id.imageView_image);
 
         }
     }

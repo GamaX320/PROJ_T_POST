@@ -171,8 +171,7 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
 
         //JsonObjectRequest of volley
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                "http://projx320.webege.com/tarpost/php/getAllSubscribePostTest" +
-                        ".php?userId=A000000004"
+                "http://projx320.webege.com/tarpost/php/getAllSubscribePostTest.php?userId=A000000004"
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -196,11 +195,13 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
                         post.setCreatorId(jsonObject.getString("creatorId"));
                         post.setTitle(jsonObject.getString("title"));
                         post.setContent(jsonObject.getString("content"));
+                        post.setImageUrl(jsonObject.getString("image"));
 
                         Log.d("response", "JSONArray postId: " + jsonObject.getInt("postId"));
                         Log.d("response", "JSONArray creatorId: " + jsonObject.getString("creatorId"));
                         Log.d("response", "JSONArray title: " + jsonObject.getString("title"));
                         Log.d("response", "JSONArray content: " + jsonObject.getString("content"));
+                        Log.d("response", "JSONArray content: " + jsonObject.getString("image"));
 
                         items.add(post);
                     }
@@ -225,8 +226,8 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
 
 //        adapter.notifyDataSetChanged();
 
-//        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-//                20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+               20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         MyApplication.getInstance().addToReqQueue(jsonObjectRequest);
 

@@ -38,9 +38,18 @@
                 android:value="com.tarpost.bryanty.proj_t_post.MainActivity"/>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName=".activity.LoginActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.LoginActivity"/>
         </activity>
     </application>
 
