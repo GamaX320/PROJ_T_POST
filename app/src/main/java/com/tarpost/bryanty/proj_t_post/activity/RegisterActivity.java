@@ -1,19 +1,24 @@
 package com.tarpost.bryanty.proj_t_post.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -27,8 +32,12 @@ import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.object.User;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterActivity extends ActionBarActivity {
 
@@ -38,9 +47,10 @@ public class RegisterActivity extends ActionBarActivity {
     private FloatingActionButton btSubmit;
 
     //Image components
-    private ImageView ivAvatar;
-    private ImageView ivCover;
-    private Bitmap bitmap;
+    private CircleImageView ivAvatar;
+    private LinearLayout ivCover;
+    private Bitmap avatarBitmap;
+    private Bitmap coverBitmap;
     private Uri fileUri;
 
     private ProgressDialog pdProgressAdd;
@@ -73,6 +83,9 @@ public class RegisterActivity extends ActionBarActivity {
         etCourse = (EditText)findViewById(R.id.userCourse);
         etDescription = (EditText)findViewById(R.id.userDescription);
 
+        ivAvatar = (CircleImageView)findViewById(R.id.circleImageView_userAvatar);
+        ivCover = (LinearLayout)findViewById(R.id.linerLayout_userCover);
+
         user = new User();
 //        user.setName(etName.getText().toString());
 //        user.setEmail(etEmail.getText().toString());
@@ -89,7 +102,67 @@ public class RegisterActivity extends ActionBarActivity {
 
     }
 
-    public void addUser(final View v) {
+    public void uploadImage(View v){
+
+        if(v.getId() == R.id.linerLayout_userCover){
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), 10);
+
+        }else if(v.getId() == R.id.circleImageView_userAvatar){
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), 20);
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 10 && resultCode == RESULT_OK && data != null && data.getData() !=
+                null) {
+            //Cover image
+            //get the image
+            fileUri = data.getData();
+            try {
+                coverBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), fileUri);
+
+                //set the selected image to image view
+                //ivCover.setImageBitmap(coverBitmap);
+                BitmapDrawable background = new BitmapDrawable(coverBitmap);
+                ivCover.setBackgroundDrawable(background);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(requestCode == 20 && resultCode == RESULT_OK && data != null && data.getData() !=
+                null){
+            //Avatar image
+            //get the image
+            fileUri = data.getData();
+            try {
+                avatarBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), fileUri);
+
+                //set the selected image to image view
+                ivAvatar.setImageBitmap(avatarBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
+        byte[] imageBytes = outputStream.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    public void addUser(View v) {
         //Showing progress dialog
         pdProgressAdd.show();
 
@@ -131,8 +204,6 @@ public class RegisterActivity extends ActionBarActivity {
 
                 Log.d("response", "Register Response: " + response.toString());
 
-                //make v final
-                Snackbar snackbar = Snackbar.make(v, "Data Inserted Successfully", Snackbar .LENGTH_LONG);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -143,10 +214,6 @@ public class RegisterActivity extends ActionBarActivity {
                         .LENGTH_SHORT).show();
                 Log.d("response", "Error Response: " + error.toString());
 
-                Snackbar snackbar = Snackbar.make(v, "Failed to insert", Snackbar
-                        .LENGTH_LONG);
-
-                snackbar.show();
             }
         }) {
             @Override
@@ -161,7 +228,8 @@ public class RegisterActivity extends ActionBarActivity {
                 params.put("description", etDescription.getText().toString());
 
                 //set image param
-                //params.put("image", getStringImage(bitmap));
+                params.put("avatarPic", getStringImage(avatarBitmap));
+                params.put("coverPic", getStringImage(coverBitmap));
 
                return params;
            }
@@ -169,7 +237,7 @@ public class RegisterActivity extends ActionBarActivity {
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        
+
         // Adding request to request queue
         MyApplication.getInstance().addToReqQueue(stringRequest);
     }
