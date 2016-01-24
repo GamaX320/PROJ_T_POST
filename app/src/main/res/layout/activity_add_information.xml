@@ -31,8 +31,11 @@
             android:id="@+id/informationContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
             app:met_floatingLabel="normal"
             app:met_iconLeft="@drawable/ic_post"
+            app:met_maxCharacters="255"
             android:layout_marginRight="10dp"
             android:hint="Content" />
 

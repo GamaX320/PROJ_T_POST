@@ -30,6 +30,7 @@
             app:met_floatingLabel="normal"
             app:met_iconLeft="@drawable/ic_username"
             android:layout_marginRight="10dp"
+            android:inputType="textEmailAddress"
             android:hint="@string/text_email" />
 
         <com.rengwuxian.materialedittext.MaterialEditText

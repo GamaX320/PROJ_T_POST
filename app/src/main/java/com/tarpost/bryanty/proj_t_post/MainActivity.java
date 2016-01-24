@@ -3,7 +3,11 @@ package com.tarpost.bryanty.proj_t_post;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,19 +17,30 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.tarpost.bryanty.proj_t_post.activity.LoginActivity;
+import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.fragment.BookmarksFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.HomeFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.MyPostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.PostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.SubscriptionFragment;
 
+import org.w3c.dom.Text;
+
+import de.hdodenhof.circleimageview.*;
+
 public class MainActivity extends ActionBarActivity {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private Toolbar toolbar;
+    private String userId, userName, userEmail, userAvatar, userCover;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +62,8 @@ public class MainActivity extends ActionBarActivity {
             //setup navigation drawer content
             setupNavigationDrawer(mNavigationView);
         }
+
+        setupUser();
     }
 
     @Override
@@ -92,6 +109,7 @@ public class MainActivity extends ActionBarActivity {
                 return true;
             }
         });
+
     }
 
     //get selected content
@@ -99,7 +117,7 @@ public class MainActivity extends ActionBarActivity {
         Fragment fragment= null;
         FragmentManager fm= this.getFragmentManager();
 
-        Log.v("position", "selected > "+position);
+        Log.v("position", "selected > " + position);
         switch (position){
             case R.id.navigation_item_home:
                 fragment= new HomeFragment();
@@ -119,5 +137,74 @@ public class MainActivity extends ActionBarActivity {
         }
 
         fm.beginTransaction().replace(R.id.container, fragment).commit();
+    }
+
+    public void setupUser(){
+        SharedPreferences sharedPreferences = getApplicationContext()
+                .getSharedPreferences("userLogin", Context.MODE_PRIVATE);
+
+        if(sharedPreferences.contains("login")){
+            if(sharedPreferences.getBoolean("login", false)){
+
+                userId = sharedPreferences.getString("userId",null);
+                userEmail = sharedPreferences.getString("userEmail",null);
+                userName = sharedPreferences.getString("userName",null);
+                userAvatar = sharedPreferences.getString("userAvatar",null);
+                userCover = sharedPreferences.getString("userCover",null);
+
+                TextView headerUserName = (TextView)findViewById(R.id.header_userName);
+                TextView headerEmail = (TextView)findViewById(R.id.header_userEmail);
+                final CircleImageView headerAvatar = (CircleImageView)findViewById(R.id.header_userAvatar);
+                final NetworkImageView headerTempAvatar = (NetworkImageView)findViewById(R.id
+                        .header_tempAvatar);
+                final NetworkImageView headerTempCover = (NetworkImageView)findViewById(R.id
+                        .header_tempCover);
+                final LinearLayout headerLinearLayout = (LinearLayout)findViewById(R.id
+                        .header_linerLayout);
+
+                headerUserName.setText(userId);
+                headerEmail.setText(userEmail);
+
+                //Set avatar and cover picture
+                ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
+                headerTempAvatar.setImageUrl(userAvatar, imageLoader);
+                headerTempCover.setImageUrl(userCover,imageLoader);
+
+                //avatar image loader listener
+                imageLoader.get(userAvatar, new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                        if (response.getBitmap() != null) {
+                            headerAvatar.setImageBitmap(response.getBitmap());
+                        }
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+                //cover image loader listener
+                imageLoader.get(userCover, new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                        if (response.getBitmap() != null) {
+                            BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(),
+                                    response.getBitmap());
+                            headerLinearLayout.setBackgroundDrawable(bitmapDrawable);
+                        }
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+            }else{
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        }
     }
 }

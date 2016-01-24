@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
@@ -50,6 +51,7 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
     private RecyclerView rv_post;
     private FloatingActionButton button_add;
     private ProgressBar progressBar;
+    private SwipeRefreshLayout srl_refreshPost;
 
     private Adapter adapter;
 
@@ -58,8 +60,9 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
     private int requestCount = 1;
 
     //http://localhost/tarpost/addInformation.php
-    private static final String GET_POST_URL = "http://projx320.webege" +
-            ".com/tarpost/php/getAllSubscribePost.php?userId=";
+    private static final String GET_POST_URL = "http://projx320.webege.com/tarpost/php/getAllSubscribePost.php?userId=";
+    private static final String GET_POST_URL2 = "http://projx320.webege" +
+            ".com/tarpost/php/getAllSubscribePostWithStatusAndPaging.php";
 
     //http://projx320.byethost4.com/tarpost/addInformation.php
 
@@ -69,6 +72,7 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
 
     private List<Post> posts;
 
+    private int page=1;
 
     public PostsFragment() {
         // Required empty public constructor
@@ -91,9 +95,10 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
         //initial progress bar
         progressBar = (ProgressBar) view.findViewById(R.id.progressBarPost);
 
-        posts= new ArrayList<>();
+        //initial swipe refresh layout
+        srl_refreshPost = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshPost);
 
-//        requestQueue = Volley.newRequestQueue(getActivity());
+        posts= new ArrayList<>();
 
         setupRecyclerView(rv_post);
 
@@ -106,109 +111,97 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
 
     private void setupRecyclerView(RecyclerView rv){
         rv.setHasFixedSize(true);
-//        getData();
-        rv.setAdapter( new PostAdapter(getActivity(), getData()));
-//        rv.setAdapter(new PostAdapter(getActivity(), posts));
+
+//        adapter = new PostAdapter(getActivity(), getData());
+        getData();
+        adapter = new PostAdapter(getActivity(), posts);
+        //rv.setAdapter( new PostAdapter(getActivity(), getData()));
+        rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        rv.setOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (isLastItemDisplaying(rv_post)) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    getData();
+                }
+            }
+        });
+
+        srl_refreshPost.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                srl_refreshPost.setRefreshing(true);
+                progressBar.setVisibility(View.VISIBLE);
+                page= 1;
+               posts.removeAll(posts);
+                getData();
+            }
+        });
+
     }
 
     //get all drawer item data
     private List<Post> getData(){
         final List<Post> items= new ArrayList<>();
 
-        //display progress bar
-//        progressBar.setVisibility(View.VISIBLE);
-        //setProgressBarIndeterminateVisibility(true);
-
-//        String GET_POST_URL = "http://projx320.webege.com/tarpost/php/getAllSubscribePostTest.php?userId=";
-//
-//        //JsonArrayRequest from server
-//        JsonArrayRequest jsonArrayRequest= new JsonArrayRequest("http://projx320.webege.com/tarpost/php/getAllSubscribePostTest.php?userId=A000000004",
-//                new Response.Listener<JSONArray>() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//
-////                        progressBar.setVisibility(View.GONE);
-//
-//                        Toast.makeText(getActivity(), "Get Data > "+ response, Toast.LENGTH_LONG)
-//                                .show();
-//
-//                        if(response != null){
-//                            //load data from json array
-//                            for(int i=0; i < response.length(); i++){
-//                                Post post = new Post();
-//                                JSONObject jsonObject = null;
-//
-//                                try{
-//                                    jsonObject = response.getJSONObject(i);
-//
-//                                    post.setPostId(jsonObject.getInt("postId"));
-//                                    post.setCreatorId(jsonObject.getString("creatorId"));
-//                                    post.setTitle(jsonObject.getString("title"));
-//                                    post.setContent(jsonObject.getString("content"));
-//                                    //set create date and update date
-//
-//                                }catch(JSONException e){
-//                                    e.printStackTrace();
-//                                }
-//
-//                                posts.add(post);
-//                            }
-//                        }
-//                    }
-//
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-////                progressBar.setVisibility(View.GONE);
-//                Toast.makeText(getActivity(), "No More Items Available", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-        // Adding request to request queue
-//        MyApplication.getInstance().addToReqQueue(jsonArrayRequest);
-
+        Log.d("response", "page size: " + page);
 
         //JsonObjectRequest of volley
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+//                "http://projx320.webege.com/tarpost/php/getAllSubscribePostTest.php?userId=A000000004"
+//                , new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                "http://projx320.webege.com/tarpost/php/getAllSubscribePostTest.php?userId=A000000004"
+                GET_POST_URL2+"?userId="+"A000000004"+"&page="+page
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), "Response Enter "+response, Toast.LENGTH_SHORT)
-                        .show();
                 Log.d("response", "Response: " + response.toString());
 
                 try{
-                    JSONArray jsonArray = response.getJSONArray("posts");
+                    int success = response.getInt("success");
 
-                    Log.d("response", "JSONArray: " + jsonArray.toString());
-                    Log.d("response", "JSONArray Size: " + jsonArray.length());
+                    if(success > 0){
 
-                    for(int i = 0 ; i < jsonArray.length() ; i++){
-                        Post post = new Post();
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        JSONArray jsonArray = response.getJSONArray("posts");
 
-                        post.setPostId(jsonObject.getInt("postId"));
-                        post.setCreatorId(jsonObject.getString("creatorId"));
-                        post.setTitle(jsonObject.getString("title"));
-                        post.setContent(jsonObject.getString("content"));
-                        post.setImageUrl(jsonObject.getString("image"));
+                        Log.d("response", "JSONArray: " + jsonArray.toString());
+                        Log.d("response", "JSONArray Size: " + jsonArray.length());
 
-                        Log.d("response", "JSONArray postId: " + jsonObject.getInt("postId"));
-                        Log.d("response", "JSONArray creatorId: " + jsonObject.getString("creatorId"));
-                        Log.d("response", "JSONArray title: " + jsonObject.getString("title"));
-                        Log.d("response", "JSONArray content: " + jsonObject.getString("content"));
-                        Log.d("response", "JSONArray content: " + jsonObject.getString("image"));
+                        for(int i = 0 ; i < jsonArray.length() ; i++){
+                            Post post = new Post();
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        items.add(post);
+                            post.setPostId(jsonObject.getInt("postId"));
+                            post.setCreatorId(jsonObject.getString("creatorId"));
+                            post.setTitle(jsonObject.getString("title"));
+                            post.setContent(jsonObject.getString("content"));
+                            post.setImageUrl(jsonObject.getString("image"));
+
+                            Log.d("response", "JSONArray postId: " + jsonObject.getInt("postId"));
+                            Log.d("response", "JSONArray creatorId: " + jsonObject.getString("creatorId"));
+                            Log.d("response", "JSONArray title: " + jsonObject.getString("title"));
+                            Log.d("response", "JSONArray content: " + jsonObject.getString("content"));
+                            Log.d("response", "JSONArray content: " + jsonObject.getString("image"));
+
+                            // items.add(post);
+                            posts.add(post);
+                        }
+                        Log.d("response", "posts size: " + items.size());
+
+//                    rv_post.setAdapter( new PostAdapter(getActivity(), items));
+//                    rv_post.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                        //Notify the adapter the date has been changed
+                        adapter.notifyDataSetChanged();
+
+                        page++;
                     }
-                    Log.d("response", "posts size: " + items.size());
-
-                    rv_post.setAdapter( new PostAdapter(getActivity(), items));
-                    rv_post.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -224,14 +217,16 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-//        adapter.notifyDataSetChanged();
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-               20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        MyApplication.getInstance().addToReqQueue(jsonObjectRequest);
+            MyApplication.getInstance().addToReqQueue(jsonObjectRequest);
 
         Log.d("response", "return items size: " + items.size());
+
+        //Stop refresh
+        srl_refreshPost.setRefreshing(false);
+
         return items;
     }
 
@@ -248,20 +243,12 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
     //This method would check that the recyclerview scroll has reached the bottom or not
     private boolean isLastItemDisplaying(RecyclerView recyclerView) {
         if (recyclerView.getAdapter().getItemCount() != 0) {
-            int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
-            if (lastVisibleItemPosition != NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1)
+            int lastItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager())
+                    .findLastCompletelyVisibleItemPosition();
+            if (lastItemPosition != NO_POSITION && lastItemPosition == recyclerView.getAdapter().getItemCount() - 1)
                 return true;
         }
         return false;
     }
 
-//    //Overriden method to detect scrolling
-//    @Override
-//    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//        //Ifscrolled at last then
-//        if (isLastItemDisplaying(rv_post)) {
-//            //Calling the method getdata again
-//            getData();
-//        }
-//    }
 }

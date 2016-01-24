@@ -1,7 +1,9 @@
 package com.tarpost.bryanty.proj_t_post.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,9 +22,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.tarpost.bryanty.proj_t_post.MainActivity;
 import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,15 +66,11 @@ public class LoginActivity extends ActionBarActivity {
         etEmail = (EditText)findViewById(R.id.email);
         etPassword= (EditText)findViewById(R.id.password);
 
-//        email = etEmail.getText().toString();
-//        password = etPassword.getText().toString();
-
         //initial button
         btSignUp = (Button)findViewById(R.id.button_signup);
         btLogin = (Button)findViewById(R.id.button_login);
 
 //        //request queue
-//        requestQueue = Volley.newRequestQueue(getApplicationContext());
         pdProgressAdd = new ProgressDialog(this);
         pdProgressAdd.setMessage("Login...");
         pdProgressAdd.setCancelable(false);
@@ -104,42 +104,6 @@ public class LoginActivity extends ActionBarActivity {
         //Showing progress dialog
         pdProgressAdd.show();
 
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, LOGIN_URL
-//                , new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                pdProgressAdd.dismiss();
-//                etEmail.setText("");
-//                etPassword.setText("");
-//                Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT)
-//                        .show();
-//                Toast.makeText(getApplicationContext(),""+email+" - "+password , Toast.LENGTH_SHORT)
-//                        .show();
-//
-//                Log.d("response", "Register Response: " + response.toString());
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                pdProgressAdd.dismiss();
-//                Toast.makeText(getApplicationContext(), "Failed to login", Toast.LENGTH_SHORT)
-//                        .show();
-//                Toast.makeText(getApplicationContext(), "Reason failed > "+error, Toast
-//                        .LENGTH_SHORT).show();
-//                Log.d("response" ,"Error Response: " + error.toString());
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("email", etEmail.getText().toString());
-//                params.put("password", etPassword.getText().toString());
-//
-//                return params;
-//            }
-//        };
-
         // Adding request to request queue
         String testUrl = "http://projx320.webege.com/tarpost/php/checkUserLogin2" +
                 ".php"+"?email="+etEmail.getText().toString()+"&password="+etPassword.getText().toString();
@@ -161,12 +125,31 @@ public class LoginActivity extends ActionBarActivity {
                                         .show();
 
                                 Log.d("response", "Register Response: " + response.toString());
+                                //Check user login
+                                JSONArray jsonArray = response.getJSONArray("user");
+                                Log.d("response", "JSONArray: " + jsonArray.toString());
+                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                                SharedPreferences sharedPreferences = getApplicationContext()
+                                        .getSharedPreferences("userLogin", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                                editor.putBoolean("login",true);
+                                editor.putString("userId", jsonObject.getString("userId"));
+                                editor.putString("userEmail",jsonObject.getString("email"));
+                                editor.putString("userName",jsonObject.getString("name"));
+                                editor.putString("userAvatar",jsonObject.getString("avatarPic"));
+                                editor.putString("userCover",jsonObject.getString("coverPic"));
+                                editor.commit();
+
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
                             }else{
+                                String message = response.getString("message");
                                 pdProgressAdd.dismiss();
                                 etEmail.setText("");
                                 etPassword.setText("");
-                                Toast.makeText(getApplicationContext(),"failed: "+ response
-                                        .getString("message"),Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),"failed: "+ message,Toast.LENGTH_LONG).show();
                                 Log.d("response", "Register Response: " + response.toString());
                             }
 
