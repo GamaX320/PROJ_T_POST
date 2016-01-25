@@ -8,7 +8,7 @@
     <!-- cardview information item-->
     <android.support.v7.widget.CardView
         xmlns:cardview="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardViewPost"
+        android:id="@+id/cardViewMyPost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         cardview:cardCornerRadius="2dp"
@@ -17,7 +17,7 @@
         android:background="?android:attr/selectableItemBackground">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                      android:id="@+id/cardPost_topLayout"
+                      android:id="@+id/cardMyPost_topLayout"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:paddingLeft="16dp"
@@ -28,7 +28,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/circleImageView_userAvatar"
+                android:id="@+id/circleImageView_mypost_userAvatar"
                 android:layout_width="@dimen/list_avatar_size"
                 android:layout_height="@dimen/list_avatar_size"
                 android:src="@drawable/avatar"
@@ -38,7 +38,7 @@
                 android:layout_alignParentTop="true"/>
 
             <TextView
-                android:id="@+id/textView_userName"
+                android:id="@+id/textView_mypost_userName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -50,7 +50,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/cardPost_midLayout"
+            android:id="@+id/cardMyPost_midLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -60,7 +60,7 @@
             android:paddingBottom="8dp">
 
             <TextView
-                android:id="@+id/textView_title"
+                android:id="@+id/textView_mypost_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -69,7 +69,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
             <TextView
-                android:id="@+id/textView_content"
+                android:id="@+id/textView_mypost_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
@@ -82,7 +82,7 @@
                 android:ellipsize="end"/>
 
             <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/imageView_image"
+                android:id="@+id/imageView_mypost_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -95,25 +95,25 @@
                 android:gravity="right">
 
                 <ImageButton
-                    android:id="@+id/imageButton_bookmark"
+                    android:id="@+id/imageButton_mypost_modify"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
                     android:tint="@android:color/darker_gray"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_bookmark"/>
+                    android:src="@drawable/ic_edit"/>
 
                 <ImageButton
-                    android:id="@+id/imageButton_share"
+                    android:id="@+id/imageButton_mypost_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
                     android:tint="@android:color/darker_gray"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_share"/>
+                    android:src="@drawable/ic_delete"/>
 
                 <ImageButton
-                    android:id="@+id/imageButton_more"
+                    android:id="@+id/imageButton_mypost_more"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"

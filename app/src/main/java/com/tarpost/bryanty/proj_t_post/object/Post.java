@@ -1,11 +1,14 @@
 package com.tarpost.bryanty.proj_t_post.object;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by BRYANTY on 10-Jan-2016.
  */
-public class Post {
+public class Post implements Parcelable{
 
     private Integer postId;
     private String creatorId, creatorName;
@@ -14,6 +17,26 @@ public class Post {
 
     public Post() {
     }
+
+    protected Post(Parcel in) {
+        creatorId = in.readString();
+        creatorName = in.readString();
+        title = in.readString();
+        content = in.readString();
+        imageUrl = in.readString();
+    }
+
+    public static final Creator<Post> CREATOR = new Creator<Post>() {
+        @Override
+        public Post createFromParcel(Parcel in) {
+            return new Post(in);
+        }
+
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
 
     public Integer getPostId() {
         return postId;
@@ -77,5 +100,19 @@ public class Post {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(creatorId);
+        dest.writeString(creatorName);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeString(imageUrl);
     }
 }

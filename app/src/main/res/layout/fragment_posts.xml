@@ -13,7 +13,10 @@
         android:id="@+id/recyclerViewPost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"/>
 
     <ProgressBar
         android:id="@+id/progressBarPost"

@@ -34,4 +34,6 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     //volley library
     compile 'com.mcxiaoke.volley:library:1.0.+'
+    //float action button
+    compile 'com.getbase:floatingactionbutton:1.10.1'
 }

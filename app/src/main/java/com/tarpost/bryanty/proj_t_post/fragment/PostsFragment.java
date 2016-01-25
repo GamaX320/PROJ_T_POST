@@ -1,6 +1,7 @@
 package com.tarpost.bryanty.proj_t_post.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -25,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.activity.AddInformationActivity;
+import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActivity;
 import com.tarpost.bryanty.proj_t_post.adapter.InformationAdapter;
 import com.tarpost.bryanty.proj_t_post.adapter.PostAdapter;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
@@ -134,11 +138,33 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
             public void onRefresh() {
                 srl_refreshPost.setRefreshing(true);
                 progressBar.setVisibility(View.VISIBLE);
-                page= 1;
-               posts.removeAll(posts);
+                page = 1;
+                posts.removeAll(posts);
                 getData();
             }
         });
+
+        rv.addOnItemTouchListener(new RecyclerViewClickListener(getActivity(), rv, new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+//                Post post = posts.get(position);
+//                Toast.makeText(getActivity(), post.getTitle() + " is selected!", Toast.LENGTH_SHORT)
+//                        .show();
+//                Intent intent = new Intent(getActivity(), PostMoreDetailsActivity.class);
+//                intent.putExtra("detailsPost", post);
+//                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Post post = posts.get(position);
+                Toast.makeText(getActivity(), post.getTitle() + " is selected!", Toast.LENGTH_SHORT)
+                        .show();
+                Intent intent = new Intent(getActivity(), PostMoreDetailsActivity.class);
+                intent.putExtra("detailsPost", post);
+                startActivity(intent);
+            }
+        }));
 
     }
 
@@ -249,6 +275,61 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
                 return true;
         }
         return false;
+    }
+
+    //Recycler view on item click listener
+    public interface ItemClickListener{
+        void onClick(View view, int position);
+        void onLongClick(View view, int position);
+    }
+
+    public static class RecyclerViewClickListener implements RecyclerView.OnItemTouchListener{
+
+        private GestureDetector gestureDetector;
+        private PostsFragment.ItemClickListener itemClickListener;
+
+        public RecyclerViewClickListener(Context context, final RecyclerView rv, final
+                                         PostsFragment.ItemClickListener itemClickListener){
+
+            this.itemClickListener = itemClickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
+
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+//                    View child = rv.findChildViewUnder(e.getX(), e.getY());
+//                   // itemClickListener.onLongClick(child, rv.getChildPosition(child));
+//                    Log.d("response", "Item position: " + rv.getChildPosition(child));
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = rv.findChildViewUnder(e.getX(), e.getY());
+                    if(child != null && itemClickListener != null){
+                         itemClickListener.onLongClick(child, rv.getChildPosition(child));
+                    }
+                    Log.d("response", "Item position: " + rv.getChildPosition(child));
+                }
+            });
+
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            View view = rv.findChildViewUnder(e.getX(), e.getY());
+
+            if(view != null && itemClickListener != null && gestureDetector.onTouchEvent(e)){
+                itemClickListener.onClick(view, rv.getChildPosition(view));
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+        }
     }
 
 }

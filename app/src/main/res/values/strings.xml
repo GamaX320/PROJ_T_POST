@@ -29,6 +29,7 @@
     <string name="title_activity_add_information">AddInformationActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_post_more_details">PostMoreDetailsActivity</string>
 
     <string name="text_error_required">This field required</string>
     <string name="text_select_image">Select Image</string>
@@ -43,7 +44,7 @@
     <string name="text_faculty">Faculty</string>
     <string name="text_course">Course</string>
     <string name="text_description">Description</string>
-
-
+    <string name="text_bookmark">Bookmark</string>
+    <string name="text_share">Share</string>
 
 </resources>

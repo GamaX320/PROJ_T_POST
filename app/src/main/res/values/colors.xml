@@ -10,4 +10,10 @@
     <color name="textColor">#FFFFFF</color>
 
     <color name="windowBackground">#FFF5F5F5</color>
+
+    <color name="buttonWhite">#fafafa</color>
+    <color name="buttonWhitePress">#f1f1f1</color>
+    <color name="buttonBlack">#808080</color>
+    <color name="buttonLabelBackground">#424242</color>
+
 </resources>
