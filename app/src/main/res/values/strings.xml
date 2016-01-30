@@ -32,6 +32,7 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_post_more_details">PostMoreDetailsActivity</string>
 
+    <string name="text_search">Search</string>
     <string name="text_error_required">This field required</string>
     <string name="text_select_image">Select Image</string>
     <string name="text_email">Email</string>
@@ -56,5 +57,6 @@
     <string name="title_activity_post_more_details_collapsing">PostMoreDetailsCollapsingActivity
     </string>
     <string name="title_activity_event_more_details">EventMoreDetailsActivity</string>
+    <string name="title_activity_search_result">SearchResultActivity</string>
 
 </resources>

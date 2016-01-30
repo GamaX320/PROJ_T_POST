@@ -294,6 +294,11 @@ public class MyPostsFragment extends Fragment implements View.OnClickListener{
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
 
         }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
     }
 
 }

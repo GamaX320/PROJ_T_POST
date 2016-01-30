@@ -4,12 +4,12 @@
 
     <uses-sdk
         android:minSdkVersion="15"
-        android:targetSdkVersion="22"/>
+        android:targetSdkVersion="23"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <android:uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -69,6 +69,15 @@
         <activity
             android:name=".activity.EventMoreDetailsActivity"
             android:label="@string/title_activity_event_more_details"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tarpost.bryanty.proj_t_post.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".SearchResultActivity"
+            android:label="@string/title_activity_search_result"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme">
             <meta-data

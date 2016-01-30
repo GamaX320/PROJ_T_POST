@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "22.0.1"
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.tarpost.bryanty.proj_t_post"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -36,4 +37,6 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.+'
     //float action button
     compile 'com.getbase:floatingactionbutton:1.10.1'
+    //material search view
+    compile 'com.miguelcatalan:materialsearchview:1.4.0'
 }

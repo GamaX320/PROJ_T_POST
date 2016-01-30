@@ -39,8 +39,8 @@ import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.json.JSONParser;
 import com.tarpost.bryanty.proj_t_post.json.RequestHandler;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
+//import org.apache.http.NameValuePair;
+//import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 

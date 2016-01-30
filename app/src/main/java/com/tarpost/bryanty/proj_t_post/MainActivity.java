@@ -15,14 +15,18 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.tarpost.bryanty.proj_t_post.activity.LoginActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.UserUtil;
@@ -43,6 +47,8 @@ public class MainActivity extends ActionBarActivity {
     private NavigationView mNavigationView;
     private Toolbar toolbar;
     private String userId, userName, userEmail, userAvatar, userCover;
+
+    private MaterialSearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,38 @@ public class MainActivity extends ActionBarActivity {
         //Launch the first item in navigation drawer
         mNavigationView.getMenu().getItem(0).setChecked(true);
 
+        searchView = (MaterialSearchView)findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(MainActivity.this, "query> "+query, Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(getApplication(), SearchResultActivity.class);
+                intent.putExtra("searchQuery", query);
+                startActivity(intent);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Do some magic
+                return false;
+            }
+        });
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //Do some magic
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                //Do some magic
+            }
+        });
+
         setupUser();
     }
 
@@ -75,6 +113,10 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
         return true;
     }
 
@@ -101,6 +143,15 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     //setup navigation drawer content
@@ -163,14 +214,19 @@ public class MainActivity extends ActionBarActivity {
                 userAvatar = sharedPreferences.getString("userAvatar",null);
                 userCover = sharedPreferences.getString("userCover",null);
 
-                TextView headerUserName = (TextView)findViewById(R.id.header_userName);
-                TextView headerEmail = (TextView)findViewById(R.id.header_userEmail);
-                final CircleImageView headerAvatar = (CircleImageView)findViewById(R.id.header_userAvatar);
-                final NetworkImageView headerTempAvatar = (NetworkImageView)findViewById(R.id
+                //mNavigationView
+                //Find header - required on API 23 and above
+                View header = mNavigationView.getHeaderView(0);
+
+                TextView headerUserName = (TextView)header.findViewById(R.id.header_userName);
+                TextView headerEmail = (TextView)header.findViewById(R.id.header_userEmail);
+                final CircleImageView headerAvatar = (CircleImageView)header.findViewById(R.id
+                        .header_userAvatar);
+                final NetworkImageView headerTempAvatar = (NetworkImageView)header.findViewById(R.id
                         .header_tempAvatar);
-                final NetworkImageView headerTempCover = (NetworkImageView)findViewById(R.id
+                final NetworkImageView headerTempCover = (NetworkImageView)header.findViewById(R.id
                         .header_tempCover);
-                final LinearLayout headerLinearLayout = (LinearLayout)findViewById(R.id
+                final LinearLayout headerLinearLayout = (LinearLayout) header.findViewById(R.id
                         .header_linerLayout);
 
                 headerUserName.setText(userId);
