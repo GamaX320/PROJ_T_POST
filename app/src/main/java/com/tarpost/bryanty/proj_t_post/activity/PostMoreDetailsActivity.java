@@ -25,7 +25,7 @@ public class PostMoreDetailsActivity extends ActionBarActivity {
     private Toolbar toolbar;
     private TextView tvUserName, tvTitle, tvContent;
     private NetworkImageView nivTempAvatar, nivImage;
-    private CircleImageView rivAvatar;
+    private CircleImageView civAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class PostMoreDetailsActivity extends ActionBarActivity {
         tvContent= (TextView)findViewById(R.id.postDetails_content);
         nivImage= (NetworkImageView)findViewById(R.id.postDetails_image);
         nivTempAvatar= (NetworkImageView)findViewById(R.id.postDetails_tempAvatar);
-        rivAvatar= (CircleImageView)findViewById(R.id.postDetails_avatar);
+        civAvatar= (CircleImageView)findViewById(R.id.postDetails_avatar);
 
         Bundle bundle= getIntent().getExtras();
         Post post= bundle.getParcelable("detailsPost");

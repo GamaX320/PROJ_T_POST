@@ -25,7 +25,9 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.tarpost.bryanty.proj_t_post.activity.LoginActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
+import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.fragment.BookmarksFragment;
+import com.tarpost.bryanty.proj_t_post.fragment.EventFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.HomeFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.MyPostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.PostsFragment;
@@ -62,6 +64,9 @@ public class MainActivity extends ActionBarActivity {
             //setup navigation drawer content
             setupNavigationDrawer(mNavigationView);
         }
+
+        //Launch the first item in navigation drawer
+        mNavigationView.getMenu().getItem(0).setChecked(true);
 
         setupUser();
     }
@@ -125,6 +130,9 @@ public class MainActivity extends ActionBarActivity {
             case R.id.navigation_item_post:
                 fragment= new MyPostsFragment();
                 break;
+            case R.id.navigation_item_event:
+                fragment= new EventFragment();
+                break;
             case R.id.navigation_item_bookmark:
                 fragment= new BookmarksFragment();
                 break;
@@ -133,6 +141,9 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case R.id.navigation_item_testpost:
                 fragment= new PostsFragment();
+                break;
+            case R.id.navigation_item_logout:
+                UserUtil.userLogout(getApplication().getApplicationContext());
                 break;
         }
 

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -29,13 +30,15 @@ import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class LoginActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
     private String email,password;
     private EditText etEmail, etPassword;
-    private Button btSignUp, btLogin;
+    private Button btLogin;
+    private TextView btSignUp;
 
     //Image components
     private ImageView imageView;
@@ -67,7 +70,7 @@ public class LoginActivity extends ActionBarActivity {
         etPassword= (EditText)findViewById(R.id.password);
 
         //initial button
-        btSignUp = (Button)findViewById(R.id.button_signup);
+        btSignUp = (TextView)findViewById(R.id.button_signup);
         btLogin = (Button)findViewById(R.id.button_login);
 
 //        //request queue

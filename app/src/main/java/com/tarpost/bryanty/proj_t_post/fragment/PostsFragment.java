@@ -29,9 +29,11 @@ import com.android.volley.toolbox.Volley;
 import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.activity.AddInformationActivity;
 import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActivity;
+import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsCollapsingActivity;
 import com.tarpost.bryanty.proj_t_post.adapter.InformationAdapter;
 import com.tarpost.bryanty.proj_t_post.adapter.PostAdapter;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
+import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.object.Information;
 import com.tarpost.bryanty.proj_t_post.object.Post;
 
@@ -40,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -205,9 +208,21 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
 
                             post.setPostId(jsonObject.getInt("postId"));
                             post.setCreatorId(jsonObject.getString("creatorId"));
+                            post.setCreatorName(jsonObject.getString("creatorName"));
+                            post.setCreatorAvatarUrl(jsonObject.getString("creatorAvatarPic"));
                             post.setTitle(jsonObject.getString("title"));
                             post.setContent(jsonObject.getString("content"));
                             post.setImageUrl(jsonObject.getString("image"));
+                            //Date need to do conversion
+//                            String updateDateTimeStr = jsonObject.getString("updateDateTime");
+//                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                            try{
+//                                Date updateDateTime = sdf.parse(updateDateTimeStr);
+//                                post.setUpdateDateTime(updateDateTime);
+//                            }catch(ParseException e){
+//                                e.printStackTrace();
+//                            }
+                            post.setUpdateDateTime(DateUtil.convertStringToDate(jsonObject.getString("updateDateTime")));
 
                             Log.d("response", "JSONArray postId: " + jsonObject.getInt("postId"));
                             Log.d("response", "JSONArray creatorId: " + jsonObject.getString("creatorId"));

@@ -1,16 +1,16 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.tarpost.bryanty.proj_t_post.fragment.BookmarkFragment">
+             tools:context="com.tarpost.bryanty.proj_t_post.fragment.EventFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshBookmarks"
+        android:id="@+id/swipeRefreshEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <!-- recyclerview information item-->
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewBookmarks"
+            android:id="@+id/recyclerViewEvent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
@@ -19,7 +19,7 @@
             android:clickable="false"/>
 
         <ProgressBar
-            android:id="@+id/progressBarBookmarks"
+            android:id="@+id/progressBarEvent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -34,7 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/floating_action_button_margin"
-        android:src="@mipmap/ic_add"
-        />
+        android:src="@mipmap/ic_add" />
 
 </FrameLayout>

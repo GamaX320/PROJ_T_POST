@@ -11,9 +11,14 @@ import java.util.Date;
 public class Post implements Parcelable{
 
     private Integer postId;
-    private String creatorId, creatorName;
+    private String creatorId, creatorName, creatorAvatarUrl;
     private String title, content, imageUrl;
     private Date createDateTime, updateDateTime;
+    private String status;
+
+    //SQLite Offline variables
+    private byte[] image;
+    private String type; // P - Post, B - Bookmark
 
     public Post() {
     }
@@ -21,6 +26,7 @@ public class Post implements Parcelable{
     protected Post(Parcel in) {
         creatorId = in.readString();
         creatorName = in.readString();
+        creatorAvatarUrl = in.readString();
         title = in.readString();
         content = in.readString();
         imageUrl = in.readString();
@@ -102,6 +108,38 @@ public class Post implements Parcelable{
         this.imageUrl = imageUrl;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCreatorAvatarUrl() {
+        return creatorAvatarUrl;
+    }
+
+    public void setCreatorAvatarUrl(String creatorAvatarUrl) {
+        this.creatorAvatarUrl = creatorAvatarUrl;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -111,6 +149,7 @@ public class Post implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(creatorId);
         dest.writeString(creatorName);
+        dest.writeString(creatorAvatarUrl);
         dest.writeString(title);
         dest.writeString(content);
         dest.writeString(imageUrl);

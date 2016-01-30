@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/eventDetails_topLayout"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:paddingLeft="16dp"
+                  android:paddingRight="16dp"
+                  android:paddingTop="120dp"
+                  android:paddingBottom="8dp"
+                  android:gravity="center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/eventDetails_avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/avatar"
+            app:border_color="#FFFFFFFF"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            />
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/eventDetails_tempAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/eventDetails_userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/eventDetails_avatar"
+            android:textSize="18sp"
+            android:paddingLeft="8dp"
+            android:text="username" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/eventDetails_belowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
+        android:layout_below="@id/eventDetails_topLayout">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/eventDetails_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_title"
+            app:met_hideUnderline="true"
+            app:met_floatingLabelText="@string/text_title"
+            android:hint="@string/text_title"
+            android:editable="false"
+            android:textSize="@dimen/abc_text_size_title_material"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:focusable="false"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/eventDetails_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_post"
+            app:met_hideUnderline="true"
+            app:met_floatingLabelText="@string/text_content"
+            android:hint="@string/text_content"
+            android:editable="false"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:focusable="false"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/eventDetails_startDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_post"
+            app:met_hideUnderline="true"
+            app:met_floatingLabelText="@string/text_startTime"
+            android:hint="@string/text_startTime"
+            android:editable="false"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:focusable="false"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/eventDetails_endDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_post"
+            app:met_hideUnderline="true"
+            app:met_floatingLabelText="@string/text_endTime"
+            android:hint="@string/text_endTime"
+            android:editable="false"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:focusable="false"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/eventDetails_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_post"
+            app:met_hideUnderline="true"
+            app:met_floatingLabelText="@string/text_location"
+            android:hint="@string/text_location"
+            android:editable="false"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:focusable="false"/>
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/eventDetails_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:paddingTop="8dp"
+            android:layout_below="@+id/eventDetails_content"
+            android:focusable="false"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

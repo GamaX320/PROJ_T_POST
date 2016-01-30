@@ -1,16 +1,16 @@
 package com.tarpost.bryanty.proj_t_post.fragment;
 
-
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +23,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
+import com.tarpost.bryanty.proj_t_post.object.Event;
+import com.tarpost.bryanty.proj_t_post.object.Post;
 import com.tarpost.bryanty.proj_t_post.object.User;
 
 import org.json.JSONArray;
@@ -31,46 +33,52 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by BRYANTY on 27-Jan-2016.
  */
-public class SubscriptionFragment extends Fragment {
+public class EventDetailsMembersFragment extends Fragment {
 
-    private GridView gv;
+    private ListView lv;
     private List<User> users;
-    private GridViewAdapter adapter;
+    private EventDetailMemberAdapter adapter;
+    private Event event;
 
-    private static final String GET_SUBSCRIPTION_USER_URL = "http://projx320.webege" +
-            ".com/tarpost/php/getAllSubscribeUserWithStatus.php";
+    private static final String GET_EVENT_MEMBERS_URL = "http://projx320.webege" +
+            ".com/tarpost/php/getAllEventMembers.php";
 
-    public SubscriptionFragment() {
+    public EventDetailsMembersFragment(){
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_subscription, container, false);
+         View view = inflater.inflate(R.layout.fragment_event_details_members, container,
+                false);
 
-        gv= (GridView)view.findViewById(R.id.gvSubscription);
+        Bundle bundle= getActivity().getIntent().getExtras();
+        Event event= bundle.getParcelable("detailEvent");
+        this.event = event;
 
-        users = new ArrayList<>();
+        lv = (ListView) view.findViewById(R.id.lvEventDetailsMembers);
 
-        setupGridView(gv);
+        users= new ArrayList<>();
+
+        setupListView(lv);
 
         return view;
     }
 
-    private void setupGridView(GridView gv){
+    private void setupListView(ListView lv){
         getData();
-        adapter = new GridViewAdapter(getActivity(), users);
-        gv.setAdapter(adapter);
+        adapter = new EventDetailMemberAdapter(getActivity(), users);
+        lv.setAdapter(adapter);
 
-        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User user = (User) parent.getItemAtPosition(position);
@@ -82,8 +90,9 @@ public class SubscriptionFragment extends Fragment {
     }
 
     private void getData(){
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                GET_SUBSCRIPTION_USER_URL+"?userId="+"1"
+                GET_EVENT_MEMBERS_URL+"?eventId="+event.getEventId()
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -137,29 +146,29 @@ public class SubscriptionFragment extends Fragment {
                 20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         MyApplication.getInstance().addToReqQueue(jsonObjectRequest);
+
     }
 
-    //Grid view adapter
-    class GridViewAdapter extends BaseAdapter{
-
-        private LayoutInflater inflater;
+    //Event Details Members Adapter
+    class EventDetailMemberAdapter extends BaseAdapter{
         private Context context;
-        private List<User> items;
+        private LayoutInflater inflater;
+        private List<User> users;
 
-        public GridViewAdapter(Context context, List<User> items) {
-            inflater= LayoutInflater.from(context);
+        public EventDetailMemberAdapter(Context context, List<User> users) {
             this.context = context;
-            this.items = items;
+            this.users = users;
+            inflater= LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return items.size();
+            return users.size();
         }
 
         @Override
-        public User getItem(int position) {
-            return items.get(position);
+        public Object getItem(int position) {
+            return users.get(position);
         }
 
         @Override
@@ -169,39 +178,37 @@ public class SubscriptionFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-            view = inflater.inflate(R.layout.row_item_subscription_user, parent, false);
+           // convertView= inflater.inflate(R.layout.row_item_event_member,parent, false);
+            convertView= inflater.inflate(R.layout.row_item_event_member, null);
+            ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
 
-            final CircleImageView userAvatar = (CircleImageView)view.findViewById(R.id.civ_subscription_avatar);
-            NetworkImageView userAvatarTemp = (NetworkImageView)view.findViewById(R.id
-                    .niv_subscription_tempAvatar);
-            TextView userName = (TextView)view.findViewById(R.id.tv_subscription_name);
+            TextView memberName = (TextView)convertView.findViewById(R.id.eventMember_userName);
+            final CircleImageView memberAvatar = (CircleImageView)convertView.findViewById(R.id
+                    .eventMember_avatar);
+            NetworkImageView memberAvatarTemp = (NetworkImageView)convertView.findViewById(R.id
+                    .eventMember_tempAvatar);
 
-            userName.setText(users.get(position).getName());
+            User user = users.get(position);
 
-            if(users.get(position).getAvatarUrl() != null && !users.get(position).getAvatarUrl()
-                    .isEmpty()){
-                ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
-                userAvatarTemp.setImageUrl(users.get(position).getAvatarUrl(), imageLoader);
+            memberName.setText(user.getName());
+            memberAvatarTemp.setImageUrl(user.getAvatarUrl(), imageLoader);
 
-                imageLoader.get(users.get(position).getAvatarUrl(), new ImageLoader.ImageListener() {
-                    @Override
-                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                        if (response.getBitmap() != null) {
-                            userAvatar.setImageBitmap(response.getBitmap());
-                        }
+            //avatar image loader listener
+            imageLoader.get(user.getAvatarUrl(), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    if (response.getBitmap() != null) {
+                        memberAvatar.setImageBitmap(response.getBitmap());
                     }
+                }
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 
-                    }
-                });
-            }
+                }
+            });
 
-            return view;
+            return convertView;
         }
     }
-
-
 }

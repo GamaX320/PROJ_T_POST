@@ -5,4 +5,5 @@
     <dimen name="floating_action_button_margin">16dp</dimen>
     <dimen name="list_avatar_size">40dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="grid_avatar_size">68dp</dimen>
 </resources>

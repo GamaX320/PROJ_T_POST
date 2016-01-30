@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="15dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/civ_subscription_avatar"
+        android:layout_width="@dimen/grid_avatar_size"
+        android:layout_height="@dimen/grid_avatar_size"
+        android:src="@drawable/avatar"
+        app:border_color="#FFFFFFFF"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/niv_subscription_tempAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_subscription_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:textSize="14sp"
+        android:text="Username"/>
+
+</LinearLayout>
