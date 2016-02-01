@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -148,11 +149,17 @@ public class LoginActivity extends ActionBarActivity {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
                             }else{
-                                String message = response.getString("message");
+                                //Wrong email or password or no such account
+//                                String message = response.getString("message");
+                                String message = getResources().getString(R.string
+                                        .text_error_login);
                                 pdProgressAdd.dismiss();
                                 etEmail.setText("");
                                 etPassword.setText("");
-                                Toast.makeText(getApplicationContext(),"failed: "+ message,Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                                Snackbar.make(getCurrentFocus(), message, Snackbar
+                                        .LENGTH_LONG).show();
+
                                 Log.d("response", "Register Response: " + response.toString());
                             }
 

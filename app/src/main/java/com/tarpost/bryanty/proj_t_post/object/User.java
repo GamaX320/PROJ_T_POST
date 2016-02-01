@@ -3,6 +3,8 @@ package com.tarpost.bryanty.proj_t_post.object;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
+
 /**
  * Created by BRYANTY on 17-Jan-2016.
  */
@@ -10,6 +12,8 @@ public class User implements Parcelable {
 
     String userId, name, email, password, phoneNo, avatarUrl, coverUrl, faculty, course,
             description, gender, status;
+
+    private Date createDateTime, updateDateTime;
 
     public User() {
     }
@@ -135,6 +139,22 @@ public class User implements Parcelable {
 
     public void setCourse(String course) {
         this.course = course;
+    }
+
+    public Date getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(Date createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public Date getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(Date updateDateTime) {
+        this.updateDateTime = updateDateTime;
     }
 
     @Override

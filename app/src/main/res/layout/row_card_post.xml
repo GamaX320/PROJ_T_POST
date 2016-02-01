@@ -35,7 +35,8 @@
                 app:border_width="1dp"
                 app:border_color="#FFFFFFFF"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"/>
+                android:layout_alignParentTop="true"
+                android:clickable="true"/>
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/networkImageView_userAvatarTemp"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PROJ_T_POST</string>
+    <string name="app_name">TARPost</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -31,9 +31,15 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_post_more_details">PostMoreDetailsActivity</string>
+    <string name="title_activity_event_more_details">EventMoreDetailsActivity</string>
+    <string name="title_activity_search_result">SearchResultActivity</string>
+    <string name="title_activity_add_event">AddEventActivity</string>
+    <string name="title_activity_user_profile">UserProfileActivity</string>
+    <string name="title_activity_user_profile_action">UserProfileActionActivity</string>
 
     <string name="text_search">Search</string>
     <string name="text_error_required">This field required</string>
+    <string name="text_error_login">You have entered an invalid username or password</string>
     <string name="text_select_image">Select Image</string>
     <string name="text_email">Email</string>
     <string name="text_password">Password</string>
@@ -51,12 +57,11 @@
     <string name="text_title">Title</string>
     <string name="text_content">Content</string>
     <string name="text_image">Image</string>
+    <string name="text_duration">Duration</string>
     <string name="text_startTime">Start Time</string>
     <string name="text_endTime">End Time</string>
     <string name="text_location">Location</string>
     <string name="title_activity_post_more_details_collapsing">PostMoreDetailsCollapsingActivity
     </string>
-    <string name="title_activity_event_more_details">EventMoreDetailsActivity</string>
-    <string name="title_activity_search_result">SearchResultActivity</string>
 
 </resources>

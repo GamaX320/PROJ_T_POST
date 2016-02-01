@@ -22,8 +22,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
+import com.tarpost.bryanty.proj_t_post.MainActivity;
 import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActivity;
+import com.tarpost.bryanty.proj_t_post.activity.UserProfileActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.object.Information;
@@ -131,6 +133,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             bookmark.setOnClickListener(this);
             share.setOnClickListener(this);
             more.setOnClickListener(this);
+
+            userAvatar.setOnClickListener(this);
         }
 
         //Bookmark and share button onClick listener
@@ -202,6 +206,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 intent.putExtra("detailsPost", post);
                 v.getContext().startActivity(intent);
 
+            }else if(v.getId() == userAvatar.getId()){
+                Intent intent = new Intent(v.getContext(), UserProfileActivity.class);
+                intent.putExtra("userId", post.getCreatorId());
+                v.getContext().startActivity(intent);
             }
         }
     }

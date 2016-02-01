@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!-- include app bar -->
+    <include
+        android:id="@+id/app_bar_with_imageview_profile"
+        layout="@layout/app_bar_with_imageview_profile"/>
+
+    <!-- content -->
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffe5e5e5"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/profileUserEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:hint="@string/text_email"
+                    app:met_floatingLabel="normal"
+                    app:met_iconLeft="@drawable/ic_email"
+                    app:met_hideUnderline="true"
+                    android:text="test@email.com"
+                    android:focusable="false"
+                    android:editable="false"/>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/profileUserPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:hint="@string/text_phoneNo"
+                    app:met_floatingLabel="normal"
+                    app:met_iconLeft="@drawable/ic_phone"
+                    app:met_hideUnderline="true"
+                    android:text="011-11111111"
+                    android:focusable="false"
+                    android:editable="false"/>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/profileUserFaculty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:hint="@string/text_faculty"
+                    app:met_floatingLabel="normal"
+                    app:met_iconLeft="@drawable/ic_faculty"
+                    app:met_hideUnderline="true"
+                    android:text="Faculty ABC"
+                    android:focusable="false"
+                    android:editable="false"/>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/profileUserCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:hint="@string/text_course"
+                    app:met_floatingLabel="normal"
+                    app:met_iconLeft="@drawable/ic_course"
+                    app:met_hideUnderline="true"
+                    android:text="Degree ABC"
+                    android:focusable="false"
+                    android:editable="false"/>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/profileUserDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:hint="@string/text_description"
+                    app:met_floatingLabel="normal"
+                    app:met_iconLeft="@drawable/ic_description"
+                    app:met_hideUnderline="true"
+                    android:text="This is sample profile..."
+                    android:focusable="false"
+                    android:editable="false"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/profileUserEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_anchor="@id/app_bar_with_imageview_profile"
+        app:layout_anchorGravity="bottom|end"
+        android:src="@mipmap/ic_edit_action"
+        android:onClick="editProfile"/>
+
+</android.support.design.widget.CoordinatorLayout>

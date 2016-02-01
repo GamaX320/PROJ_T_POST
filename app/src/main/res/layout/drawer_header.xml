@@ -24,7 +24,7 @@
         app:border_color="#FFFFFFFF"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        />
+        android:clickable="true"/>
 
     <TextView
         android:id="@+id/header_userName"

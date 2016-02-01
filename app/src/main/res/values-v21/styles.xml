@@ -14,7 +14,8 @@
 
     <!-- Collapsing Layout Text Appearance : Expanded and Collapsed -->
     <style name="ExpandedAppBarStyle" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">48sp</item>
+        <!--<item name="android:textSize">48sp</item>-->
+        <item name="android:textSize">28sp</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
     </style>

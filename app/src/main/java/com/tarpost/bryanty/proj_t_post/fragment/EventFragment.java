@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tarpost.bryanty.proj_t_post.R;
+import com.tarpost.bryanty.proj_t_post.activity.AddEventActivity;
 import com.tarpost.bryanty.proj_t_post.activity.AddInformationActivity;
 import com.tarpost.bryanty.proj_t_post.activity.EventMoreDetailsActivity;
 import com.tarpost.bryanty.proj_t_post.adapter.EventAdapter;
@@ -277,7 +278,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()){
             case R.id.button_add:
-                startActivity(new Intent(getActivity(), AddInformationActivity.class));
+                startActivity(new Intent(getActivity(), AddEventActivity.class));
                 break;
         }
     }

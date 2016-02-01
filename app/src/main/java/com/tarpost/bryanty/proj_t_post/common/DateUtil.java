@@ -2,6 +2,7 @@ package com.tarpost.bryanty.proj_t_post.common;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -64,5 +65,40 @@ public class DateUtil {
         }
 
         return date;
+    }
+
+    public static String convertDateToString(Date date){
+        String dateStr = "";
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, date.getYear());
+        cal.set(Calendar.MONTH, date.getMonth());
+        cal.set(Calendar.DAY_OF_MONTH, date.getDate());
+        dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cal.getTime());
+
+        return dateStr;
+    }
+
+    public static String convertYearMonthDayToString(int year, int month, int day){
+        String dateStr = "";
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        dateStr = new SimpleDateFormat("E, MMM d, yyyy").format(cal.getTime());
+
+        return dateStr;
+    }
+
+    public static String convertHourMinuteToString(int hour, int minute){
+        String timeStr = "";
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR, hour);
+        cal.set(Calendar.MINUTE, minute);
+        timeStr = new SimpleDateFormat("HH:mm aa").format(cal.getTime());
+
+        return timeStr;
     }
 }

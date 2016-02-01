@@ -17,9 +17,16 @@
         android:gravity="center"
         android:background="@color/primaryColor">
 
-        <ImageView
+     <!-- <ImageView
             android:id="@+id/logoImageView"
             android:layout_width="wrap_content"
+            android:layout_height="144dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/ic_launcher"/>-->
+        <ImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="100dp"
             android:layout_height="144dp"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal"

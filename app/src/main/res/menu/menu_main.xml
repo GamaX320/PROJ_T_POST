@@ -5,6 +5,8 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_login" android:title="Login"
     android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_collapsing" android:title="action_collapsing"
+          android:orderInCategory="100" app:showAsAction="never" />
 
     <!-- Search -->
     <item

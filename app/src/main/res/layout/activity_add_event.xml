@@ -1,0 +1,215 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.tarpost.bryanty.proj_t_post.activity.AddEventActivity">
+
+    <!-- include app bar -->
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/eventScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/app_bar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="14dp"
+        android:layout_below="@id/eventScrollView">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/eventTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_title"
+            android:layout_marginRight="10dp"
+            android:hint="Title" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/eventContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_post"
+            app:met_maxCharacters="255"
+            android:layout_marginRight="10dp"
+            android:hint="Content" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/eventImageIcon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_image"
+            app:met_hideUnderline="true"
+            android:editable="false"
+            android:clickable="false"
+            android:layout_marginRight="10dp"
+            android:hint="@string/text_image" />
+
+        <LinearLayout
+            android:layout_marginLeft="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/eventImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:padding="1dp"
+                android:tint="@android:color/darker_gray"
+                android:src="@drawable/ic_image"/>
+
+            <Button
+                android:id="@+id/eventImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_select_image"
+                android:onClick="uploadImage"
+                android:layout_marginTop="25dp"/>
+
+        </LinearLayout>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/eventDateTimeIcon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_time"
+            app:met_hideUnderline="true"
+            android:editable="false"
+            android:clickable="false"
+            android:layout_marginRight="10dp"
+            android:hint="@string/text_duration" />
+
+    <LinearLayout
+        android:layout_marginLeft="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_startTime"
+            android:gravity="center"
+            android:textSize="16dip"
+            android:clickable="true"
+            android:textColor="@android:color/darker_gray"/>
+
+        <TextView
+        android:id="@+id/eventStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="Sun,Jan 31,2016"
+        android:gravity="center"
+        android:textSize="16dip"
+        android:onClick="datePicker"
+        android:clickable="true"
+        android:textColor="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/eventStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="9.30 AM"
+            android:gravity="center"
+            android:textSize="16dip"
+            android:onClick="timePicker"
+            android:clickable="true"
+            android:textColor="@android:color/darker_gray"/>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_endTime"
+                android:gravity="center"
+                android:textSize="16dip"
+                android:clickable="true"
+                android:textColor="@android:color/darker_gray"/>
+
+            <TextView
+                android:id="@+id/eventEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="27dp"
+                android:text="Sun,Jan 31,2016"
+                android:gravity="center"
+                android:textSize="16dip"
+                android:onClick="datePicker"
+                android:clickable="true"
+                android:textColor="@android:color/darker_gray"/>
+
+            <TextView
+                android:id="@+id/eventEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="9.30 AM"
+                android:gravity="center"
+                android:textSize="16dip"
+                android:onClick="timePicker"
+                android:clickable="true"
+                android:textColor="@android:color/darker_gray"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/eventLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_floatingLabel="normal"
+            app:met_iconLeft="@drawable/ic_location"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:hint="@string/text_location"/>
+
+        <Button
+            android:id="@+id/eventLocationSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_search"
+            android:layout_marginRight="10dp"
+            android:onClick="searchLocation"/>
+
+    </LinearLayout>
+
+        <!-- floating action button -->
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/button_add_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/floating_action_button_margin"
+            android:src="@mipmap/ic_done"
+            android:onClick="addInformation"/>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

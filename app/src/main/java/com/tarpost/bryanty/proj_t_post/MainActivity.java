@@ -28,6 +28,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.tarpost.bryanty.proj_t_post.activity.LoginActivity;
+import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsCollapsingActivity;
+import com.tarpost.bryanty.proj_t_post.activity.UserProfileActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.fragment.BookmarksFragment;
@@ -138,6 +140,9 @@ public class MainActivity extends ActionBarActivity {
                 return true;
             case R.id.action_login:
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                return true;
+            case R.id.action_collapsing:
+                startActivity(new Intent(MainActivity.this, UserProfileActivity.class));
                 return true;
 
         }
@@ -252,6 +257,16 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
 
+                //header avatar profile onClick listener
+                headerAvatar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
+                        intent.putExtra("userId", userId);
+                        startActivity(intent);
+                    }
+                });
+
                 //cover image loader listener
                 imageLoader.get(userCover, new ImageLoader.ImageListener() {
                     @Override
@@ -274,4 +289,5 @@ public class MainActivity extends ActionBarActivity {
             }
         }
     }
+
 }
