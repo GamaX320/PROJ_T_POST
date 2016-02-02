@@ -226,6 +226,8 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
 
                             Log.d("response", "JSONArray postId: " + jsonObject.getInt("postId"));
                             Log.d("response", "JSONArray creatorId: " + jsonObject.getString("creatorId"));
+                            Log.d("response", "JSONArray creatorAvatar: " + jsonObject.getString
+                                    ("creatorAvatarPic"));
                             Log.d("response", "JSONArray title: " + jsonObject.getString("title"));
                             Log.d("response", "JSONArray content: " + jsonObject.getString("content"));
                             Log.d("response", "JSONArray content: " + jsonObject.getString("image"));

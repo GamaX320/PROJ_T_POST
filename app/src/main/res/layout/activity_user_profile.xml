@@ -16,7 +16,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffe5e5e5"
+        android:background="@android:color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -111,5 +111,15 @@
         app:layout_anchorGravity="bottom|end"
         android:src="@mipmap/ic_edit_action"
         android:onClick="editProfile"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/profileUserFollowing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_anchor="@id/app_bar_with_imageview_profile"
+        app:layout_anchorGravity="bottom|end"
+        android:src="@mipmap/ic_following_on"
+        android:onClick="subscribeUser"/>
 
 </android.support.design.widget.CoordinatorLayout>

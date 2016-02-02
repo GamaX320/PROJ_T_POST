@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by BRYANTY on 27-Jan-2016.
  */
@@ -55,7 +57,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Event currentItem= items.get(position);
 
         //  holder.userAvatar.setImageResource(currentItem.userAvatar);
@@ -63,9 +65,32 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.title.setText(currentItem.getTitle());
         holder.content.setText(currentItem.getContent());
 
+        ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
         if( currentItem.getImageUrl() != null && !currentItem.getImageUrl().isEmpty()){
-            ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
             holder.image.setImageUrl(currentItem.getImageUrl(),imageLoader);
+        }
+
+        if(currentItem.getAvatarUrl() != null && !currentItem.getAvatarUrl().isEmpty() &&
+                currentItem.getAvatarUrl() != ""){
+            holder.userAvatarTemp.setImageUrl(currentItem.getAvatarUrl(), imageLoader);
+
+            imageLoader.get(currentItem.getAvatarUrl(), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    if (response.getBitmap() != null) {
+                        holder.userAvatar.setImageBitmap(response.getBitmap());
+                    }
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+
+        }else{
+            holder.userAvatarTemp.setImageUrl(null, imageLoader);
+            holder.userAvatar.setImageResource(R.drawable.avatar);
         }
 
         holder.timeStamp.setText(DateUtil.getTimeRangeStr(currentItem.getUpdateDateTime()));
@@ -79,7 +104,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     //view holder
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        ImageView userAvatar;
+        CircleImageView userAvatar;
+        NetworkImageView userAvatarTemp;
         TextView userName;
         TextView timeStamp;
         TextView title;
@@ -91,7 +117,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            userAvatar= (ImageView)itemView.findViewById(R.id.circleImageView_event_userAvatar);
+            userAvatar= (CircleImageView)itemView.findViewById(R.id.circleImageView_event_userAvatar);
+            userAvatarTemp = (NetworkImageView)itemView.findViewById(R.id.networkImageView_event_userAvatarTemp);
             userName= (TextView)itemView.findViewById(R.id.textView_event_userName);
             timeStamp= (TextView)itemView.findViewById(R.id.textView_event_timeStamp);
             title= (TextView)itemView.findViewById(R.id.textView_event_title);

@@ -3,7 +3,8 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:padding="15dp">
+              android:padding="15dp"
+              android:gravity="center_vertical|center_horizontal">
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -19,7 +20,8 @@
         android:id="@+id/niv_subscription_tempAvatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_subscription_name"
@@ -27,6 +29,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:textSize="14sp"
-        android:text="Username"/>
+        android:text="bryan"/>
 
 </LinearLayout>

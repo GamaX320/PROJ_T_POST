@@ -11,7 +11,7 @@ import java.util.Date;
 public class User implements Parcelable {
 
     String userId, name, email, password, phoneNo, avatarUrl, coverUrl, faculty, course,
-            description, gender, status;
+            description, gender, status, following;
 
     private Date createDateTime, updateDateTime;
 
@@ -31,6 +31,7 @@ public class User implements Parcelable {
         description = in.readString();
         gender = in.readString();
         status = in.readString();
+        following = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -157,6 +158,14 @@ public class User implements Parcelable {
         this.updateDateTime = updateDateTime;
     }
 
+    public String getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(String following) {
+        this.following = following;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -176,5 +185,6 @@ public class User implements Parcelable {
         dest.writeString(description);
         dest.writeString(gender);
         dest.writeString(status);
+        dest.writeString(following);
     }
 }

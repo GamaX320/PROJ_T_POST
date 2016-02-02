@@ -37,6 +37,14 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"/>
 
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/networkImageView_event_userAvatarTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:visibility="gone"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

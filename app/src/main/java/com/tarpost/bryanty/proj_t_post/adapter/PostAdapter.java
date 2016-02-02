@@ -76,23 +76,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             holder.image.setImageUrl(currentItem.getImageUrl(),imageLoader);
         }
 
-        if(currentItem.getCreatorAvatarUrl() != null && !currentItem.getCreatorAvatarUrl().isEmpty()){
+        if(currentItem.getCreatorAvatarUrl() != null && !currentItem.getCreatorAvatarUrl()
+                .isEmpty() && currentItem.getCreatorAvatarUrl() != ""){
             holder.userAvatarTemp.setImageUrl(currentItem.getCreatorAvatarUrl(), imageLoader);
-        }
 
-        imageLoader.get(currentItem.getCreatorAvatarUrl(), new ImageLoader.ImageListener() {
-            @Override
-            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                if (response.getBitmap() != null) {
-                    holder.userAvatar.setImageBitmap(response.getBitmap());
+            //avatar image loader listener
+            imageLoader.get(currentItem.getCreatorAvatarUrl(), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    if (response.getBitmap() != null) {
+                        holder.userAvatar.setImageBitmap(response.getBitmap());
+                    }
                 }
-            }
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 
-            }
-        });
+                }
+            });
+
+        }else{
+            holder.userAvatarTemp.setImageUrl(null, imageLoader);
+            holder.userAvatar.setImageResource(R.drawable.avatar);
+        }
 
         holder.timeStamp.setText(DateUtil.getTimeRangeStr(currentItem.getUpdateDateTime()));
 

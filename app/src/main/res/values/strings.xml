@@ -38,6 +38,10 @@
     <string name="title_activity_user_profile_action">UserProfileActionActivity</string>
 
     <string name="text_search">Search</string>
+    <string name="text_dialog_confirm_title">Confirm</string>
+    <string name="text_dialog_confirm_content">Are you confirm to perform?</string>
+    <string name="text_dialog_confirm_yes">Yes</string>
+    <string name="text_dialog_confirm_no">No</string>
     <string name="text_error_required">This field required</string>
     <string name="text_error_login">You have entered an invalid username or password</string>
     <string name="text_select_image">Select Image</string>

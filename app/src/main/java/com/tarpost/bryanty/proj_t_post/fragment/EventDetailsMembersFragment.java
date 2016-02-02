@@ -2,6 +2,7 @@ package com.tarpost.bryanty.proj_t_post.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.tarpost.bryanty.proj_t_post.R;
+import com.tarpost.bryanty.proj_t_post.activity.UserProfileActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.object.Event;
 import com.tarpost.bryanty.proj_t_post.object.Post;
@@ -82,9 +84,9 @@ public class EventDetailsMembersFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User user = (User) parent.getItemAtPosition(position);
-//                Intent intent = new Intent(v.getContext(), DetailsActivity.class);
-//                intent.putExtra("com.example.cities.City", city);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+                intent.putExtra("userId", user.getUserId());
+                startActivity(intent);
             }
         });
     }
@@ -191,22 +193,29 @@ public class EventDetailsMembersFragment extends Fragment {
             User user = users.get(position);
 
             memberName.setText(user.getName());
-            memberAvatarTemp.setImageUrl(user.getAvatarUrl(), imageLoader);
 
-            //avatar image loader listener
-            imageLoader.get(user.getAvatarUrl(), new ImageLoader.ImageListener() {
-                @Override
-                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                    if (response.getBitmap() != null) {
-                        memberAvatar.setImageBitmap(response.getBitmap());
+            if(user.getAvatarUrl() != null && !user.getAvatarUrl().isEmpty() && user.getAvatarUrl
+                    () != ""){
+                memberAvatarTemp.setImageUrl(user.getAvatarUrl(), imageLoader);
+
+                //avatar image loader listener
+                imageLoader.get(user.getAvatarUrl(), new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                        if (response.getBitmap() != null) {
+                            memberAvatar.setImageBitmap(response.getBitmap());
+                        }
                     }
-                }
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-                }
-            });
+                    }
+                });
+            }else{
+                memberAvatar.setImageResource(R.drawable.avatar);
+            }
+
 
             return convertView;
         }

@@ -2,6 +2,7 @@ package com.tarpost.bryanty.proj_t_post.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -22,7 +23,9 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.tarpost.bryanty.proj_t_post.R;
+import com.tarpost.bryanty.proj_t_post.activity.UserProfileActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
+import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.object.User;
 
 import org.json.JSONArray;
@@ -74,16 +77,19 @@ public class SubscriptionFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User user = (User) parent.getItemAtPosition(position);
-//                Intent intent = new Intent(v.getContext(), DetailsActivity.class);
-//                intent.putExtra("com.example.cities.City", city);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+                intent.putExtra("userId", user.getUserId());
+                startActivity(intent);
             }
         });
     }
 
     private void getData(){
+
+        UserUtil userUtil = new UserUtil(getActivity().getApplicationContext());
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                GET_SUBSCRIPTION_USER_URL+"?userId="+"1"
+                GET_SUBSCRIPTION_USER_URL+"?userId="+userUtil.getUserId()
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -177,14 +183,15 @@ public class SubscriptionFragment extends Fragment {
                     .niv_subscription_tempAvatar);
             TextView userName = (TextView)view.findViewById(R.id.tv_subscription_name);
 
-            userName.setText(users.get(position).getName());
+            userName.setText(items.get(position).getName());
 
-            if(users.get(position).getAvatarUrl() != null && !users.get(position).getAvatarUrl()
-                    .isEmpty()){
-                ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
-                userAvatarTemp.setImageUrl(users.get(position).getAvatarUrl(), imageLoader);
+            ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
+            if(items.get(position).getAvatarUrl() != null && !items.get(position).getAvatarUrl()
+                    .isEmpty() && items.get(position).getAvatarUrl() != ""){
 
-                imageLoader.get(users.get(position).getAvatarUrl(), new ImageLoader.ImageListener() {
+                userAvatarTemp.setImageUrl(items.get(position).getAvatarUrl(), imageLoader);
+
+                imageLoader.get(items.get(position).getAvatarUrl(), new ImageLoader.ImageListener() {
                     @Override
                     public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                         if (response.getBitmap() != null) {
@@ -197,6 +204,9 @@ public class SubscriptionFragment extends Fragment {
 
                     }
                 });
+            }else{
+                userAvatarTemp.setImageUrl(null, imageLoader);
+                userAvatar.setImageResource(R.drawable.avatar);
             }
 
             return view;
