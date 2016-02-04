@@ -113,6 +113,15 @@
                     android:src="@drawable/ic_delete"/>
 
                 <ImageButton
+                    android:id="@+id/imageButton_mypost_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:tint="@android:color/darker_gray"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_share"/>
+
+                <ImageButton
                     android:id="@+id/imageButton_mypost_more"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

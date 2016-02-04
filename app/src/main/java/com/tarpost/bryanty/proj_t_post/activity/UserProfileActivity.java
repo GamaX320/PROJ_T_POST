@@ -229,10 +229,30 @@ public class UserProfileActivity extends AppCompatActivity {
 
         collapsingToolbarLayout.setTitle(user.getName());
         userEmail.setText(user.getEmail());
-        userPhone.setText(user.getPhoneNo());
-        userFaculty.setText(user.getFaculty());
-        userCourse.setText(user.getCourse());
-        userDescription.setText(user.getDescription());
+
+        if(user.getPhoneNo() != null && user.getPhoneNo() != "" && user.getPhoneNo() != "null"){
+            userPhone.setText(user.getPhoneNo());
+        }else{
+            userPhone.setText(" ");
+        }
+
+        if(user.getFaculty() != null && user.getFaculty() != "" && user.getFaculty() != "null"){
+            userFaculty.setText(user.getFaculty());
+        }else{
+            userFaculty.setText(" ");
+        }
+
+        if(user.getCourse() != null && user.getCourse() != "" && user.getCourse() != "null"){
+            userCourse.setText(user.getCourse());
+        }else{
+            userCourse.setText(" ");
+        }
+
+       if(user.getDescription() != null && user.getDescription() != "" && user.getDescription() != "null"){
+           userDescription.setText(user.getDescription());
+       }else{
+           userDescription.setText(" ");
+       }
 
         if(user.getFollowing().equals("1")){
             userProfileFollowing.setImageResource(R.mipmap.ic_following_off);
@@ -263,7 +283,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     .setPositiveButton(R.string.text_dialog_confirm_yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            pdProgressAdd.setMessage("Removing...");
+                            pdProgressAdd.setMessage(getResources().getString(R.string.text_dialog_removing));
                             pdProgressAdd.show();
                             unFollowingUser();
 
@@ -279,46 +299,9 @@ public class UserProfileActivity extends AppCompatActivity {
                     .setPositiveButton(R.string.text_dialog_confirm_yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            pdProgressAdd.setMessage("Adding...");
+                            pdProgressAdd.setMessage(getResources().getString(R.string.text_dialog_adding));
                             pdProgressAdd.show();
                             followingUser();
-
-//                        StringRequest stringRequest = new StringRequest(Request.Method.POST, ADD_SUBSCRIPTION
-//                                , new Response.Listener<String>() {
-//                            @Override
-//                            public void onResponse(String response) {
-//                                pdProgressAdd.dismiss();
-//                                userProfileFollowing.setImageResource(R.mipmap.ic_following_off);
-//
-//                                Log.d("response", "Response: " + response.toString());
-//                            }
-//                        }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                pdProgressAdd.dismiss();
-//                                Toast.makeText(getApplicationContext(), "Reason failed > " + error, Toast
-//                                        .LENGTH_LONG).show();
-//                                Log.d("response", "Error Response: " + error.toString());
-//
-//                            }
-//                        }) {
-//                            @Override
-//                            protected Map<String, String> getParams() throws AuthFailureError {
-//                                Map<String, String> params = new HashMap<String, String>();
-//                                UserUtil userUtil = new UserUtil(getApplication().getApplicationContext());
-//
-//                                params.put("userId", userUtil.getUserId());
-//                                params.put("subscripId", userId);
-//
-//                                return params;
-//                            }
-//                        };
-//
-//                        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-//                                20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//
-//                        // Adding request to request queue
-//                        MyApplication.getInstance().addToReqQueue(stringRequest);
 
                         }
                     })
@@ -336,14 +319,18 @@ public class UserProfileActivity extends AppCompatActivity {
                 pdProgressAdd.dismiss();
                 userProfileFollowing.setImageResource(R.mipmap.ic_following_off);
 
+                Toast.makeText(UserProfileActivity.this,getResources().getString(R.string
+                        .text_message_subscribe),Toast.LENGTH_LONG).show();
+
                 Log.d("response", "Response: " + response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 pdProgressAdd.dismiss();
-                Toast.makeText(getApplicationContext(), "Reason failed > " + error, Toast
-                        .LENGTH_LONG).show();
+                Toast.makeText(UserProfileActivity.this,getResources().getString(R.string
+                        .text_message_insert_failed),Toast.LENGTH_LONG).show();
+
                 Log.d("response", "Error Response: " + error.toString());
 
             }
@@ -377,14 +364,18 @@ public class UserProfileActivity extends AppCompatActivity {
                 pdProgressAdd.dismiss();
                 userProfileFollowing.setImageResource(R.mipmap.ic_following_on);
 
+                Toast.makeText(UserProfileActivity.this,getResources().getString(R.string
+                        .text_message_unsubscribe),Toast.LENGTH_LONG).show();
+
                 Log.d("response", "Response: " + response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 pdProgressAdd.dismiss();
-                Toast.makeText(getApplicationContext(), "Reason failed > " + error, Toast
-                        .LENGTH_LONG).show();
+                Toast.makeText(UserProfileActivity.this,getResources().getString(R.string
+                        .text_message_update_failed),Toast.LENGTH_LONG).show();
+
                 Log.d("response", "Error Response: " + error.toString());
 
             }

@@ -48,8 +48,10 @@ public class EventMoreDetailsActivity extends ActionBarActivity {
         TabViewPagerAdapter adapter = new TabViewPagerAdapter(getSupportFragmentManager());
 
         //Add each tab(fragment) on here
-        adapter.addFragment(new EventDetailsFragment(), "Event Details");
-        adapter.addFragment(new EventDetailsMembersFragment(), "Members");
+        adapter.addFragment(new EventDetailsFragment(), getResources().getString(R.string
+                .text_event_details));
+        adapter.addFragment(new EventDetailsMembersFragment(), getResources().getString(R.string
+                .text_members));
 
         viewPager.setAdapter(adapter);
     }

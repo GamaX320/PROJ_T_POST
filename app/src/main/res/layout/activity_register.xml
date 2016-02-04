@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="14dp"
         android:layout_below="@id/app_bar"
         android:id="@+id/linearLayout">
 
@@ -33,7 +32,7 @@
                 android:layout_height="192dp"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:background="@drawable/avatar"
+                android:background="@drawable/cover"
                 android:onClick="uploadImage">
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -41,7 +40,7 @@
                     android:id="@+id/circleImageView_userAvatar"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/avatar"
                     app:border_width="1dp"
                     app:border_color="#FFFFFFFF"
                     android:layout_alignParentLeft="true"
@@ -75,7 +74,8 @@
             app:met_floatingLabel="normal"
             app:met_iconLeft="@drawable/ic_password"
             android:layout_marginRight="10dp"
-            android:hint="@string/text_password" />
+            android:hint="@string/text_password"
+            android:inputType="textPassword"/>
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/userPhone"
@@ -113,7 +113,7 @@
             android:layout_marginRight="10dp"
             android:hint="@string/text_description" />
 
-        <com.rengwuxian.materialedittext.MaterialEditText
+       <!-- <com.rengwuxian.materialedittext.MaterialEditText
              android:id="@+id/userAvatar"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
                 android:onClick="uploadImage"
                 android:layout_marginTop="25dp"/>
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <!-- floating action button -->
         <android.support.design.widget.FloatingActionButton

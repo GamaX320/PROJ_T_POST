@@ -6,6 +6,7 @@
     <string name="nav_item_home">Home</string>
     <string name="nav_item_post">My Posts</string>
     <string name="nav_item_event">Event</string>
+    <string name="nav_item_eventJoin">Event Joined</string>
     <string name="nav_item_bookmark">Bookmarks</string>
     <string name="nav_item_subscription">Subscriptions</string>
     <string name="nav_item_settings">Settings</string>
@@ -36,14 +37,44 @@
     <string name="title_activity_add_event">AddEventActivity</string>
     <string name="title_activity_user_profile">UserProfileActivity</string>
     <string name="title_activity_user_profile_action">UserProfileActionActivity</string>
+    <string name="title_activity_post_more_details_collapsing">PostMoreDetailsCollapsingActivity
+    </string>
+    <string name="title_activity_post_more_details_action">PostMoreDetailsActionActivity</string>
 
     <string name="text_search">Search</string>
+
     <string name="text_dialog_confirm_title">Confirm</string>
     <string name="text_dialog_confirm_content">Are you confirm to perform?</string>
     <string name="text_dialog_confirm_yes">Yes</string>
     <string name="text_dialog_confirm_no">No</string>
+    <string name="text_dialog_confirm_cancel">Cancel</string>
+    <string name="text_dialog_adding">Adding...</string>
+    <string name="text_dialog_updating">Updating...</string>
+    <string name="text_dialog_removing">Removing...</string>
+
+    <string name="text_message_insert_user_success">Create User Successfully. Please check
+        your email for activation</string>
+    <string name="text_message_insert_user_failed">Failed to create user</string>
+    <string name="text_message_insert_success">Inserted Successfully</string>
+    <string name="text_message_insert_failed">Failed to insert</string>
+    <string name="text_message_update_success">Update Successfully</string>
+    <string name="text_message_update_failed">Failed to Update</string>
+    <string name="text_message_delete_success">Delete Successfully</string>
+    <string name="text_message_delete_failed">Failed to Delete</string>
+    <string name="text_message_unsubscribe">Unsubscribe Successfully</string>
+    <string name="text_message_subscribe">Subscribe Successfully</string>
+    <string name="text_message_join_event">Join Event Successfully</string>
+    <string name="text_message_join_event_failed">Failed to join event</string>
+    <string name="text_message_unjoin_event">Un-join Event Successfully</string>
+    <string name="text_message_unjoin_event_failed">Failed to un-join event</string>
+    <string name="text_message_no_items_available">No More Items Available</string>
+
+    <string name="text_success_login">Login Successfully</string>
     <string name="text_error_required">This field required</string>
     <string name="text_error_login">You have entered an invalid username or password</string>
+
+    <string name="text_create_post">Create Post</string>
+    <string name="text_modify_post">Modify Post</string>
     <string name="text_select_image">Select Image</string>
     <string name="text_email">Email</string>
     <string name="text_password">Password</string>
@@ -65,7 +96,8 @@
     <string name="text_startTime">Start Time</string>
     <string name="text_endTime">End Time</string>
     <string name="text_location">Location</string>
-    <string name="title_activity_post_more_details_collapsing">PostMoreDetailsCollapsingActivity
-    </string>
+    <string name="text_event_details">Event Details</string>
+    <string name="text_members">Members</string>
+
 
 </resources>

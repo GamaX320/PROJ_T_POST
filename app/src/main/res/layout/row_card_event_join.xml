@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:padding="5dp">
 
@@ -28,7 +29,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/circleImageView_event_userAvatar"
+                android:id="@+id/circleImageView_event_join_userAvatar"
                 android:layout_width="@dimen/list_avatar_size"
                 android:layout_height="@dimen/list_avatar_size"
                 android:src="@drawable/avatar"
@@ -38,7 +39,7 @@
                 android:layout_alignParentTop="true"/>
 
             <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/networkImageView_event_userAvatarTemp"
+                android:id="@+id/networkImageView_event_join_userAvatarTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -53,20 +54,12 @@
                 android:paddingLeft="8dp">
 
                 <TextView
-                    android:id="@+id/textView_event_userName"
+                    android:id="@+id/textView_event_join_userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:text="Username"/>
-
-                <TextView
-                    android:id="@+id/textView_event_timeStamp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp"
-                    android:text="3 hours ago"/>
 
             </LinearLayout>
 
@@ -83,7 +76,7 @@
             android:paddingBottom="8dp">
 
             <TextView
-                android:id="@+id/textView_event_title"
+                android:id="@+id/textView_event_join_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -92,25 +85,90 @@
                 android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
-            <TextView
-                android:id="@+id/textView_event_content"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:layout_below="@+id/cardview_title"
-                android:text="Here the content"
-                android:textSize="14sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:maxLines="3"
-                android:lines="3"
-                android:ellipsize="end"/>
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-            <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/imageView_event_image"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/text_startTime"
+                android:textSize="14sp"
+                android:paddingTop="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:layout_weight="1.5"/>
+
+            <TextView
+                android:id="@+id/textView_event_join_startDateTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:text="2015-02-01 19:00:00"
+                android:textSize="14sp"
+                android:paddingTop="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_weight="0.5"/>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/text_endTime"
+                android:textSize="14sp"
+                android:paddingTop="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:layout_weight="1.5"/>
+
+            <TextView
+                android:id="@+id/textView_event_join_endDateTime"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="25dp" />
+                android:layout_alignParentTop="true"
+                android:text="2015-02-01 19:00:00"
+                android:textSize="14sp"
+                android:paddingTop="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_weight="0.5"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/text_location"
+                android:textSize="14sp"
+                android:paddingTop="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:layout_weight="1.5"/>
+
+            <TextView
+                android:id="@+id/textView_event_join_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="Kuala Lumpur"
+                android:textSize="14sp"
+                android:paddingTop="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_weight="0.5"/>
+
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -119,16 +177,16 @@
                 android:gravity="right">
 
                 <ImageButton
-                    android:id="@+id/imageButton_event_join"
+                    android:id="@+id/imageButton_event_joing_cancel_join"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
                     android:tint="@android:color/darker_gray"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_event_join"/>
+                    android:src="@drawable/ic_event_disjoin"/>
 
                 <ImageButton
-                    android:id="@+id/imageButton_event_share"
+                    android:id="@+id/imageButton_event_joing_share"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
@@ -137,7 +195,7 @@
                     android:src="@drawable/ic_share"/>
 
                 <ImageButton
-                    android:id="@+id/imageButton_event_more"
+                    android:id="@+id/imageButton_event_joing_more"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"

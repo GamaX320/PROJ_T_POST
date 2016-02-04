@@ -123,9 +123,9 @@ public class LoginActivity extends ActionBarActivity {
                                 pdProgressAdd.dismiss();
                                 etEmail.setText("");
                                 etPassword.setText("");
-                                Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT)
-                                        .show();
-                                Toast.makeText(getApplicationContext(),""+email+" - "+password , Toast.LENGTH_SHORT)
+                                Toast.makeText(getApplicationContext(), getResources().getString
+                                        (R.string.text_success_login), Toast
+                                        .LENGTH_SHORT)
                                         .show();
 
                                 Log.d("response", "Register Response: " + response.toString());
@@ -150,9 +150,15 @@ public class LoginActivity extends ActionBarActivity {
 
                             }else{
                                 //Wrong email or password or no such account
-//                                String message = response.getString("message");
-                                String message = getResources().getString(R.string
+                                String message = response.getString("message");
+//                                String message = getResources().getString(R.string
+//                                        .text_error_login);
+
+                                if(message.equals("No Items Found")){
+                                     message = getResources().getString(R.string
                                         .text_error_login);
+                                }
+
                                 pdProgressAdd.dismiss();
                                 etEmail.setText("");
                                 etPassword.setText("");
@@ -185,5 +191,10 @@ public class LoginActivity extends ActionBarActivity {
 
     public void signUp(View v){
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }

@@ -97,7 +97,7 @@ public class RegisterActivity extends ActionBarActivity {
         btSubmit = (FloatingActionButton)findViewById(R.id.button_add_user);
 
         pdProgressAdd = new ProgressDialog(this);
-        pdProgressAdd.setMessage("Adding...");
+        pdProgressAdd.setMessage(getResources().getString(R.string.text_dialog_adding));
         pdProgressAdd.setCancelable(false);
 
     }
@@ -200,7 +200,9 @@ public class RegisterActivity extends ActionBarActivity {
                 etCourse.setText("");
                 etDescription.setText("");
 
-                Toast.makeText(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.text_message_insert_user_success), Toast
+                        .LENGTH_LONG)
+                        .show();
 
                 Log.d("response", "Register Response: " + response.toString());
 
@@ -209,7 +211,9 @@ public class RegisterActivity extends ActionBarActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 pdProgressAdd.dismiss();
-                Toast.makeText(getApplicationContext(), "Failed to insert", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.text_message_insert_user_failed), Toast
+                        .LENGTH_SHORT)
+                        .show();
                 Toast.makeText(getApplicationContext(), "Reason failed > "+error, Toast
                         .LENGTH_SHORT).show();
                 Log.d("response", "Error Response: " + error.toString());
@@ -228,8 +232,13 @@ public class RegisterActivity extends ActionBarActivity {
                 params.put("description", etDescription.getText().toString());
 
                 //set image param
-                params.put("avatarPic", getStringImage(avatarBitmap));
-                params.put("coverPic", getStringImage(coverBitmap));
+                if(avatarBitmap != null){
+                    params.put("avatarPic", getStringImage(avatarBitmap));
+                }
+
+                if(coverBitmap != null){
+                    params.put("coverPic", getStringImage(coverBitmap));
+                }
 
                return params;
            }

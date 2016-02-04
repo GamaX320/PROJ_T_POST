@@ -96,7 +96,8 @@
     <LinearLayout
         android:layout_marginLeft="65dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="3">
 
         <TextView
             android:layout_width="wrap_content"
@@ -105,7 +106,8 @@
             android:gravity="center"
             android:textSize="16dip"
             android:clickable="true"
-            android:textColor="@android:color/darker_gray"/>
+            android:textColor="@android:color/darker_gray"
+            android:layout_weight="1"/>
 
         <TextView
         android:id="@+id/eventStartDate"
@@ -117,7 +119,8 @@
         android:textSize="16dip"
         android:onClick="datePicker"
         android:clickable="true"
-        android:textColor="@android:color/darker_gray"/>
+        android:textColor="@android:color/darker_gray"
+        android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/eventStartTime"
@@ -129,7 +132,8 @@
             android:textSize="16dip"
             android:onClick="timePicker"
             android:clickable="true"
-            android:textColor="@android:color/darker_gray"/>
+            android:textColor="@android:color/darker_gray"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
@@ -137,7 +141,8 @@
             android:layout_marginLeft="65dp"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="3">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,7 +151,8 @@
                 android:gravity="center"
                 android:textSize="16dip"
                 android:clickable="true"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/eventEndDate"
@@ -158,19 +164,21 @@
                 android:textSize="16dip"
                 android:onClick="datePicker"
                 android:clickable="true"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/eventEndTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="9.30 AM"
+                android:text="13.30 AM"
                 android:gravity="center"
                 android:textSize="16dip"
                 android:onClick="timePicker"
                 android:clickable="true"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray"
+                android:layout_weight="1"/>
         </LinearLayout>
 
     <LinearLayout
@@ -206,7 +214,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/floating_action_button_margin"
             android:src="@mipmap/ic_done"
-            android:onClick="addInformation"/>
+            android:onClick="addEvent"/>
 
     </LinearLayout>
 

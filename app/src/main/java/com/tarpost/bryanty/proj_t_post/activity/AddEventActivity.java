@@ -2,40 +2,62 @@ package com.tarpost.bryanty.proj_t_post.activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.tarpost.bryanty.proj_t_post.R;
+import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.DateUtil;
+import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.object.Event;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class AddEventActivity  extends ActionBarActivity {
 
     private Toolbar toolbar;
     private FloatingActionButton btSubmit;
-    private EditText eventLocation;
+    private EditText eventTitle, eventContent, eventLocation;
 
     private TextView startDateButton, endDateButton, startTimeButton, endTimeButton;
     static final int START_DATE_DIALOG_ID = 100;
@@ -46,6 +68,24 @@ public class AddEventActivity  extends ActionBarActivity {
     int hour_x,minute_x,second_x;
 
     private Event event;
+    private Date startDateTime;
+    private Date endDateTime;
+
+    //Image components
+    private ImageView imageView;
+    private Button btImage;
+    private String imageEncode, imageName;
+    private Bitmap bitmap;
+    private Uri fileUri;
+
+    private ProgressDialog pdProgressAdd;
+
+    private static final String ADD_EVENT_URL = "http://projx320.webege" +
+            ".com/tarpost/php/insertEvent.php";
+
+    //JSON element ids from repsonse of php script:
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_MESSAGE = "message";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +113,55 @@ public class AddEventActivity  extends ActionBarActivity {
         hour_x = c.get(Calendar.HOUR);
         minute_x = c.get(Calendar.MINUTE);
         second_x = c.get(Calendar.SECOND);
+
+        event = new Event();
+        startDateTime= new Date();
+        endDateTime = new Date();
+
+        //initial components
+        eventTitle = (EditText)findViewById(R.id.eventTitle);
+        eventContent = (EditText)findViewById(R.id.eventContent);
+        imageView = (ImageView)findViewById(R.id.eventImageView);
+
+        pdProgressAdd = new ProgressDialog(this);
+        pdProgressAdd.setMessage(getResources().getString(R.string.text_dialog_adding));
+        pdProgressAdd.setCancelable(false);
+    }
+
+    public void uploadImage(View v){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 10);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 10 && resultCode == RESULT_OK && data != null && data.getData() !=
+                null) {
+
+            //get the image
+            fileUri = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), fileUri);
+
+                //set the selected image to image view
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
+        byte[] imageBytes = outputStream.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
     }
 
     public void datePicker(View view){
@@ -123,6 +212,10 @@ public class AddEventActivity  extends ActionBarActivity {
             day_x = dayOfMonth;
 
             startDateButton.setText(DateUtil.convertYearMonthDayToString(year_x, month_x, day_x));
+            startDateTime.setYear(year_x);
+            startDateTime.setMonth(month_x);
+            startDateTime.setDate(day_x);
+            Log.v("startDate", "current start date> " + startDateTime);
         }
     };
 
@@ -134,6 +227,10 @@ public class AddEventActivity  extends ActionBarActivity {
             day_x = dayOfMonth;
 
             endDateButton.setText(DateUtil.convertYearMonthDayToString(year_x, month_x, day_x));
+            endDateTime.setYear(year_x);
+            endDateTime.setMonth(month_x);
+            endDateTime.setDate(day_x);
+            Log.v("endDate", "current end date> " + endDateTime);
         }
     };
 
@@ -144,6 +241,10 @@ public class AddEventActivity  extends ActionBarActivity {
             minute_x = minute;
 
             startTimeButton.setText(DateUtil.convertHourMinuteToString(hour_x, minute_x));
+            startDateTime.setHours(hour_x);
+            startDateTime.setMinutes(minute_x);
+            startDateTime.setSeconds(0);
+            Log.v("startDate", "current start time> " + startDateTime);
         }
     };
 
@@ -154,29 +255,119 @@ public class AddEventActivity  extends ActionBarActivity {
             minute_x = minute;
 
             endTimeButton.setText(DateUtil.convertHourMinuteToString(hour_x, minute_x));
+            endDateTime.setHours(hour_x);
+            endDateTime.setMinutes(minute_x);
+            endDateTime.setSeconds(0);
+            Log.v("endDate", "current end time> " + endDateTime);
         }
     };
 
     //Search location latitude and longitude based on name user enter
     public void searchLocation(View view){
         Geocoder geocoder = new Geocoder(AddEventActivity.this, Locale.getDefault());
-        List<Address> addresses;
+        final List<Address> addresses;
         try{
-
             addresses = geocoder.getFromLocationName(eventLocation.getText().toString(), 5);
 
             if(addresses.size() > 0){
                 Log.v("location", "location getLatitude > " + addresses.get(0).getLatitude());
-                Log.v("location","location getLongitude > "+addresses.get(0)
+                Log.v("location", "location getLongitude > " + addresses.get(0)
                         .getLongitude());
 
-                event.setLocationLat(addresses.get(0).getLatitude());
-                event.setLocationLng(addresses.get(0).getLongitude());
+                final List<String> addressList = new ArrayList<String>();
+                for(int i = 0; i < addresses.size() ; i++){
+                    addressList.add(addresses.get(i).getLocality());
+                }
+
+                CharSequence[] charAddresses = addressList.toArray(new CharSequence[addressList.size
+                        ()]);
+
+                new MaterialDialog.Builder(this)
+                        .title(R.string.text_location)
+                        .items(charAddresses)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                                Toast.makeText(AddEventActivity.this, "selected location> "+text,
+                                        Toast.LENGTH_LONG)
+                                        .show();
+
+                                for(int j = 0 ; j < addresses.size() ; j++){
+                                    if(addresses.get(j).getLocality().equals(text)){
+                                        event.setLocationLat(addresses.get(j).getLatitude());
+                                        event.setLocationLng(addresses.get(j).getLongitude());
+
+                                        Log.v("location", "location2 getLatitude > " + addresses
+                                                .get(j).getLatitude());
+                                        Log.v("location", "location2 getLongitude > " + addresses
+                                                .get(j)
+                                                .getLongitude());
+                                    }
+                                }
+                            }
+                        })
+                        .positiveText(R.string.text_dialog_confirm_cancel)
+                        .show();
+
             }
 
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //add event onClick listener
+    public void addEvent(View view){
+        pdProgressAdd.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ADD_EVENT_URL
+                , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                pdProgressAdd.dismiss();
+                eventTitle.setText("");
+                eventContent.setText("");
+                Log.d("response" ,"Register Response: " + response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pdProgressAdd.dismiss();
+                Toast.makeText(getApplicationContext(), "Failed to insert", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Reason failed > "+error, Toast
+                        .LENGTH_SHORT).show();
+                Log.d("response" ,"Error Response: " + error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                UserUtil userUtil = new UserUtil(getApplication().getApplicationContext());
+
+                params.put("creatorId", userUtil.getUserId());
+                params.put("title", eventTitle.getText().toString());
+                params.put("content", eventContent.getText().toString());
+
+                //set image param
+                params.put("image", getStringImage(bitmap));
+
+                params.put("startDateTime", DateUtil.convertDateToString(startDateTime));
+                params.put("endDateTime", DateUtil.convertDateToString(endDateTime));
+
+                //TODO: set location latitude and longtitude
+                params.put("locationLat", getStringImage(bitmap));
+                params.put("locationLng", getStringImage(bitmap));
+
+                return params;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // Adding request to request queue
+        MyApplication.getInstance().addToReqQueue(stringRequest);
     }
 
 }

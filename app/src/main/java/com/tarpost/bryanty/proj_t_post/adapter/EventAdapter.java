@@ -1,7 +1,9 @@
 package com.tarpost.bryanty.proj_t_post.adapter;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +24,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.tarpost.bryanty.proj_t_post.R;
+import com.tarpost.bryanty.proj_t_post.activity.EventMoreDetailsActivity;
+import com.tarpost.bryanty.proj_t_post.activity.UserProfileActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.object.Event;
@@ -112,7 +116,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         TextView content;
         NetworkImageView image;
 
-        ImageButton bookmark, share, more;
+        ImageButton join, share, more;
         Event event;
 
         public ViewHolder(View itemView) {
@@ -125,84 +129,111 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             content= (TextView)itemView.findViewById(R.id.textView_event_content);
             image= (NetworkImageView)itemView.findViewById(R.id.imageView_event_image);
 
-//            bookmark= (ImageButton)itemView.findViewById(R.id.imageButton_bookmark);
-//            share= (ImageButton)itemView.findViewById(R.id.imageButton_share);
-//            more= (ImageButton)itemView.findViewById(R.id.imageButton_more);
-//            bookmark.setOnClickListener(this);
-//            share.setOnClickListener(this);
-//            more.setOnClickListener(this);
+            join= (ImageButton)itemView.findViewById(R.id.imageButton_event_join);
+            share= (ImageButton)itemView.findViewById(R.id.imageButton_event_share);
+            more= (ImageButton)itemView.findViewById(R.id.imageButton_event_more);
+            join.setOnClickListener(this);
+            share.setOnClickListener(this);
+            more.setOnClickListener(this);
+            userAvatar.setOnClickListener(this);
         }
 
         //Bookmark and share button onClick listener
         @Override
         public void onClick(final View v){
 
-//            if(v.getId() == bookmark.getId()){
-//
-//                if(post.getPostId() != null){
-//                    final ProgressDialog pdProgressAdd;
-//                    final String ADD_INFORMATION_URL = "http://projx320.webege.com/tarpost/php/insertBookmark.php";
-//
-//                    pdProgressAdd = new ProgressDialog(v.getContext());
-//                    pdProgressAdd.setMessage("Adding...");
-//                    pdProgressAdd.setCancelable(false);
-//
-//                    pdProgressAdd.show();
-//
-//                    StringRequest stringRequest = new StringRequest(Request.Method.POST, ADD_INFORMATION_URL
-//                            , new Response.Listener<String>() {
-//                        @Override
-//                        public void onResponse(String response) {
-//                            pdProgressAdd.dismiss();
-//
-//                            Toast.makeText(v.getContext(), "Bookmark Added Successfully", Toast
-//                                    .LENGTH_SHORT)
-//                                    .show();
-//
-//                        }
-//                    }, new Response.ErrorListener() {
-//                        @Override
-//                        public void onErrorResponse(VolleyError error) {
-//                            pdProgressAdd.dismiss();
-//                            Toast.makeText(v.getContext(), "Bookmark Added Failed", Toast
-//                                    .LENGTH_SHORT)
-//                                    .show();
-//                        }
-//                    }) {
-//                        @Override
-//                        protected Map<String, String> getParams() throws AuthFailureError {
-//                            Map<String, String> params = new HashMap<String, String>();
-//                            SharedPreferences sharedPreferences = v.getContext()
-//                                    .getSharedPreferences("userLogin", Context.MODE_PRIVATE);
-//                            params.put("userId", sharedPreferences.getString("userId",null));
-//                            params.put("postId", post.getPostId().toString());
-//
-//                            return params;
-//                        }
-//                    };
-//
-//                    stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-//                            20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//
-//                    // Adding request to request queue
-//                    MyApplication.getInstance().addToReqQueue(stringRequest);
-//                }
-//
-//            }else if(v.getId() == share.getId()){
-//
-//                Intent intent = new Intent();
-//                intent.setAction(Intent.ACTION_SEND);
-//                intent.setType("text/plain");
-//                intent.putExtra(Intent.EXTRA_TEXT, post.getContent());
-//                v.getContext(). startActivity(Intent.createChooser(intent, "Share"));
-//
-//            }else if(v.getId() == more.getId()){
-//
-//                Intent intent = new Intent(v.getContext(), PostMoreDetailsActivity.class);
-//                intent.putExtra("detailsPost", post);
-//                v.getContext().startActivity(intent);
-//
-//            }
+            if(v.getId() == join.getId()){
+                AlertDialog alertDialog = new AlertDialog.Builder(v.getContext())
+                        .setTitle(v.getResources().getString(R.string
+                                .text_dialog_confirm_title))
+                        .setMessage(v.getResources().getString(R.string
+                                .text_dialog_confirm_content))
+                        .setPositiveButton(R.string.text_dialog_confirm_yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                final ProgressDialog pdProgressAdd;
+                                final String ADD_EVENT_MEMBER_URL = "http://projx320.webege" +
+                                        ".com/tarpost/php/insertEventMember.php";
+
+                                pdProgressAdd = new ProgressDialog(v.getContext());
+                                pdProgressAdd.setMessage(v.getResources().getResourceEntryName(R
+                                        .string.text_dialog_adding));
+                                pdProgressAdd.setCancelable(false);
+
+                                pdProgressAdd.show();
+
+                                StringRequest stringRequest = new StringRequest(Request.Method
+                                        .POST, ADD_EVENT_MEMBER_URL
+                                        , new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        pdProgressAdd.dismiss();
+
+                                        Toast.makeText(v.getContext(), v.getResources().getString
+                                                (R.string.text_message_join_event), Toast
+                                                .LENGTH_LONG)
+                                                .show();
+
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        pdProgressAdd.dismiss();
+                                        Toast.makeText(v.getContext(), v.getResources().getString
+                                                (R.string.text_message_join_event_failed), Toast
+                                                .LENGTH_LONG)
+                                                .show();
+                                    }
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        SharedPreferences sharedPreferences = v.getContext()
+                                                .getSharedPreferences("userLogin", Context.MODE_PRIVATE);
+                                        params.put("eventMemId", sharedPreferences.getString("userId",null));
+                                        params.put("eventId", event.getEventId().toString());
+
+                                        return params;
+                                    }
+                                };
+
+                                stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                                        20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                                // Adding request to request queue
+                                MyApplication.getInstance().addToReqQueue(stringRequest);
+
+                            }
+                        })
+                        .setNegativeButton(R.string.text_dialog_confirm_no, null).show();
+
+            }else if(v.getId() == share.getId()){
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TITLE, event.getTitle());
+                intent.putExtra(Intent.EXTRA_TEXT, event.getContent()
+                        + System.getProperty("line.separator")
+                        + v.getResources().getString(R.string.text_startTime) + " :"
+                        + event.getStartDateTime()
+                        + System.getProperty("line.separator")
+                        +v.getResources().getString(R.string.text_endTime)+" :"
+                        +event.getEndDateTime()
+                        + System.getProperty("line.separator")
+                        +v.getResources().getString(R.string.text_location)+" :"
+                        +event.getLocation());
+                v.getContext(). startActivity(Intent.createChooser(intent, "Share"));
+
+            }else if(v.getId() == more.getId()){
+                Intent intent = new Intent(v.getContext(), EventMoreDetailsActivity.class);
+                intent.putExtra("detailEvent", event);
+                v.getContext().startActivity(intent);
+            }else if(v.getId() == userAvatar.getId()){
+                Intent intent = new Intent(v.getContext(), UserProfileActivity.class);
+                intent.putExtra("userId", event.getCreatorId());
+                v.getContext().startActivity(intent);
+            }
         }
     }
 }

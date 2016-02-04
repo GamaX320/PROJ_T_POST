@@ -1,9 +1,11 @@
 package com.tarpost.bryanty.proj_t_post.common;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by BRYANTY on 26-Jan-2016.
@@ -71,9 +73,13 @@ public class DateUtil {
         String dateStr = "";
 
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, date.getYear());
+        cal.set(Calendar.YEAR, date.getYear()+1900);
         cal.set(Calendar.MONTH, date.getMonth());
         cal.set(Calendar.DAY_OF_MONTH, date.getDate());
+
+        cal.set(Calendar.HOUR, date.getHours());
+        cal.set(Calendar.MINUTE, date.getMinutes());
+        cal.set(Calendar.SECOND, date.getSeconds());
         dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cal.getTime());
 
         return dateStr;

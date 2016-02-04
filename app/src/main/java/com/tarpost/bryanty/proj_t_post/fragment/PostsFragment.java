@@ -28,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.activity.AddInformationActivity;
+import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActionActivity;
 import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActivity;
 import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsCollapsingActivity;
 import com.tarpost.bryanty.proj_t_post.adapter.InformationAdapter;
@@ -248,14 +249,15 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
 
                 }catch (JSONException e){
                     e.printStackTrace();
-                    Toast.makeText(getActivity(), "Exception>>>>>>>>>> "+e, Toast.LENGTH_SHORT)
+                    Toast.makeText(getActivity(), "Exception>>>>>>>>>> "+e, Toast.LENGTH_LONG)
                             .show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "No More Items Available", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_no_items_available), Toast
+                        .LENGTH_LONG).show();
                 Log.d("response", "Error Response: " + error.toString());
             }
         });
@@ -278,7 +280,10 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
 
         switch (v.getId()){
             case R.id.button_add:
-                startActivity(new Intent(getActivity(), AddInformationActivity.class));
+//                startActivity(new Intent(getActivity(), AddInformationActivity.class));
+                Intent intent = new Intent(getActivity(), PostMoreDetailsActionActivity.class);
+                intent.putExtra("mode", "NEW");
+                startActivity(intent);
                 break;
         }
     }

@@ -88,7 +88,7 @@ public class UserProfileActionActivity extends AppCompatActivity {
         user= bundle.getParcelable("editUser");
 
         pdProgress = new ProgressDialog(this);
-        pdProgress.setMessage("Updating...");
+        pdProgress.setMessage(getResources().getString(R.string.text_dialog_updating));
         pdProgress.setCancelable(false);
 
         setValues();
@@ -254,8 +254,8 @@ public class UserProfileActionActivity extends AppCompatActivity {
                 userCourse.setText("");
                 userDescription.setText("");
 
-                Toast.makeText(getApplicationContext(), "Data Update Successfully", Toast
-                        .LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.text_message_update_success), Toast
+                        .LENGTH_LONG).show();
 
                 Log.d("response", "Register Response: " + response.toString());
 
@@ -269,9 +269,9 @@ public class UserProfileActionActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 pdProgress.dismiss();
-                Toast.makeText(getApplicationContext(), "Failed to insert", Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), "Reason failed > "+error, Toast
-                        .LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string
+                        .text_message_update_success), Toast.LENGTH_LONG).show();
+
                 Log.d("response", "Error Response: " + error.toString());
 
             }

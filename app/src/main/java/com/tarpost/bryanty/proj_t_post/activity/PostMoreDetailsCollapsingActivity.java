@@ -40,7 +40,7 @@ public class PostMoreDetailsCollapsingActivity extends AppCompatActivity {
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarStyle);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarStyle);
 
-        ivAppbarImage = (ImageView)findViewById(R.id.appBarImageView);
+        ivAppbarImage = (ImageView)findViewById(R.id.app_bar_with_imageview_post);
 
         tvTitle = (TextView)findViewById(R.id.postDetailsCollapsing_title);
         tvContent = (TextView)findViewById(R.id.postDetailsCollapsing_content);

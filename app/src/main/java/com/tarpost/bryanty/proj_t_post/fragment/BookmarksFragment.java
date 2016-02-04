@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.tarpost.bryanty.proj_t_post.R;
+import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActionActivity;
 import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActivity;
 import com.tarpost.bryanty.proj_t_post.adapter.BookmarksAdapter;
 import com.tarpost.bryanty.proj_t_post.adapter.MyPostAdapter;
@@ -43,7 +44,7 @@ import static android.support.v7.widget.RecyclerView.NO_POSITION;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BookmarksFragment extends Fragment {
+public class BookmarksFragment extends Fragment{
 
     private RecyclerView rv_bookmarks;
     private FloatingActionButton button_add;
@@ -88,10 +89,6 @@ public class BookmarksFragment extends Fragment {
 
         setupRecyclerView(rv_bookmarks);
 
-        //initial button add new
-//        button_add= (FloatingActionButton)view.findViewById(R.id.button_add);
-//        button_add.setOnClickListener(this);
-
         return view;
     }
 
@@ -128,8 +125,7 @@ public class BookmarksFragment extends Fragment {
             @Override
             public void onLongClick(View view, int position) {
                 Post post = posts.get(position);
-                Toast.makeText(getActivity(), post.getTitle() + " is selected!", Toast.LENGTH_SHORT)
-                        .show();
+
                 Intent intent = new Intent(getActivity(), PostMoreDetailsActivity.class);
                 intent.putExtra("detailsPost", post);
                 startActivity(intent);
@@ -186,7 +182,8 @@ public class BookmarksFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "No More Items Available", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_no_items_available), Toast
+                        .LENGTH_SHORT).show();
                 Log.d("response", "Error Response: " + error.toString());
             }
         });

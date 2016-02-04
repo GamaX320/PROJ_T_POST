@@ -155,15 +155,15 @@ public class SearchResultActivity extends ActionBarActivity {
                     e.printStackTrace();
                     Toast.makeText(SearchResultActivity.this
                             , "Exception>>>>>>>>>> " + e, Toast
-                            .LENGTH_SHORT)
+                            .LENGTH_LONG)
                             .show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SearchResultActivity.this, "No More Items Available", Toast
-                        .LENGTH_SHORT).show();
+                Toast.makeText(SearchResultActivity.this, getResources().getString(R.string.text_message_no_items_available), Toast
+                        .LENGTH_LONG).show();
                 Log.d("response", "Error Response: " + error.toString());
             }
         });

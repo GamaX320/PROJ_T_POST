@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!-- include app bar -->
+    <include
+        android:id="@+id/app_bar_with_imageview_post"
+        layout="@layout/app_bar_with_imageview"/>
+
+    <!-- content -->
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/postTitleAction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:hint="@string/text_title"
+                    app:met_floatingLabel="normal"
+                    app:met_iconLeft="@drawable/ic_title"/>
+
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/postContentAction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:hint="@string/text_content"
+                    android:inputType="textMultiLine"
+                    android:maxLines="10"
+                    app:met_floatingLabel="normal"
+                    app:met_iconLeft="@drawable/ic_post"
+                    app:met_maxCharacters="500"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/postEditSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_anchor="@id/app_bar_with_imageview_post"
+        app:layout_anchorGravity="bottom|end"
+        android:src="@mipmap/ic_done"
+        android:onClick="postAction"/>
+
+</android.support.design.widget.CoordinatorLayout>

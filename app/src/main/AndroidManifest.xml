@@ -111,6 +111,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tarpost.bryanty.proj_t_post.MainActivity"/>
         </activity>
+        <activity
+            android:name=".activity.PostMoreDetailsActionActivity"
+            android:label="@string/title_activity_post_more_details_action"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tarpost.bryanty.proj_t_post.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>

@@ -127,14 +127,15 @@ public class SubscriptionFragment extends Fragment {
 
                 }catch (JSONException e){
                     e.printStackTrace();
-                    Toast.makeText(getActivity(), "Exception>>>>>>>>>> " + e, Toast.LENGTH_SHORT)
+                    Toast.makeText(getActivity(), "Exception>>>>>>>>>> " + e, Toast.LENGTH_LONG)
                             .show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "No More Items Available", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_no_items_available), Toast
+                        .LENGTH_LONG).show();
                 Log.d("response", "Error Response: " + error.toString());
             }
         });

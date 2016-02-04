@@ -108,7 +108,7 @@ public class AddInformationActivity extends ActionBarActivity {
 //        //request queue
 //        requestQueue = Volley.newRequestQueue(getApplicationContext());
         pdProgressAdd = new ProgressDialog(this);
-        pdProgressAdd.setMessage("Adding...");
+        pdProgressAdd.setMessage(getResources().getString(R.string.text_dialog_adding));
         pdProgressAdd.setCancelable(false);
 
     }
@@ -143,25 +143,25 @@ public class AddInformationActivity extends ActionBarActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 10 && resultCode == RESULT_OK && data != null && data.getData() !=
-                null) {
+            if (requestCode == 10 && resultCode == RESULT_OK && data != null && data.getData() !=
+                    null) {
 
-            //get the image
-            fileUri = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), fileUri);
+                //get the image
+                fileUri = data.getData();
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), fileUri);
 
-                //set the selected image to image view
-                imageView.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
+                    //set the selected image to image view
+                    imageView.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-    }
 
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

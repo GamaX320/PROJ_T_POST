@@ -24,6 +24,7 @@ public class Post implements Parcelable{
     }
 
     protected Post(Parcel in) {
+        postId = in.readInt();
         creatorId = in.readString();
         creatorName = in.readString();
         creatorAvatarUrl = in.readString();
@@ -147,6 +148,7 @@ public class Post implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(postId);
         dest.writeString(creatorId);
         dest.writeString(creatorName);
         dest.writeString(creatorAvatarUrl);

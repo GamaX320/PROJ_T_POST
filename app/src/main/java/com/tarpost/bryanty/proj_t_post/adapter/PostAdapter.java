@@ -154,7 +154,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     final String ADD_INFORMATION_URL = "http://projx320.webege.com/tarpost/php/insertBookmark.php";
 
                     pdProgressAdd = new ProgressDialog(v.getContext());
-                    pdProgressAdd.setMessage("Adding...");
+                    pdProgressAdd.setMessage(v.getResources().getString(R.string.text_dialog_adding));
                     pdProgressAdd.setCancelable(false);
 
                     pdProgressAdd.show();
@@ -165,8 +165,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         public void onResponse(String response) {
                             pdProgressAdd.dismiss();
 
-                            Toast.makeText(v.getContext(), "Bookmark Added Successfully", Toast
-                                    .LENGTH_SHORT)
+                            Toast.makeText(v.getContext(), v.getResources().getString(R.string.text_message_insert_success),
+                                    Toast
+                                    .LENGTH_LONG)
                                     .show();
 
                         }
@@ -174,8 +175,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             pdProgressAdd.dismiss();
-                            Toast.makeText(v.getContext(), "Bookmark Added Failed", Toast
-                                    .LENGTH_SHORT)
+                            Toast.makeText(v.getContext(), v.getResources().getString(R.string.text_message_insert_failed),
+                                    Toast
+                                    .LENGTH_LONG)
                                     .show();
                         }
                     }) {

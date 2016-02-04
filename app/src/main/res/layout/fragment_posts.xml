@@ -34,6 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/floating_action_button_margin"
-        android:src="@mipmap/ic_add"
+        android:src="@drawable/ic_post"
         />
 </FrameLayout>

@@ -1,21 +1,22 @@
 package com.tarpost.bryanty.proj_t_post;
 
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,18 +29,16 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.tarpost.bryanty.proj_t_post.activity.LoginActivity;
-import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsCollapsingActivity;
 import com.tarpost.bryanty.proj_t_post.activity.UserProfileActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.fragment.BookmarksFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.EventFragment;
+import com.tarpost.bryanty.proj_t_post.fragment.EventJoinFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.HomeFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.MyPostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.PostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.SubscriptionFragment;
-
-import org.w3c.dom.Text;
 
 import de.hdodenhof.circleimageview.*;
 
@@ -75,12 +74,13 @@ public class MainActivity extends ActionBarActivity {
 
         //Launch the first item in navigation drawer
         mNavigationView.getMenu().getItem(0).setChecked(true);
+        getContent(R.id.navigation_item_testpost);
 
         searchView = (MaterialSearchView)findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, "query> "+query, Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "query> " + query, Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getApplication(), SearchResultActivity.class);
                 intent.putExtra("searchQuery", query);
@@ -108,7 +108,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        setupUser();
+       setupUser();
+
     }
 
     @Override
@@ -180,9 +181,9 @@ public class MainActivity extends ActionBarActivity {
 
         Log.v("position", "selected > " + position);
         switch (position){
-            case R.id.navigation_item_home:
+           /* case R.id.navigation_item_home:
                 fragment= new HomeFragment();
-                break;
+                break;*/
             case R.id.navigation_item_post:
                 fragment= new MyPostsFragment();
                 break;
@@ -192,6 +193,9 @@ public class MainActivity extends ActionBarActivity {
             case R.id.navigation_item_bookmark:
                 fragment= new BookmarksFragment();
                 break;
+            case R.id.navigation_item_event_join:
+                fragment= new EventJoinFragment();
+                break;
             case R.id.navigation_item_subscription:
                 fragment= new SubscriptionFragment();
                 break;
@@ -199,8 +203,21 @@ public class MainActivity extends ActionBarActivity {
                 fragment= new PostsFragment();
                 break;
             case R.id.navigation_item_logout:
-                UserUtil.userLogout(getApplication().getApplicationContext());
-                break;
+
+                AlertDialog alertDialog = new AlertDialog.Builder(this)
+                        .setTitle(getResources().getString(R.string
+                                .text_dialog_confirm_title))
+                        .setMessage(getResources().getString(R.string
+                                .text_dialog_confirm_content))
+                        .setPositiveButton(R.string.text_dialog_confirm_yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                UserUtil.userLogout(getApplication().getApplicationContext());
+                            }
+                        })
+                        .setNegativeButton(R.string.text_dialog_confirm_no, null).show();
+                return;
+                //break;
         }
 
         fm.beginTransaction().replace(R.id.container, fragment).commit();
@@ -287,6 +304,8 @@ public class MainActivity extends ActionBarActivity {
             }else{
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
+        }else{
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
     }
 

@@ -1,7 +1,11 @@
 package com.tarpost.bryanty.proj_t_post.adapter;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,16 +13,25 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.StringRequest;
 import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.object.Post;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by BRYANTY on 26-Jan-2016.
@@ -110,11 +123,68 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
 
             }else if(v.getId() == delete.getId()){
 
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, post.getContent());
-                v.getContext(). startActivity(Intent.createChooser(intent, "Share"));
+                AlertDialog alertDialog = new AlertDialog.Builder(v.getContext())
+                        .setTitle(v.getResources().getString(R.string
+                                .text_dialog_confirm_title))
+                        .setMessage(v.getResources().getString(R.string
+                                .text_dialog_confirm_content))
+                        .setPositiveButton(R.string.text_dialog_confirm_yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                final ProgressDialog pdProgressAdd;
+                                final String DELETE_EVENT_MEMBER_URL = "http://projx320.webege" +
+                                        ".com/tarpost/php/deleteBookmark.php";
+
+                                pdProgressAdd = new ProgressDialog(v.getContext());
+                                pdProgressAdd.setMessage(v.getResources().getString(R.string.text_dialog_removing));
+                                pdProgressAdd.setCancelable(false);
+
+                                pdProgressAdd.show();
+
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, DELETE_EVENT_MEMBER_URL
+                                        , new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        pdProgressAdd.dismiss();
+
+                                        Toast.makeText(v.getContext(), v.getResources().getString
+                                                (R.string.text_message_delete_success), Toast
+                                                .LENGTH_LONG)
+                                                .show();
+
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        pdProgressAdd.dismiss();
+                                        Toast.makeText(v.getContext(), v.getResources().getString
+                                                (R.string.text_message_delete_failed), Toast
+                                                .LENGTH_LONG)
+                                                .show();
+                                    }
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        SharedPreferences sharedPreferences = v.getContext()
+                                                .getSharedPreferences("userLogin", Context.MODE_PRIVATE);
+                                        params.put("userId", sharedPreferences.getString("userId",null));
+                                        params.put("postId",post.getPostId().toString());
+
+                                        return params;
+                                    }
+                                };
+
+                                stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                                        20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                                // Adding request to request queue
+                                MyApplication.getInstance().addToReqQueue(stringRequest);
+
+                            }
+                        })
+                        .setNegativeButton(R.string.text_dialog_confirm_no, null).show();
 
             }else if(v.getId() == more.getId()){
 
