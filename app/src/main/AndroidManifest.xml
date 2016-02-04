@@ -120,6 +120,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tarpost.bryanty.proj_t_post.MainActivity"/>
         </activity>
+       <!-- <activity android:name=".activity.SettingsActivity" android:label="@string/title_activity_post_settings"
+                  android:screenOrientation="nosensor">
+            <intent-filer>
+                <action android:name=".Preferences" />
+                <category android:name="android.intent.cetagory.PREFERENCE" />
+            </intent-filer>
+        </activity>-->
+        <activity android:name=".activity.SettingsMainActivity"
+                  android:label="@string/title_activity_post_settings"
+                  android:parentActivityName=".MainActivity"
+                  android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tarpost.bryanty.proj_t_post.MainActivity"/>
+            <intent-filer>
+                <action android:name=".Preferences" />
+                <category android:name="android.intent.cetagory.PREFERENCE" />
+            </intent-filer>
+        </activity>
     </application>
 
 </manifest>

@@ -29,6 +29,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.tarpost.bryanty.proj_t_post.activity.LoginActivity;
+import com.tarpost.bryanty.proj_t_post.activity.SettingsActivity;
+import com.tarpost.bryanty.proj_t_post.activity.SettingsMainActivity;
 import com.tarpost.bryanty.proj_t_post.activity.UserProfileActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.UserUtil;
@@ -80,7 +82,6 @@ public class MainActivity extends ActionBarActivity {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, "query> " + query, Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getApplication(), SearchResultActivity.class);
                 intent.putExtra("searchQuery", query);
@@ -109,6 +110,10 @@ public class MainActivity extends ActionBarActivity {
         });
 
        setupUser();
+
+        UserUtil.setupTheme(this, toolbar);
+//        getWindow().setNavigationBarColor(getResources().getColor(R.color.myrandomcolor1));
+//        getWindow().setStatusBarColor(getResources().getColor(R.color.myrandomcolor2));
 
     }
 
@@ -202,6 +207,11 @@ public class MainActivity extends ActionBarActivity {
             case R.id.navigation_item_testpost:
                 fragment= new PostsFragment();
                 break;
+            case R.id.navigation_item_settings:
+                Intent intent = new Intent(MainActivity.this, SettingsMainActivity.class);
+                startActivity(intent);
+               return;
+               // break;
             case R.id.navigation_item_logout:
 
                 AlertDialog alertDialog = new AlertDialog.Builder(this)
@@ -251,7 +261,8 @@ public class MainActivity extends ActionBarActivity {
                 final LinearLayout headerLinearLayout = (LinearLayout) header.findViewById(R.id
                         .header_linerLayout);
 
-                headerUserName.setText(userId);
+//                headerUserName.setText(userId);
+                headerUserName.setText(userName);
                 headerEmail.setText(userEmail);
 
                 //Set avatar and cover picture

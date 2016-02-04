@@ -18,4 +18,21 @@
     <color name="buttonBlack">#808080</color>
     <color name="buttonLabelBackground">#424242</color>
 
+     <color name="primaryRed">#f44336</color>
+     <color name="primaryDarkRed">#d32f2f</color>
+     <color name="primaryPurple">#9c27b0</color>
+     <color name="primaryDarkPurple">#7b1fa2</color>
+     <color name="primaryIndigo">#3f51b5</color>
+     <color name="primaryDarkIndigo">#303f9f</color>
+     <color name="primaryBlue">#2196f3</color>
+     <color name="primaryDarkBlue">#1976d2</color>
+     <color name="primaryTeal">#009688</color>
+     <color name="primaryDarkTeal">#00796b</color>
+     <color name="primaryOrange">#ff5722</color>
+     <color name="primaryDarkOrange">#e64a19</color>
+     <color name="primaryBrown">#795548</color>
+     <color name="primaryDarkBrown">#5d4037</color>
+     <color name="primaryGrey">#607d8b</color>
+     <color name="primaryDarkGrey">#455a64</color>
+
 </resources>

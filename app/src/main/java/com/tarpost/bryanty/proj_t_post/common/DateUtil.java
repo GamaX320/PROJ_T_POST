@@ -1,5 +1,7 @@
 package com.tarpost.bryanty.proj_t_post.common;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,7 +19,6 @@ public class DateUtil {
         Date currentDate = new Date();
 
         if(date != null){
-
             if(date.before(currentDate)){
 
                 int differenceYear = currentDate.getYear() - date.getYear();

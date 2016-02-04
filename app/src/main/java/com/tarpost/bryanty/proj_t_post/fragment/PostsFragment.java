@@ -35,6 +35,7 @@ import com.tarpost.bryanty.proj_t_post.adapter.InformationAdapter;
 import com.tarpost.bryanty.proj_t_post.adapter.PostAdapter;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.DateUtil;
+import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.object.Information;
 import com.tarpost.bryanty.proj_t_post.object.Post;
 
@@ -184,8 +185,10 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
 //                , new Response.Listener<JSONObject>() {
 //            @Override
 //            public void onResponse(JSONObject response) {
+        UserUtil userUtil = new UserUtil(getActivity().getApplicationContext());
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                GET_POST_URL2+"?userId="+"A000000004"+"&page="+page
+                GET_POST_URL2+"?userId="+userUtil.getUserId()+"&page="+page
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

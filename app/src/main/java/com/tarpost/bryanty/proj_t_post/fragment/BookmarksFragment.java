@@ -30,6 +30,7 @@ import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActivity;
 import com.tarpost.bryanty.proj_t_post.adapter.BookmarksAdapter;
 import com.tarpost.bryanty.proj_t_post.adapter.MyPostAdapter;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
+import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.object.Post;
 
 import org.json.JSONArray;
@@ -138,8 +139,9 @@ public class BookmarksFragment extends Fragment{
     private List<Post> getData(){
         final List<Post> items= new ArrayList<>();
 
+        UserUtil userUtil = new UserUtil(getActivity().getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                GET_BOOKMARKS_URL+"?userId="+"A000000004"
+                GET_BOOKMARKS_URL+"?userId="+userUtil.getUserId()
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

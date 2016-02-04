@@ -18,6 +18,7 @@ public class Event implements Parcelable {
     private Date createDateTime, updateDateTime;
     private String status;
     private String location;
+    private String startDateTimeStr, endDateTimeStr;
 
     //SQLite Offline variables
     private byte[] image;
@@ -38,6 +39,8 @@ public class Event implements Parcelable {
         image = in.createByteArray();
         type = in.readString();
         location = in.readString();
+        startDateTimeStr = in.readString();
+        endDateTimeStr = in.readString();
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -188,6 +191,22 @@ public class Event implements Parcelable {
         this.avatarUrl = avatarUrl;
     }
 
+    public String getStartDateTimeStr() {
+        return startDateTimeStr;
+    }
+
+    public void setStartDateTimeStr(String startDateTimeStr) {
+        this.startDateTimeStr = startDateTimeStr;
+    }
+
+    public String getEndDateTimeStr() {
+        return endDateTimeStr;
+    }
+
+    public void setEndDateTimeStr(String endDateTimeStr) {
+        this.endDateTimeStr = endDateTimeStr;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -206,5 +225,7 @@ public class Event implements Parcelable {
         dest.writeByteArray(image);
         dest.writeString(type);
         dest.writeString(location);
+        dest.writeString(startDateTimeStr);
+        dest.writeString(endDateTimeStr);
     }
 }

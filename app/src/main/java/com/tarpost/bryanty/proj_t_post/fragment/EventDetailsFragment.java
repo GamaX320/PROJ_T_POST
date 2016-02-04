@@ -75,12 +75,12 @@ public class EventDetailsFragment extends Fragment {
         eventTitle.setText(event.getTitle());
         eventContent.setText(event.getContent());
 
-        if(event.getStartDateTime() != null){
-            eventStartDateTime.setText(event.getStartDateTime().toString());
+        if(event.getStartDateTimeStr() != null){
+            eventStartDateTime.setText(event.getStartDateTimeStr());
         }
 
-        if(event.getEndDateTime() != null){
-            eventEndDateTime.setText(event.getEndDateTime().toString());
+        if(event.getEndDateTimeStr() != null){
+            eventEndDateTime.setText(event.getEndDateTimeStr());
         }
         eventLocation.setText(event.getLocation());
 

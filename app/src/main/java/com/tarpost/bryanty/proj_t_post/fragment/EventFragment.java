@@ -232,7 +232,11 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                             }
 
                             event.setStartDateTime(DateUtil.convertStringToDate(jsonObject.getString("startDateTime")));
+                            event.setStartDateTimeStr(DateUtil.convertDateToString(event
+                                    .getStartDateTime()));
                             event.setEndDateTime(DateUtil.convertStringToDate(jsonObject.getString("endDateTime")));
+                            event.setEndDateTimeStr(DateUtil.convertDateToString(event
+                                    .getEndDateTime()));
                             event.setUpdateDateTime(DateUtil.convertStringToDate(jsonObject.getString("updateDateTime")));
 
                             // items.add(post);

@@ -93,9 +93,6 @@ public class SearchResultActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SearchObject result = (SearchObject) parent.getItemAtPosition(position);
-                Toast.makeText(SearchResultActivity.this, "selected> " + result.getId() + " " +
-                        "name" + result.getName() + " type" + result.getResultType(), Toast
-                        .LENGTH_LONG).show();
 
                 if (result.getResultType().equals("user")) {
                     Intent intent = new Intent(SearchResultActivity.this, UserProfileActivity

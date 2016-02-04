@@ -1,9 +1,15 @@
 package com.tarpost.bryanty.proj_t_post.common;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.preference.PreferenceManager;
+import android.support.v7.widget.Toolbar;
 
+import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.activity.LoginActivity;
 import com.tarpost.bryanty.proj_t_post.sqlite.DbHelper;
 
@@ -53,6 +59,54 @@ public class UserUtil {
         //Add new flag
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    public static void setupTheme(Activity activity, Toolbar toolbar){
+        if(Build.VERSION.SDK_INT >= 21){
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences
+                    (activity.getBaseContext());
+
+            String colorSelected = sp.getString("themeColor", "1");
+            int primaryColor = activity.getResources().getColor(R.color.primaryRed);
+            int primaryDarkColor =  activity.getResources().getColor(R.color.primaryDarkRed);
+
+            switch (colorSelected){
+                case "1":
+                    primaryColor = activity.getResources().getColor(R.color.primaryRed);
+                    primaryDarkColor = activity.getResources().getColor(R.color.primaryDarkRed);
+                    break;
+                case "2":
+                    primaryColor = activity.getResources().getColor(R.color.primaryPurple);
+                    primaryDarkColor = activity.getResources().getColor(R.color.primaryDarkPurple);
+                    break;
+                case "3":
+                    primaryColor = activity.getResources().getColor(R.color.primaryIndigo);
+                    primaryDarkColor = activity.getResources().getColor(R.color.primaryDarkIndigo);
+                    break;
+                case "4":
+                    primaryColor = activity.getResources().getColor(R.color.primaryBlue);
+                    primaryDarkColor = activity.getResources().getColor(R.color.primaryDarkBlue);
+                    break;
+                case "5":
+                    primaryColor = activity.getResources().getColor(R.color.primaryTeal);
+                    primaryDarkColor = activity.getResources().getColor(R.color.primaryDarkTeal);
+                    break;
+                case "6":
+                    primaryColor = activity.getResources().getColor(R.color.primaryOrange);
+                    primaryDarkColor = activity.getResources().getColor(R.color.primaryDarkOrange);
+                    break;
+                case "7":
+                    primaryColor = activity.getResources().getColor(R.color.primaryBrown);
+                    primaryDarkColor = activity.getResources().getColor(R.color.primaryDarkBrown);
+                    break;
+                case "8":
+                    primaryColor = activity.getResources().getColor(R.color.primaryGrey);
+                    primaryDarkColor = activity.getResources().getColor(R.color.primaryDarkGrey);
+                    break;
+            }
+            activity.getWindow().setStatusBarColor(primaryDarkColor);
+            toolbar.setBackgroundColor(primaryColor);
+        }
     }
 
     public Boolean getLogin() {

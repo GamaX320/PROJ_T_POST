@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +33,11 @@ import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.object.Event;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -68,6 +73,24 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.userName.setText(currentItem.getCreatorName());
         holder.title.setText(currentItem.getTitle());
         holder.content.setText(currentItem.getContent());
+        holder.startDateTime.setText(DateUtil.convertDateToString(currentItem.getStartDateTime()));
+        holder.endDateTime.setText(DateUtil.convertDateToString(currentItem.getEndDateTime()));
+        Geocoder geocoder = new Geocoder(holder.itemView.getContext(), Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(currentItem.getLocationLat(),
+                    currentItem.getLocationLng(),1);
+
+            if(addresses.size() > 0){
+                Log.v("location", "location result > " + addresses.get(0).getLocality());
+                Log.v("location","location result > "+addresses.get(0)
+                        .getAddressLine(0));
+
+                currentItem.setLocation(addresses.get(0).getLocality());
+                holder.location.setText(currentItem.getLocation());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
         if( currentItem.getImageUrl() != null && !currentItem.getImageUrl().isEmpty()){
@@ -114,6 +137,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         TextView timeStamp;
         TextView title;
         TextView content;
+        TextView startDateTime;
+        TextView endDateTime;
+        TextView location;
         NetworkImageView image;
 
         ImageButton join, share, more;
@@ -127,6 +153,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             timeStamp= (TextView)itemView.findViewById(R.id.textView_event_timeStamp);
             title= (TextView)itemView.findViewById(R.id.textView_event_title);
             content= (TextView)itemView.findViewById(R.id.textView_event_content);
+            startDateTime= (TextView)itemView.findViewById(R.id.textView_event_startDateTime);
+            endDateTime= (TextView)itemView.findViewById(R.id.textView_event_endDateTime);
+            location= (TextView)itemView.findViewById(R.id.textView_event_location);
             image= (NetworkImageView)itemView.findViewById(R.id.imageView_event_image);
 
             join= (ImageButton)itemView.findViewById(R.id.imageButton_event_join);
@@ -157,8 +186,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                                         ".com/tarpost/php/insertEventMember.php";
 
                                 pdProgressAdd = new ProgressDialog(v.getContext());
-                                pdProgressAdd.setMessage(v.getResources().getResourceEntryName(R
-                                        .string.text_dialog_adding));
+                                pdProgressAdd.setMessage(v.getResources().getString(R.string
+                                        .text_dialog_adding));
                                 pdProgressAdd.setCancelable(false);
 
                                 pdProgressAdd.show();

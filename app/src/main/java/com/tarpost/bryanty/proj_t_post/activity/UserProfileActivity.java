@@ -156,6 +156,22 @@ public class UserProfileActivity extends AppCompatActivity {
                             user.setUpdateDateTime(DateUtil.convertStringToDate(jsonObject.getString
                                     ("updateDateTime")));
 
+                            if(user.getPhoneNo().equals("null")){
+                                user.setPhoneNo(null);
+                            }
+
+                            if(user.getFaculty().equals("null")){
+                                user.setFaculty(null);
+                            }
+
+                            if(user.getCourse().equals("null")){
+                                user.setCourse(null);
+                            }
+
+                            if(user.getDescription().equals("null")){
+                                user.setDescription(null);
+                            }
+
                             setValues();
 
                         }
@@ -229,30 +245,10 @@ public class UserProfileActivity extends AppCompatActivity {
 
         collapsingToolbarLayout.setTitle(user.getName());
         userEmail.setText(user.getEmail());
-
-        if(user.getPhoneNo() != null && user.getPhoneNo() != "" && user.getPhoneNo() != "null"){
-            userPhone.setText(user.getPhoneNo());
-        }else{
-            userPhone.setText(" ");
-        }
-
-        if(user.getFaculty() != null && user.getFaculty() != "" && user.getFaculty() != "null"){
-            userFaculty.setText(user.getFaculty());
-        }else{
-            userFaculty.setText(" ");
-        }
-
-        if(user.getCourse() != null && user.getCourse() != "" && user.getCourse() != "null"){
-            userCourse.setText(user.getCourse());
-        }else{
-            userCourse.setText(" ");
-        }
-
-       if(user.getDescription() != null && user.getDescription() != "" && user.getDescription() != "null"){
-           userDescription.setText(user.getDescription());
-       }else{
-           userDescription.setText(" ");
-       }
+        userPhone.setText(user.getPhoneNo());
+        userFaculty.setText(user.getFaculty());
+        userCourse.setText(user.getCourse());
+        userDescription.setText(user.getDescription());
 
         if(user.getFollowing().equals("1")){
             userProfileFollowing.setImageResource(R.mipmap.ic_following_off);
