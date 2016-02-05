@@ -41,6 +41,7 @@ import com.tarpost.bryanty.proj_t_post.fragment.HomeFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.MyPostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.PostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.SubscriptionFragment;
+import com.tarpost.bryanty.proj_t_post.sqlite.DbHelper;
 
 import de.hdodenhof.circleimageview.*;
 
@@ -112,6 +113,12 @@ public class MainActivity extends ActionBarActivity {
        setupUser();
 
         UserUtil.setupTheme(this, toolbar);
+
+        //delete old offline data
+        DbHelper dbHelper = new DbHelper(this);
+        dbHelper.deleteOldPost();
+        dbHelper.deleteOldEvent();
+
 //        getWindow().setNavigationBarColor(getResources().getColor(R.color.myrandomcolor1));
 //        getWindow().setStatusBarColor(getResources().getColor(R.color.myrandomcolor2));
 

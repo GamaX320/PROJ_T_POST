@@ -414,7 +414,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //Delete older post record
     public void deleteOldPost(){
-        String query = "DELETE FROM "+TABLE_POST+" WHERE "+COLUMN_ADDEDDATE+" <=('now', '-2 day')";
+        String query = "DELETE FROM "+TABLE_POST+" WHERE "+COLUMN_ADDEDDATE+" <=date('now', '-2 day')";
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(query);
         db.close();
@@ -430,7 +430,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //Delete older post record
     public void deleteOldEvent(){
-        String query = "DELETE FROM "+TABLE_EVENT+" WHERE "+COLUMN_ADDEDDATE+" <=('now', '-2 day')";
+        String query = "DELETE FROM "+TABLE_EVENT+" WHERE "+COLUMN_ADDEDDATE+" <=date('now', '-2 day')";
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(query);
         db.close();
