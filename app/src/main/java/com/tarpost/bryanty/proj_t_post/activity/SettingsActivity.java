@@ -1,5 +1,7 @@
 package com.tarpost.bryanty.proj_t_post.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -8,6 +10,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -66,8 +69,28 @@ public class SettingsActivity extends PreferenceFragment {
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                //code for what you want it to do
-                Toast.makeText(getActivity(), "clicked", Toast.LENGTH_LONG).show();
+
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                        .setTitle(getResources().getString(R.string
+                                .text_dialog_confirm_title))
+                        .setMessage(getResources().getString(R.string
+                                .text_dialog_confirm_content))
+                        .setPositiveButton(R.string.text_dialog_confirm_yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_clear_offline_data), Toast
+                                        .LENGTH_LONG)
+                                        .show();
+
+                                Log.v("delete db", "delete database > " + getActivity().getApplication()
+                                        .deleteDatabase("tarpost_offline"));
+                            }
+                        })
+                        .setNegativeButton(R.string.text_dialog_confirm_no, null).show();
+
+
+
                 return true;
             }
         });

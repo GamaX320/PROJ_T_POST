@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.tarpost.bryanty.proj_t_post.R;
@@ -47,13 +48,35 @@ public class PostMoreDetailsActivity extends ActionBarActivity {
         Bundle bundle= getIntent().getExtras();
         Post post= bundle.getParcelable("detailsPost");
 
-        tvUserName.setText(post.getCreatorId());
+        tvUserName.setText(post.getCreatorName());
         tvTitle.setText(post.getTitle());
         tvContent.setText(post.getContent());
 
+        ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
         if(post.getImageUrl() != null && !post.getImageUrl().isEmpty()){
-            ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
             nivImage.setImageUrl(post.getImageUrl(),imageLoader);
+        }
+
+        if(post.getCreatorAvatarUrl() != null && !post.getCreatorAvatarUrl().isEmpty()){
+
+            nivTempAvatar.setImageUrl(post.getCreatorAvatarUrl(),imageLoader);
+
+            imageLoader.get(post.getCreatorAvatarUrl(), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    if (response.getBitmap() != null) {
+                        civAvatar.setImageBitmap(response.getBitmap());
+                    }
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+        }else {
+            nivTempAvatar.setImageUrl(null, imageLoader);
+            civAvatar.setImageResource(R.drawable.avatar);
         }
 
     }

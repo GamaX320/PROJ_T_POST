@@ -29,12 +29,14 @@ import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.object.Event;
+import com.tarpost.bryanty.proj_t_post.sqlite.DbHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -90,7 +92,31 @@ public class EventJoinFragment extends Fragment{
     private void setupRecyclerView(RecyclerView rv){
         rv.setHasFixedSize(true);
 
-        getData();
+        //Check whether online data or offline data
+        if(UserUtil.checkInternetConnection(getActivity().getApplicationContext())){
+            getData();
+        }else {
+            Log.d("Offline Read", "Retrieve...");
+            DbHelper dbHelper = new DbHelper(getActivity());
+            events = dbHelper.getAllEventJoin();
+
+            if (events != null && events.size() > 0) {
+                for (Event object : events) {
+                    Log.d("Offline Data", "Id: " + object.getEventId()
+                            + " Title: " + object.getTitle()
+                            + " Content: " + object.getContent()
+                            + " Type: " + object.getType()
+                            + " Added: " + object.getAddedDate());
+                }
+
+                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_fetch_offline_data), Toast
+                        .LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_no_items_available), Toast
+                        .LENGTH_LONG).show();
+            }
+        }
+
         adapter = new EventJoinAdapter(getActivity(), events);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -170,6 +196,14 @@ public class EventJoinFragment extends Fragment{
                             event.setEndDateTimeStr(DateUtil.convertDateToString(event
                                     .getEndDateTime()));
                             event.setUpdateDateTime(DateUtil.convertStringToDate(jsonObject.getString("updateDateTime")));
+
+                            event.setType("J");
+                            event.setAddedDate(new Date());
+
+                            //Offline data
+                            Log.d("Offline Insert", "SQLITE Inserting...");
+                            DbHelper dbHelper = new DbHelper(getActivity());
+                            dbHelper.addEvent(event);
 
                             events.add(event);
                         }

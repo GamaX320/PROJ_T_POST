@@ -34,6 +34,7 @@ import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.object.Event;
+import com.tarpost.bryanty.proj_t_post.sqlite.DbHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -115,8 +116,32 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     private void setupRecyclerView(RecyclerView rv){
         rv.setHasFixedSize(true);
 
-        getData();
-        adapter = new EventAdapter(getActivity(), events);
+        //Check whether online data or offline data
+        if(UserUtil.checkInternetConnection(getActivity().getApplicationContext())){
+            getData();
+        }else {
+            Log.d("Offline Read", "Retrieve...");
+            DbHelper dbHelper = new DbHelper(getActivity());
+            events = dbHelper.getAllEvent();
+
+            if (events != null && events.size() > 0) {
+                for (Event object : events) {
+                    Log.d("Offline Data", "Id: " + object.getEventId()
+                            + " Title: " + object.getTitle()
+                            + " Content: " + object.getContent()
+                            + " Type: " + object.getType()
+                            + " Added: " + object.getAddedDate());
+                }
+
+                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_fetch_offline_data), Toast
+                        .LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_no_items_available), Toast
+                        .LENGTH_LONG).show();
+            }
+        }
+
+            adapter = new EventAdapter(getActivity(), events);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -238,6 +263,14 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                             event.setEndDateTimeStr(DateUtil.convertDateToString(event
                                     .getEndDateTime()));
                             event.setUpdateDateTime(DateUtil.convertStringToDate(jsonObject.getString("updateDateTime")));
+
+                            event.setType("E");
+                            event.setAddedDate(new Date());
+
+                            //Offline data
+                            Log.d("Offline Insert", "SQLITE Inserting...");
+                            DbHelper dbHelper = new DbHelper(getActivity());
+                            dbHelper.addEvent(event);
 
                             // items.add(post);
                             events.add(event);

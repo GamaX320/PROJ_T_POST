@@ -17,8 +17,10 @@ public class Post implements Parcelable{
     private String status;
 
     //SQLite Offline variables
+    private byte[] avatarImage;
     private byte[] image;
-    private String type; // P - Post, B - Bookmark
+    private String type; // P - Post, B - Bookmark, M - MyPost
+    private Date addedDate; // Date of the record add into db - new Date()
 
     public Post() {
     }
@@ -139,6 +141,22 @@ public class Post implements Parcelable{
 
     public void setCreatorAvatarUrl(String creatorAvatarUrl) {
         this.creatorAvatarUrl = creatorAvatarUrl;
+    }
+
+    public byte[] getAvatarImage() {
+        return avatarImage;
+    }
+
+    public void setAvatarImage(byte[] avatarImage) {
+        this.avatarImage = avatarImage;
+    }
+
+    public Date getAddedDate() {
+        return addedDate;
+    }
+
+    public void setAddedDate(Date addedDate) {
+        this.addedDate = addedDate;
     }
 
     @Override

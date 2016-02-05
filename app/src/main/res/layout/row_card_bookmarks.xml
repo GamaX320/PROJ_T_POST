@@ -37,7 +37,13 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"/>
 
-            <TextView
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/networkImageView_bookmarks_userAvatarTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+           <!-- <TextView
                 android:id="@+id/textView_bookmarks_userName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +51,31 @@
                 android:layout_toRightOf="@+id/circleImageView_userAvatar"
                 android:textSize="14sp"
                 android:paddingLeft="8dp"
-                android:text="username" />
+                android:text="username" />-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="8dp">
+
+                <TextView
+                    android:id="@+id/textView_bookmarks_userName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="Username"/>
+
+                <TextView
+                    android:id="@+id/textView_bookmarks_timeStamp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp"
+                    android:text="3 hours ago"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -83,11 +113,11 @@
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageView_bookmarks_image"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginTop="25dp"
-                android:scaleType="fitXY"/>
+                android:layout_marginTop="15dp"
+                android:scaleType="centerCrop"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

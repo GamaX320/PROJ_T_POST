@@ -28,12 +28,15 @@ import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActionActivity;
 import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
+import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.object.Post;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by BRYANTY on 25-Jan-2016.
@@ -58,7 +61,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Post currentItem= items.get(position);
 
         //  holder.userAvatar.setImageResource(currentItem.userAvatar);
@@ -66,11 +69,34 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         holder.title.setText(currentItem.getTitle());
         holder.content.setText(currentItem.getContent());
 
+        ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
         if( currentItem.getImageUrl() != null && !currentItem.getImageUrl().isEmpty()){
-            ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
             holder.image.setImageUrl(currentItem.getImageUrl(),imageLoader);
         }
 
+        if(currentItem.getCreatorAvatarUrl() != null && !currentItem.getCreatorAvatarUrl()
+                .isEmpty()){
+            holder.userAvatarTemp.setImageUrl(currentItem.getCreatorAvatarUrl(), imageLoader);
+            //avatar image loader listener
+            imageLoader.get(currentItem.getCreatorAvatarUrl(), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    if (response.getBitmap() != null) {
+                        holder.userAvatar.setImageBitmap(response.getBitmap());
+                    }
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+        }else {
+            holder.userAvatarTemp.setImageUrl(null, imageLoader);
+            holder.userAvatar.setImageResource(R.drawable.avatar);
+        }
+
+        holder.timeStamp.setText(DateUtil.getTimeRangeStr(currentItem.getUpdateDateTime()));
         holder.post= currentItem;
     }
 
@@ -81,22 +107,27 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
 
     //view holder
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        ImageView userAvatar;
+        CircleImageView userAvatar;
+        NetworkImageView userAvatarTemp;
         TextView userName;
         TextView title;
         TextView content;
         NetworkImageView image;
+        TextView timeStamp;
 
         ImageButton  modify, delete, share, more;
         Post post;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            userAvatar= (ImageView)itemView.findViewById(R.id.circleImageView_mypost_userAvatar);
+            userAvatar= (CircleImageView)itemView.findViewById(R.id.circleImageView_mypost_userAvatar);
+            userAvatarTemp= (NetworkImageView)itemView.findViewById(R.id
+                    .networkImageView_mypost_userAvatarTemp);
             userName= (TextView)itemView.findViewById(R.id.textView_mypost_userName);
             title= (TextView)itemView.findViewById(R.id.textView_mypost_title);
             content= (TextView)itemView.findViewById(R.id.textView_mypost_content);
             image= (NetworkImageView)itemView.findViewById(R.id.imageView_mypost_image);
+            timeStamp= (TextView)itemView.findViewById(R.id.textView_mypost_timeStamp);
 
             modify= (ImageButton)itemView.findViewById(R.id.imageButton_mypost_modify);
             delete= (ImageButton)itemView.findViewById(R.id.imageButton_mypost_delete);

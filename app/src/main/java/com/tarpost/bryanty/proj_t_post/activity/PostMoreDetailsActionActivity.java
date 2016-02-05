@@ -276,7 +276,6 @@ public class PostMoreDetailsActionActivity extends AppCompatActivity {
                 params.put("title", postTitle.getText().toString());
                 params.put("content", postContent.getText().toString());
 
-                //TODO: post id null
                 params.put("postId", post.getPostId().toString());
 
                 //set image param

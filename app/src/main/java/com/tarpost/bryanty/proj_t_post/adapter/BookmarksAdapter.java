@@ -26,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
+import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.object.Post;
 
 import java.util.Collections;
@@ -57,7 +58,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Post currentItem= items.get(position);
 
         //Only display the bookmark status Active
@@ -67,11 +68,34 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
             holder.title.setText(currentItem.getTitle());
             holder.content.setText(currentItem.getContent());
 
+            ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
             if( currentItem.getImageUrl() != null && !currentItem.getImageUrl().isEmpty()){
-                ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
                 holder.image.setImageUrl(currentItem.getImageUrl(),imageLoader);
             }
 
+            if(currentItem.getCreatorAvatarUrl() != null && !currentItem.getCreatorAvatarUrl()
+                    .isEmpty()){
+                holder.userAvatarTemp.setImageUrl(currentItem.getCreatorAvatarUrl(), imageLoader);
+                //avatar image loader listener
+                imageLoader.get(currentItem.getCreatorAvatarUrl(), new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                        if (response.getBitmap() != null) {
+                            holder.userAvatar.setImageBitmap(response.getBitmap());
+                        }
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+            }else {
+                holder.userAvatarTemp.setImageUrl(null, imageLoader);
+                holder.userAvatar.setImageResource(R.drawable.avatar);
+            }
+
+            holder.timeStamp.setText(DateUtil.getTimeRangeStr(currentItem.getUpdateDateTime()));
             holder.post= currentItem;
         }
 
@@ -85,10 +109,12 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
     //view holder
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView userAvatar;
+        NetworkImageView userAvatarTemp;
         TextView userName;
         TextView title;
         TextView content;
         NetworkImageView image;
+        TextView timeStamp;
 
         ImageButton share, delete, more;
         Post post;
@@ -100,6 +126,9 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
             title= (TextView)itemView.findViewById(R.id.textView_bookmarks_title);
             content= (TextView)itemView.findViewById(R.id.textView_bookmarks_content);
             image= (NetworkImageView)itemView.findViewById(R.id.imageView_bookmarks_image);
+            userAvatarTemp= (NetworkImageView)itemView.findViewById(R.id
+                    .networkImageView_bookmarks_userAvatarTemp);
+            timeStamp= (TextView)itemView.findViewById(R.id.textView_bookmarks_timeStamp);
 
             share= (ImageButton)itemView.findViewById(R.id.imageButton_bookmarks_share);
             delete= (ImageButton)itemView.findViewById(R.id.imageButton_bookmarks_delete);

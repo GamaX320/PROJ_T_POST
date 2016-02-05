@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by BRYANTY on 26-Jan-2016.
@@ -58,7 +59,20 @@ public class DateUtil {
     }
 
     public static Date convertStringToDate(String dateStr){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US);
+        Date date = null;
+
+        try{
+            date = sdf.parse(dateStr);
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+
+        return date;
+    }
+
+    public static Date convertStringToDateSQLite(String dateStr){
+        SimpleDateFormat sdf = new SimpleDateFormat("E MMM dd hh:mm:ss Z yyyy",Locale.US);
         Date date = null;
 
         try{

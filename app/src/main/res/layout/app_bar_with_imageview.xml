@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/cover"
+            android:background="@color/primaryColor"
             android:onClick="uploadImage"
             android:orientation="horizontal"
             app:layout_collapseMode="parallax"

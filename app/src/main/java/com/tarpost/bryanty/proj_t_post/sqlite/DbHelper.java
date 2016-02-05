@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.object.Event;
@@ -31,13 +32,13 @@ public class DbHelper extends SQLiteOpenHelper {
     //Post Table columns
     private static final String COLUMN_POSTID = "postId";
     private static final String COLUMN_CREATORID = "creatorId";
+    private static final String COLUMN_CREATORNAME = "creatorName";
     private static final String COLUMN_TITLE = "title";
     private static final String COLUMN_CONTENT = "content";
-    private static final String COLUMN_IMAGE = "image";
-    private static final String COLUMN_CREATEDATETIME = "createDateTime";
     private static final String COLUMN_UPDATEDATETIME = "updateDateTime";
     private static final String COLUMN_STATUS = "status";
     private static final String COLUMN_TYPE = "type";
+    private static final String COLUMN_ADDEDDATE = "addedDate";
     //Event Table columns
     private static final String COLUMN_EVENTID = "postId";
     private static final String COLUMN_EVENT_CREATORID = "creatorId";
@@ -52,6 +53,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_EVENT_UPDATEDATETIME = "updateDateTime";
     private static final String COLUMN_EVENT_STATUS = "status";
     private static final String COLUMN_EVENT_TYPE = "type";
+    private static final String COLUMN_EVENT_ADDEDDATE = "addedDate";
 
     public DbHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -63,13 +65,13 @@ public class DbHelper extends SQLiteOpenHelper {
         String CREATE_TABLE_POST = "CREATE TABLE "+TABLE_POST+" ("
                 +COLUMN_POSTID+" INTEGER PRIMARY KEY, "
                 +COLUMN_CREATORID+" TEXT, "
+                +COLUMN_CREATORNAME+" TEXT, "
                 +COLUMN_TITLE+" TEXT, "
                 +COLUMN_CONTENT+" TEXT, "
-                +COLUMN_IMAGE+" BLOB, "
-                +COLUMN_CREATEDATETIME+" TEXT, "
                 +COLUMN_UPDATEDATETIME+" TEXT, "
                 +COLUMN_STATUS+" TEXT, "
-                +COLUMN_TYPE+" TEXT "
+                +COLUMN_TYPE+" TEXT, "
+                +COLUMN_ADDEDDATE+" TEXT "
                 +")";
 
         String CREATE_TABLE_EVENT = "CREATE TABLE "+TABLE_EVENT+" ("
@@ -77,15 +79,16 @@ public class DbHelper extends SQLiteOpenHelper {
                 +COLUMN_EVENT_CREATORID+" TEXT, "
                 +COLUMN_EVENT_TITLE+" TEXT, "
                 +COLUMN_EVENT_CONTENT+" TEXT, "
-                +COLUMN_EVENT_IMAGE+" BLOB, "
+//                +COLUMN_EVENT_IMAGE+" BLOB, "
                 +COLUMN_EVENT_STARTDATETIME+" TEXT, "
                 +COLUMN_EVENT_ENDDATETIME+" TEXT, "
                 +COLUMN_EVENT_LATITUDE+" DOUBLE, "
                 +COLUMN_EVENT_LONGITUDU+" DOUBLE, "
-                +COLUMN_EVENT_CREATEDATETIME+" TEXT, "
+//                +COLUMN_EVENT_CREATEDATETIME+" TEXT, "
                 +COLUMN_EVENT_UPDATEDATETIME+" TEXT, "
                 +COLUMN_EVENT_STATUS+" TEXT, "
-                +COLUMN_EVENT_TYPE+" TEXT "
+                +COLUMN_EVENT_TYPE+" TEXT, "
+                +COLUMN_EVENT_ADDEDDATE+" TEXT "
                 +")";
 
         db.execSQL(CREATE_TABLE_POST);
@@ -102,18 +105,32 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //Insert post record
     public void addPost(Post post){
-        SQLiteDatabase db = this.getWritableDatabase();
 
+        List<Post> postList = new ArrayList<Post>();
+        postList=getAllPost();
+        if(postList != null && postList.size() > 0){
+            //Duplicate record found
+//            if(postList.contains(post)){
+//                return;
+//            }
+            for(Post object : postList){
+                if(object.getPostId().equals(post.getPostId())){
+                    return;
+                }
+            }
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_POSTID, post.getPostId());
         values.put(COLUMN_CREATORID, post.getCreatorId());
+        values.put(COLUMN_CREATORNAME, post.getCreatorName());
         values.put(COLUMN_TITLE, post.getTitle());
         values.put(COLUMN_CONTENT, post.getContent());
-        values.put(COLUMN_IMAGE, post.getImage());
-        values.put(COLUMN_CREATEDATETIME, post.getCreateDateTime().toString());
         values.put(COLUMN_UPDATEDATETIME, post.getUpdateDateTime().toString());
         values.put(COLUMN_STATUS, post.getStatus());
         values.put(COLUMN_TYPE, post.getType());
+        values.put(COLUMN_ADDEDDATE, post.getAddedDate().toString());
 
         db.insert(TABLE_POST, null, values);
         db.close();
@@ -123,20 +140,35 @@ public class DbHelper extends SQLiteOpenHelper {
     public void addEvent(Event event){
         SQLiteDatabase db = this.getWritableDatabase();
 
+        List<Event> eventList = new ArrayList<Event>();
+        eventList = getAllEvent();
+        if(eventList != null && eventList.size() > 0){
+            //Duplicate record found
+//            if(eventList.contains(event)){
+//                return;
+//            }
+            for(Event object : eventList){
+                if(object.getEventId().equals(event.getEventId())){
+                    return;
+                }
+            }
+        }
+
         ContentValues values = new ContentValues();
         values.put(COLUMN_EVENTID, event.getEventId());
         values.put(COLUMN_EVENT_CREATORID, event.getCreatorId());
         values.put(COLUMN_EVENT_TITLE, event.getTitle());
         values.put(COLUMN_EVENT_CONTENT, event.getContent());
-        values.put(COLUMN_EVENT_IMAGE, event.getImage());
+//        values.put(COLUMN_EVENT_IMAGE, event.getImage());
         values.put(COLUMN_EVENT_STARTDATETIME, event.getStartDateTime().toString());
         values.put(COLUMN_EVENT_ENDDATETIME, event.getEndDateTime().toString());
         values.put(COLUMN_EVENT_LATITUDE, event.getLocationLat());
         values.put(COLUMN_EVENT_LONGITUDU, event.getLocationLng());
-        values.put(COLUMN_EVENT_CREATEDATETIME, event.getCreateDateTime().toString());
+//        values.put(COLUMN_EVENT_CREATEDATETIME, event.getCreateDateTime().toString());
         values.put(COLUMN_EVENT_UPDATEDATETIME, event.getUpdateDateTime().toString());
         values.put(COLUMN_EVENT_STATUS, event.getStatus());
         values.put(COLUMN_EVENT_TYPE, event.getType());
+        values.put(COLUMN_EVENT_ADDEDDATE, event.getAddedDate().toString());
 
         db.insert(TABLE_EVENT, null, values);
         db.close();
@@ -145,7 +177,8 @@ public class DbHelper extends SQLiteOpenHelper {
     //Get all posts record
     public List<Post> getAllPost(){
         List<Post> posts = new ArrayList<Post>();
-        String query = "SELECT * FROM "+TABLE_POST;
+//        String query = "SELECT * FROM "+TABLE_POST;
+        String query = "SELECT * FROM "+TABLE_POST+" WHERE "+COLUMN_TYPE+" == 'P' ";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
@@ -154,20 +187,83 @@ public class DbHelper extends SQLiteOpenHelper {
                 Post post = new Post();
                 post.setPostId(Integer.parseInt(cursor.getString(0)));
                 post.setCreatorId(cursor.getString(1));
-                post.setTitle(cursor.getString(2));
-                post.setContent(cursor.getString(3));
-                //Convert byte[] to bitmap
-                //BitmapFactory.decodeByteArray(cursor.getBlob(4), 0, cursor.getBlob(4).length);
-                post.setImage(cursor.getBlob(4));
-                post.setCreateDateTime(DateUtil.convertStringToDate(cursor.getString(5)));
-                post.setUpdateDateTime(DateUtil.convertStringToDate(cursor.getString(6)));
-                post.setStatus(cursor.getString(7));
-                post.setType(cursor.getString(8));
+                post.setCreatorName(cursor.getString(2));
+                post.setTitle(cursor.getString(3));
+                post.setContent(cursor.getString(4));
+                post.setUpdateDateTime(DateUtil.convertStringToDateSQLite(cursor.getString(5)));
+                post.setStatus(cursor.getString(6));
+                post.setType(cursor.getString(7));
+                post.setAddedDate(DateUtil.convertStringToDateSQLite(cursor.getString(8)));
 
                 posts.add(post);
 
             }while(cursor.moveToNext());
         }
+
+        cursor.close();
+        db.close();
+
+        return posts;
+    }
+
+    public List<Post> getAllBookmarks(){
+        List<Post> posts = new ArrayList<Post>();
+        String query = "SELECT * FROM "+TABLE_POST+" WHERE "+COLUMN_TYPE+" == 'B' ";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Post post = new Post();
+                post.setPostId(Integer.parseInt(cursor.getString(0)));
+                post.setCreatorId(cursor.getString(1));
+                post.setCreatorName(cursor.getString(2));
+                post.setTitle(cursor.getString(3));
+                post.setContent(cursor.getString(4));
+                post.setUpdateDateTime(DateUtil.convertStringToDateSQLite(cursor.getString(5)));
+                post.setStatus(cursor.getString(6));
+                post.setType(cursor.getString(7));
+                post.setAddedDate(DateUtil.convertStringToDateSQLite(cursor.getString(8)));
+
+                posts.add(post);
+
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return posts;
+    }
+
+    //Get all posts record
+    public List<Post> getAllMyPost(){
+        List<Post> posts = new ArrayList<Post>();
+//        String query = "SELECT * FROM "+TABLE_POST;
+        String query = "SELECT * FROM "+TABLE_POST+" WHERE "+COLUMN_TYPE+" == 'M' ";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Post post = new Post();
+                post.setPostId(Integer.parseInt(cursor.getString(0)));
+                post.setCreatorId(cursor.getString(1));
+                post.setCreatorName(cursor.getString(2));
+                post.setTitle(cursor.getString(3));
+                post.setContent(cursor.getString(4));
+                post.setUpdateDateTime(DateUtil.convertStringToDateSQLite(cursor.getString(5)));
+                post.setStatus(cursor.getString(6));
+                post.setType(cursor.getString(7));
+                post.setAddedDate(DateUtil.convertStringToDateSQLite(cursor.getString(8)));
+
+                posts.add(post);
+
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
 
         return posts;
     }
@@ -175,7 +271,7 @@ public class DbHelper extends SQLiteOpenHelper {
     //Get all events record
     public List<Event> getAllEvent(){
         List<Event> events = new ArrayList<Event>();
-        String query = "SELECT * FROM "+TABLE_EVENT;
+        String query = "SELECT * FROM "+TABLE_EVENT+" WHERE "+COLUMN_EVENT_TYPE+" == 'E' ";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
@@ -188,15 +284,46 @@ public class DbHelper extends SQLiteOpenHelper {
                 event.setContent(cursor.getString(3));
                 //Convert byte[] to bitmap
                 //BitmapFactory.decodeByteArray(cursor.getBlob(4), 0, cursor.getBlob(4).length);
-                event.setImage(cursor.getBlob(4));
-                event.setStartDateTime(DateUtil.convertStringToDate(cursor.getString(5)));
-                event.setEndDateTime(DateUtil.convertStringToDate(cursor.getString(6)));
-                event.setLocationLat(cursor.getDouble(7));
-                event.setLocationLng(cursor.getDouble(8));
-                event.setCreateDateTime(DateUtil.convertStringToDate(cursor.getString(9)));
-                event.setUpdateDateTime(DateUtil.convertStringToDate(cursor.getString(10)));
-                event.setStatus(cursor.getString(11));
-                event.setType(cursor.getString(12));
+//                event.setImage(cursor.getBlob(4));
+                event.setStartDateTime(DateUtil.convertStringToDateSQLite(cursor.getString(4)));
+                event.setEndDateTime(DateUtil.convertStringToDateSQLite(cursor.getString(5)));
+                event.setLocationLat(cursor.getDouble(6));
+                event.setLocationLng(cursor.getDouble(7));
+//                event.setCreateDateTime(DateUtil.convertStringToDate(cursor.getString(9)));
+                event.setUpdateDateTime(DateUtil.convertStringToDateSQLite(cursor.getString(8)));
+                event.setStatus(cursor.getString(9));
+                event.setType(cursor.getString(10));
+                event.setAddedDate(DateUtil.convertStringToDateSQLite(cursor.getString(11)));
+
+                events.add(event);
+
+            }while(cursor.moveToNext());
+        }
+
+        return events;
+    }
+
+    public List<Event> getAllEventJoin(){
+        List<Event> events = new ArrayList<Event>();
+        String query = "SELECT * FROM "+TABLE_EVENT+" WHERE "+COLUMN_EVENT_TYPE+" == 'J' ";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Event event = new Event();
+                event.setEventId(Integer.parseInt(cursor.getString(0)));
+                event.setCreatorId(cursor.getString(1));
+                event.setTitle(cursor.getString(2));
+                event.setContent(cursor.getString(3));
+                event.setStartDateTime(DateUtil.convertStringToDateSQLite(cursor.getString(4)));
+                event.setEndDateTime(DateUtil.convertStringToDateSQLite(cursor.getString(5)));
+                event.setLocationLat(cursor.getDouble(6));
+                event.setLocationLng(cursor.getDouble(7));
+                event.setUpdateDateTime(DateUtil.convertStringToDateSQLite(cursor.getString(8)));
+                event.setStatus(cursor.getString(9));
+                event.setType(cursor.getString(10));
+                event.setAddedDate(DateUtil.convertStringToDateSQLite(cursor.getString(11)));
 
                 events.add(event);
 
@@ -239,10 +366,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_CREATORID, post.getCreatorId());
+        values.put(COLUMN_CREATORNAME, post.getCreatorName());
         values.put(COLUMN_TITLE, post.getTitle());
         values.put(COLUMN_CONTENT, post.getContent());
-        values.put(COLUMN_IMAGE, post.getImage());
-        values.put(COLUMN_CREATEDATETIME, post.getCreateDateTime().toString());
         values.put(COLUMN_UPDATEDATETIME, post.getUpdateDateTime().toString());
         values.put(COLUMN_STATUS, post.getStatus());
         values.put(COLUMN_TYPE, post.getType());
@@ -261,15 +387,17 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(COLUMN_EVENT_CREATORID, event.getCreatorId());
         values.put(COLUMN_EVENT_TITLE, event.getTitle());
         values.put(COLUMN_EVENT_CONTENT, event.getContent());
-        values.put(COLUMN_EVENT_IMAGE, event.getImage());
+//        values.put(COLUMN_EVENT_IMAGE, event.getImage());
         values.put(COLUMN_EVENT_STARTDATETIME, event.getStartDateTime().toString());
         values.put(COLUMN_EVENT_ENDDATETIME, event.getEndDateTime().toString());
         values.put(COLUMN_EVENT_LATITUDE, event.getLocationLat());
         values.put(COLUMN_EVENT_LONGITUDU, event.getLocationLng());
-        values.put(COLUMN_EVENT_CREATEDATETIME, event.getCreateDateTime().toString());
+//        values.put(COLUMN_EVENT_CREATEDATETIME, event.getCreateDateTime().toString());
         values.put(COLUMN_EVENT_UPDATEDATETIME, event.getUpdateDateTime().toString());
         values.put(COLUMN_EVENT_STATUS, event.getStatus());
         values.put(COLUMN_EVENT_TYPE, event.getType());
+        values.put(COLUMN_EVENT_ADDEDDATE, event.getAddedDate().toString());
+
         result = db.update(TABLE_EVENT, values, COLUMN_EVENTID + " = ?", new String[]{String
                 .valueOf(event.getEventId())});
 
@@ -284,11 +412,27 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    //Delete older post record
+    public void deleteOldPost(){
+        String query = "DELETE FROM "+TABLE_POST+" WHERE "+COLUMN_ADDEDDATE+" <=('now', '-2 day')";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(query);
+        db.close();
+    }
+
     //Delete event record
     public void deleteEvent(Event event){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_EVENT, COLUMN_EVENTID + " = ?", new String[]{String
                 .valueOf(event.getEventId())});
+        db.close();
+    }
+
+    //Delete older post record
+    public void deleteOldEvent(){
+        String query = "DELETE FROM "+TABLE_EVENT+" WHERE "+COLUMN_ADDEDDATE+" <=('now', '-2 day')";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(query);
         db.close();
     }
 

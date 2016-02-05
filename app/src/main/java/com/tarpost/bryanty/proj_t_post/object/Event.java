@@ -22,7 +22,8 @@ public class Event implements Parcelable {
 
     //SQLite Offline variables
     private byte[] image;
-    private String type; // C - Creator, J - Join member
+    private String type; // E - event, C - Creator, J - Join member
+    private Date addedDate;
 
     public Event() {
     }
@@ -205,6 +206,14 @@ public class Event implements Parcelable {
 
     public void setEndDateTimeStr(String endDateTimeStr) {
         this.endDateTimeStr = endDateTimeStr;
+    }
+
+    public Date getAddedDate() {
+        return addedDate;
+    }
+
+    public void setAddedDate(Date addedDate) {
+        this.addedDate = addedDate;
     }
 
     @Override

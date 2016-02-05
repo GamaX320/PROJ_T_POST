@@ -97,6 +97,9 @@
     <string name="text_message_unjoin_event">Un-join Event Successfully</string>
     <string name="text_message_unjoin_event_failed">Failed to un-join event</string>
     <string name="text_message_no_items_available">No More Items Available</string>
+    <string name="text_message_fetch_offline_data">Fetched Offline Data</string>
+    <string name="text_message_clear_offline_data">Clear Offline Data Successfully</string>
+
 
     <string name="text_success_login">Login Successfully</string>
     <string name="text_error_required">This field required</string>

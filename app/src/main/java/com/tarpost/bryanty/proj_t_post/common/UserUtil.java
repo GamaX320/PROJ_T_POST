@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
@@ -105,8 +106,22 @@ public class UserUtil {
                     break;
             }
             activity.getWindow().setStatusBarColor(primaryDarkColor);
+            activity.getWindow().setNavigationBarColor(primaryColor);
             toolbar.setBackgroundColor(primaryColor);
         }
+    }
+
+    //Check internet connection
+    public static boolean checkInternetConnection(Context context){
+
+        boolean result = false;
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if(cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected()){
+            result = true;
+        }
+
+        return  result;
     }
 
     public Boolean getLogin() {

@@ -30,14 +30,17 @@ import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActivity;
 import com.tarpost.bryanty.proj_t_post.adapter.BookmarksAdapter;
 import com.tarpost.bryanty.proj_t_post.adapter.MyPostAdapter;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
+import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.object.Post;
+import com.tarpost.bryanty.proj_t_post.sqlite.DbHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static android.support.v7.widget.RecyclerView.NO_POSITION;
@@ -96,7 +99,32 @@ public class BookmarksFragment extends Fragment{
     private void setupRecyclerView(RecyclerView rv){
         rv.setHasFixedSize(true);
 
-        getData();
+        //Check whether online data or offline data
+        if(UserUtil.checkInternetConnection(getActivity().getApplicationContext())){
+            getData();
+        }else{
+            Log.d("Offline Read", "Retrieve...");
+            DbHelper dbHelper = new DbHelper(getActivity());
+            posts = dbHelper.getAllBookmarks();
+
+            if(posts != null && posts.size() > 0){
+                for(Post object : posts){
+                    Log.d("Offline Data","Id: "+object.getPostId()
+                            +" Title: "+object.getTitle()
+                            +" Content: "+object.getContent()
+                            +" Type: "+object.getType()
+                            +" Added: "+ object.getAddedDate());
+                }
+
+                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_fetch_offline_data), Toast
+                        .LENGTH_LONG).show();
+            }else{
+                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_no_items_available), Toast
+                        .LENGTH_LONG).show();
+            }
+
+        }
+
         adapter = new BookmarksAdapter(getActivity(), posts);
         //rv.setAdapter( new PostAdapter(getActivity(), getData()));
         rv.setAdapter(adapter);
@@ -161,10 +189,22 @@ public class BookmarksFragment extends Fragment{
 
                             post.setPostId(jsonObject.getInt("postId"));
                             post.setCreatorId(jsonObject.getString("creatorId"));
+                            post.setCreatorName(jsonObject.getString("creatorName"));
+                            post.setCreatorAvatarUrl(jsonObject.getString("creatorAvatarPic"));
                             post.setTitle(jsonObject.getString("title"));
                             post.setContent(jsonObject.getString("content"));
                             post.setImageUrl(jsonObject.getString("image"));
                             post.setStatus(jsonObject.getString("status"));
+                            post.setUpdateDateTime(DateUtil.convertStringToDate(jsonObject
+                                    .getString("updateDateTime")));
+
+                            post.setType("B");
+                            post.setAddedDate(new Date());
+
+                            //Offline data
+                            Log.d("Offline Insert", "SQLITE Inserting...");
+                            DbHelper dbHelper = new DbHelper(getActivity());
+                            dbHelper.addPost(post);
 
                             posts.add(post);
                         }

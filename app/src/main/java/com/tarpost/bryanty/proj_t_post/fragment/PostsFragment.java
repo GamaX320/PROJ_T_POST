@@ -38,14 +38,13 @@ import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.object.Information;
 import com.tarpost.bryanty.proj_t_post.object.Post;
+import com.tarpost.bryanty.proj_t_post.object.User;
+import com.tarpost.bryanty.proj_t_post.sqlite.DbHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -122,7 +121,33 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
         rv.setHasFixedSize(true);
 
 //        adapter = new PostAdapter(getActivity(), getData());
-        getData();
+
+        //Check whether online data or offline data
+        if(UserUtil.checkInternetConnection(getActivity().getApplicationContext())){
+            getData();
+        }else{
+            Log.d("Offline Read", "Retrieve...");
+            DbHelper dbHelper = new DbHelper(getActivity());
+            posts = dbHelper.getAllPost();
+
+            if(posts != null && posts.size() > 0){
+                for(Post object : posts){
+                    Log.d("Offline Data","Id: "+object.getPostId()
+                            +" Title: "+object.getTitle()
+                            +" Content: "+object.getContent()
+                            +" Type: "+object.getType()
+                            +" Added: "+ object.getAddedDate());
+                }
+
+                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_fetch_offline_data), Toast
+                        .LENGTH_LONG).show();
+            }else{
+                Toast.makeText(getActivity(), getResources().getString(R.string.text_message_no_items_available), Toast
+                        .LENGTH_LONG).show();
+            }
+
+        }
+
         adapter = new PostAdapter(getActivity(), posts);
         //rv.setAdapter( new PostAdapter(getActivity(), getData()));
         rv.setAdapter(adapter);
@@ -218,14 +243,6 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
                             post.setContent(jsonObject.getString("content"));
                             post.setImageUrl(jsonObject.getString("image"));
                             //Date need to do conversion
-//                            String updateDateTimeStr = jsonObject.getString("updateDateTime");
-//                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                            try{
-//                                Date updateDateTime = sdf.parse(updateDateTimeStr);
-//                                post.setUpdateDateTime(updateDateTime);
-//                            }catch(ParseException e){
-//                                e.printStackTrace();
-//                            }
                             post.setUpdateDateTime(DateUtil.convertStringToDate(jsonObject.getString("updateDateTime")));
 
                             Log.d("response", "JSONArray postId: " + jsonObject.getInt("postId"));
@@ -235,6 +252,25 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
                             Log.d("response", "JSONArray title: " + jsonObject.getString("title"));
                             Log.d("response", "JSONArray content: " + jsonObject.getString("content"));
                             Log.d("response", "JSONArray content: " + jsonObject.getString("image"));
+
+                            post.setType("P");
+                            post.setAddedDate(new Date());
+
+                            //Offline data
+                            Log.d("Offline Insert", "SQLITE Inserting...");
+                            DbHelper dbHelper = new DbHelper(getActivity());
+                            dbHelper.addPost(post);
+
+//                            Log.d("Offline Read", "Retrieve...");
+//                            List<Post> postList = dbHelper.getAllPost();
+//
+//                            for(Post object : postList){
+//                                Log.d("Offline Data","Id: "+object.getPostId()
+//                                        +" Title: "+object.getTitle()
+//                                        +" Content: "+object.getContent()
+//                                        +" Type: "+object.getType()
+//                                        +" Added: "+ object.getAddedDate());
+//                            }
 
                             // items.add(post);
                             posts.add(post);

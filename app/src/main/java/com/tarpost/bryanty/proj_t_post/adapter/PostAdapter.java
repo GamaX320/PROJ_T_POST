@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.object.Information;
 import com.tarpost.bryanty.proj_t_post.object.Post;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -86,6 +88,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                     if (response.getBitmap() != null) {
                         holder.userAvatar.setImageBitmap(response.getBitmap());
+
                     }
                 }
 
@@ -103,6 +106,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.timeStamp.setText(DateUtil.getTimeRangeStr(currentItem.getUpdateDateTime()));
 
         holder.post= currentItem;
+
     }
 
     @Override
