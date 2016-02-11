@@ -39,7 +39,7 @@ public class LoginActivity extends ActionBarActivity {
     private String email,password;
     private EditText etEmail, etPassword;
     private Button btLogin;
-    private TextView btSignUp;
+    private TextView btSignUp, btForgetPassword;
 
     //Image components
     private ImageView imageView;
@@ -73,6 +73,7 @@ public class LoginActivity extends ActionBarActivity {
         //initial button
         btSignUp = (TextView)findViewById(R.id.button_signup);
         btLogin = (Button)findViewById(R.id.button_login);
+        btForgetPassword = (TextView)findViewById(R.id.button_forget_password);
 
 //        //request queue
         pdProgressAdd = new ProgressDialog(this);
@@ -191,6 +192,10 @@ public class LoginActivity extends ActionBarActivity {
 
     public void signUp(View v){
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+    }
+
+    public void forgetPassword(View v){
+        startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
     }
 
     @Override

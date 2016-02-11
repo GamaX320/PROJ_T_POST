@@ -1,14 +1,19 @@
 package com.tarpost.bryanty.proj_t_post;
 
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -41,7 +46,14 @@ import com.tarpost.bryanty.proj_t_post.fragment.HomeFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.MyPostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.PostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.SubscriptionFragment;
+import com.tarpost.bryanty.proj_t_post.notification.NotificationReceiver;
+import com.tarpost.bryanty.proj_t_post.notification.NotificationService;
+import com.tarpost.bryanty.proj_t_post.object.Event;
 import com.tarpost.bryanty.proj_t_post.sqlite.DbHelper;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.*;
 
@@ -119,8 +131,8 @@ public class MainActivity extends ActionBarActivity {
         dbHelper.deleteOldPost();
         dbHelper.deleteOldEvent();
 
-//        getWindow().setNavigationBarColor(getResources().getColor(R.color.myrandomcolor1));
-//        getWindow().setStatusBarColor(getResources().getColor(R.color.myrandomcolor2));
+        //setup notification
+        setupNotification();
 
     }
 
@@ -325,6 +337,56 @@ public class MainActivity extends ActionBarActivity {
         }else{
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
+    }
+
+    public void setupNotification(){
+        List<Event> events = new ArrayList<Event>();
+        Log.d("Offline Read", "Retrieve...");
+        DbHelper dbHelper = new DbHelper(this);
+        events = dbHelper.getAllEventJoin();
+
+        if(events != null && events.size() > 0){
+
+            int i = 0;
+            for(Event event : events){
+                Log.v("Notification", "Adding notification...");
+                Intent intent= new Intent(MainActivity.this, NotificationReceiver.class);
+                intent.putExtra("joinedEvent", event);
+
+                Calendar eventDateTime =  Calendar.getInstance();
+                eventDateTime.setTimeInMillis(System.currentTimeMillis());
+                eventDateTime.set((event.getStartDateTime().getYear() + 1900),
+                        event.getStartDateTime().getMonth(),
+                        event.getStartDateTime().getDate(),
+                        event.getStartDateTime().getHours(),
+                        event.getStartDateTime().getMinutes(),
+                        event.getStartDateTime().getSeconds());
+
+                Log.v("Notification", "Adding notification on date: "
+                        + (event.getStartDateTime().getYear()+1900) + " "
+                        + event.getStartDateTime().getMonth() + " "
+                        + event.getStartDateTime().getDate() + " "
+                        + event.getStartDateTime().getHours() + " "
+                        + event.getStartDateTime().getMinutes() + " "
+                        + event.getStartDateTime().getSeconds());
+
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, i,
+                        intent,0);
+                AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, eventDateTime.getTimeInMillis(), pendingIntent);
+
+//                if(i>0){
+//                    Calendar calendar = Calendar.getInstance();
+//                    calendar.setTimeInMillis(System.currentTimeMillis());
+//                    calendar.set(2016, 1, 11, 16, 48, 0);
+//                    alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+//                }
+
+                i++;
+            }
+
+        }
+
     }
 
 }

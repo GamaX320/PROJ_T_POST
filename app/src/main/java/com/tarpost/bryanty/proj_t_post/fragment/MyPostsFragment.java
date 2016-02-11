@@ -224,7 +224,6 @@ public class MyPostsFragment extends Fragment implements View.OnClickListener{
 
                         //Notify the adapter the date has been changed
                         adapter.notifyDataSetChanged();
-
                     }
 
                 }catch (JSONException e){
