@@ -153,8 +153,13 @@ public class MainActivity extends ActionBarActivity {
         dbHelper.deleteOldEvent();
 
         //setup notification
-        events = new ArrayList<Event>();
-        setupNotification();
+        if(UserUtil.checkNotificationOnOff(this)){
+            Log.v("NotificationOnOff","Receive notification On");
+            events = new ArrayList<Event>();
+            setupNotification();
+        }else{
+            Log.v("NotificationOnOff","Receive notification Off");
+        }
 
     }
 

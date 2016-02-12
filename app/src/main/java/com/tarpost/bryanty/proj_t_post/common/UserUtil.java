@@ -113,6 +113,12 @@ public class UserUtil {
         }
     }
 
+    public static boolean checkNotificationOnOff(Activity activity){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences
+                (activity.getBaseContext());
+        return  sp.getBoolean("notificationOnOff",true);
+    }
+
     //Check internet connection
     public static boolean checkInternetConnection(Context context){
 
