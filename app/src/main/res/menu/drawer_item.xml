@@ -21,6 +21,10 @@
             android:icon="@drawable/ic_event"
             android:title="@string/nav_item_event"/>
         <item
+            android:id="@+id/navigation_item_event_my"
+            android:icon="@drawable/ic_my_event"
+            android:title="@string/nav_item_event_my"/>
+        <item
             android:id="@+id/navigation_item_bookmark"
             android:icon="@drawable/ic_bookmark"
             android:title="@string/nav_item_bookmark"/>

@@ -6,6 +6,7 @@
     <string name="nav_item_home">Home</string>
     <string name="nav_item_post">My Posts</string>
     <string name="nav_item_event">Event</string>
+    <string name="nav_item_event_my">My Events</string>
     <string name="nav_item_eventJoin">Event Joined</string>
     <string name="nav_item_bookmark">Bookmarks</string>
     <string name="nav_item_subscription">Subscriptions</string>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="5dp">
+
+    <!-- cardview information item-->
+    <android.support.v7.widget.CardView
+        xmlns:cardview="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cardViewMyEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        cardview:cardCornerRadius="2dp"
+        cardview:cardElevation="5dp"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:id="@+id/cardMyEvent_topLayout"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:paddingLeft="16dp"
+                      android:paddingRight="16dp"
+                      android:paddingTop="8dp"
+                      android:paddingBottom="8dp"
+                      android:gravity="center_vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/circleImageView_myevent_userAvatar"
+                android:layout_width="@dimen/list_avatar_size"
+                android:layout_height="@dimen/list_avatar_size"
+                android:src="@drawable/avatar"
+                app:border_width="1dp"
+                app:border_color="#FFFFFFFF"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"/>
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/networkImageView_myevent_userAvatarTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="8dp">
+
+                <TextView
+                    android:id="@+id/textView_myevent_userName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="Username"/>
+
+                <TextView
+                    android:id="@+id/textView_myevent_timeStamp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp"
+                    android:text="3 hours ago"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cardMyEvent_midLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="54dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/textView_myevent_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="Here the title"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+            <TextView
+                android:id="@+id/textView_myevent_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:layout_below="@+id/cardview_title"
+                android:text="Here the content"
+                android:textSize="14sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:maxLines="3"
+                android:lines="3"
+                android:ellipsize="end"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/text_startTime"
+                    android:textSize="14sp"
+                    android:paddingTop="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:layout_weight="1.5"/>
+
+                <TextView
+                    android:id="@+id/textView_myevent_startDateTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:textSize="14sp"
+                    android:paddingTop="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/text_endTime"
+                    android:textSize="14sp"
+                    android:paddingTop="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:layout_weight="1.5"/>
+
+                <TextView
+                    android:id="@+id/textView_myevent_endDateTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:textSize="14sp"
+                    android:paddingTop="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/text_location"
+                    android:textSize="14sp"
+                    android:paddingTop="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:layout_weight="1.5"/>
+
+                <TextView
+                    android:id="@+id/textView_myevent_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:textSize="14sp"
+                    android:paddingTop="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/imageView_myevent_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:gravity="right">
+
+                <ImageButton
+                    android:id="@+id/imageButton_myevent_modify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:tint="@android:color/darker_gray"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_edit"/>
+
+                <ImageButton
+                    android:id="@+id/imageButton_myevent_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:tint="@android:color/darker_gray"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_delete"/>
+
+                <ImageButton
+                    android:id="@+id/imageButton_myevent_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:tint="@android:color/darker_gray"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_share"/>
+
+                <ImageButton
+                    android:id="@+id/imageButton_myevent_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:tint="@android:color/darker_gray"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_more"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -48,6 +48,7 @@ import com.tarpost.bryanty.proj_t_post.fragment.BookmarksFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.EventFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.EventJoinFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.HomeFragment;
+import com.tarpost.bryanty.proj_t_post.fragment.MyEventsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.MyPostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.PostsFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.SubscriptionFragment;
@@ -243,6 +244,9 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case R.id.navigation_item_bookmark:
                 fragment= new BookmarksFragment();
+                break;
+            case R.id.navigation_item_event_my:
+                fragment= new MyEventsFragment();
                 break;
             case R.id.navigation_item_event_join:
                 fragment= new EventJoinFragment();
