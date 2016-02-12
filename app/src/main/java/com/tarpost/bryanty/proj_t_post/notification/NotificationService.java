@@ -49,7 +49,7 @@ public class NotificationService extends Service {
         PendingIntent pIntent = PendingIntent.getActivity(this,numberNotification,
                 intent1,0);
 
-        if(Build.VERSION.SDK_INT >= 21){
+        if(Build.VERSION.SDK_INT >= 21 && intent != null){
 
             Bundle bundle= intent.getExtras();
             Event event= bundle.getParcelable("joinedEvent");

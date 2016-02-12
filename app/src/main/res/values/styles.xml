@@ -18,6 +18,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <!-- Fullscreen theme for intro. -->
+   <!-- <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>-->
+
     <!-- Collapsing Layout Text Appearance : Expanded and Collapsed -->
     <style name="ExpandedAppBarStyle" parent="@android:style/TextAppearance.Medium">
         <!--<item name="android:textSize">48sp</item>-->

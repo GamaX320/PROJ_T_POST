@@ -140,6 +140,7 @@ public class LoginActivity extends ActionBarActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
                                 editor.putBoolean("login",true);
+                                editor.putBoolean("firstTime",true);
                                 editor.putString("userId", jsonObject.getString("userId"));
                                 editor.putString("userEmail",jsonObject.getString("email"));
                                 editor.putString("userName",jsonObject.getString("name"));

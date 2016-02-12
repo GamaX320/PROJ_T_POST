@@ -29,8 +29,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.tarpost.bryanty.proj_t_post.activity.LoginActivity;
@@ -38,6 +42,7 @@ import com.tarpost.bryanty.proj_t_post.activity.SettingsActivity;
 import com.tarpost.bryanty.proj_t_post.activity.SettingsMainActivity;
 import com.tarpost.bryanty.proj_t_post.activity.UserProfileActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
+import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.fragment.BookmarksFragment;
 import com.tarpost.bryanty.proj_t_post.fragment.EventFragment;
@@ -49,10 +54,16 @@ import com.tarpost.bryanty.proj_t_post.fragment.SubscriptionFragment;
 import com.tarpost.bryanty.proj_t_post.notification.NotificationReceiver;
 import com.tarpost.bryanty.proj_t_post.notification.NotificationService;
 import com.tarpost.bryanty.proj_t_post.object.Event;
+import com.tarpost.bryanty.proj_t_post.slide.Intro;
 import com.tarpost.bryanty.proj_t_post.sqlite.DbHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.*;
@@ -66,10 +77,20 @@ public class MainActivity extends ActionBarActivity {
 
     private MaterialSearchView searchView;
 
+    private List<Event> events;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //check user is first time or not
+        SharedPreferences sharedPreferences = getApplicationContext()
+                .getSharedPreferences("userLogin", Context.MODE_PRIVATE);
+        if(sharedPreferences.getBoolean("firstTime", false)){
+            Intent intent = new Intent(this, Intro.class);
+            startActivity(intent);
+        }
 
         //initial toolbar
         toolbar= (Toolbar)findViewById(R.id.toolbar);
@@ -132,6 +153,7 @@ public class MainActivity extends ActionBarActivity {
         dbHelper.deleteOldEvent();
 
         //setup notification
+        events = new ArrayList<Event>();
         setupNotification();
 
     }
@@ -163,12 +185,12 @@ public class MainActivity extends ActionBarActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            case R.id.action_login:
+          /*  case R.id.action_login:
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 return true;
             case R.id.action_collapsing:
                 startActivity(new Intent(MainActivity.this, UserProfileActivity.class));
-                return true;
+                return true;*/
 
         }
 
@@ -247,6 +269,13 @@ public class MainActivity extends ActionBarActivity {
                         .setNegativeButton(R.string.text_dialog_confirm_no, null).show();
                 return;
                 //break;
+            case R.id.navigation_item_feedback:
+                Intent feedback = new Intent(Intent.ACTION_SEND);
+                feedback.setType("text/email");
+                feedback.putExtra(Intent.EXTRA_EMAIL, new String[] { "proj.x320@gmail.com" });
+                feedback.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
+                startActivity(Intent.createChooser(feedback, "Send Feedback"));
+                return;
         }
 
         fm.beginTransaction().replace(R.id.container, fragment).commit();
@@ -340,10 +369,22 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void setupNotification(){
-        List<Event> events = new ArrayList<Event>();
+//        List<Event> events = new ArrayList<Event>();
         Log.d("Offline Read", "Retrieve...");
         DbHelper dbHelper = new DbHelper(this);
-        events = dbHelper.getAllEventJoin();
+//        events = dbHelper.getAllEventJoin();
+
+        //Check whether online data or offline data
+        if(UserUtil.checkInternetConnection(this.getApplicationContext())){
+            getAllEventsJoin();
+
+            if( events == null || events.size() == 0){
+                events = dbHelper.getAllEventJoin();
+            }
+
+        }else {
+            events = dbHelper.getAllEventJoin();
+        }
 
         if(events != null && events.size() > 0){
 
@@ -387,6 +428,77 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
+    }
+
+    private void getAllEventsJoin(){
+        final UserUtil userUtil = new UserUtil(this.getApplicationContext());
+        final String GET_EVENT_JOIN_URL = "http://projx320.webege" +
+                ".com/tarpost/php/getAllUserEventJoin.php";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                GET_EVENT_JOIN_URL+"?userId="+userUtil.getUserId()
+                , new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try{
+                    int success = response.getInt("success");
+
+                    if(success > 0){
+
+                        JSONArray jsonArray = response.getJSONArray("events");
+
+                        for(int i = 0 ; i < jsonArray.length() ; i++){
+                            Event event = new Event();
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            event.setEventId(jsonObject.getInt("eventId"));
+                            event.setCreatorId(jsonObject.getString("creatorId"));
+                            event.setCreatorName(jsonObject.getString("creatorName"));
+                            event.setAvatarUrl(jsonObject.getString("avatarPic"));
+                            event.setTitle(jsonObject.getString("title"));
+                            event.setContent(jsonObject.getString("content"));
+                            event.setImageUrl(jsonObject.getString("image"));
+
+                            event.setLocationLat(jsonObject.getDouble("locationLat"));
+                            event.setLocationLng(jsonObject.getDouble("locationLng"));
+
+                            event.setStartDateTime(DateUtil.convertStringToDate(jsonObject.getString("startDateTime")));
+                            event.setStartDateTimeStr(DateUtil.convertDateToString(event
+                                    .getStartDateTime()));
+                            event.setEndDateTime(DateUtil.convertStringToDate(jsonObject.getString("endDateTime")));
+                            event.setEndDateTimeStr(DateUtil.convertDateToString(event
+                                    .getEndDateTime()));
+                            event.setUpdateDateTime(DateUtil.convertStringToDate(jsonObject.getString("updateDateTime")));
+
+                            event.setType("J");
+                            event.setAddedDate(new Date());
+
+                            events.add(event);
+                        }
+                        Log.d("response", "Response: " + response.toString());
+
+                    }
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Exception>>>>>>>>>> "+e, Toast.LENGTH_LONG)
+                            .show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.text_message_no_items_available), Toast
+                        .LENGTH_LONG).show();
+                Log.d("response", "Error Response: " + error.toString());
+            }
+        });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        MyApplication.getInstance().addToReqQueue(jsonObjectRequest);
     }
 
 }

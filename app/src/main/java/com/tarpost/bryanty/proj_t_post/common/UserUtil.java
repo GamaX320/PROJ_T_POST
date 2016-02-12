@@ -19,7 +19,7 @@ import com.tarpost.bryanty.proj_t_post.sqlite.DbHelper;
  */
 public class UserUtil {
 
-    private Boolean login;
+    private Boolean login, firstTime;
     private String userId, userEmail, userName, userAvatar, userCover;
 
     public UserUtil(){
@@ -30,6 +30,7 @@ public class UserUtil {
         SharedPreferences sharedPreferences = context.getSharedPreferences("userLogin", Context.MODE_PRIVATE);
 
         this.login = sharedPreferences.getBoolean("login", false);
+        this.firstTime = sharedPreferences.getBoolean("firstTime", false);
         this.userId = sharedPreferences.getString("userId",null);
         this.userEmail = sharedPreferences.getString("userEmail",null);
         this.userName = sharedPreferences.getString("userName",null);
@@ -43,6 +44,7 @@ public class UserUtil {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putBoolean("login", false);
+        editor.putBoolean("firstTime", true);
         editor.putString("userId", null);
         editor.putString("userEmail",null);
         editor.putString("userName", null);
@@ -130,6 +132,14 @@ public class UserUtil {
 
     public void setLogin(Boolean login) {
         this.login = login;
+    }
+
+    public Boolean getFirstTime() {
+        return firstTime;
+    }
+
+    public void setFirstTime(Boolean firstTime) {
+        this.firstTime = firstTime;
     }
 
     public String getUserId() {

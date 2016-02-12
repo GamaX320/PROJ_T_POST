@@ -154,6 +154,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tarpost.bryanty.proj_t_post.activity.LoginActivity"/>
         </activity>
+        <activity
+            android:name=".slide.Intro"
+            android:label="@string/title_activity_intro"
+            android:theme="@style/FullscreenTheme">
+        </activity>
 
         <service android:name=".notification.NotificationService"
                  android:enabled="true"></service>
