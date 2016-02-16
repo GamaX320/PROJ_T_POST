@@ -100,11 +100,39 @@ public class DateUtil {
         return dateStr;
     }
 
+    public static String convertDateToStringWithout1900(Date date){
+        String dateStr = "";
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, date.getYear());
+        cal.set(Calendar.MONTH, date.getMonth());
+        cal.set(Calendar.DAY_OF_MONTH, date.getDate());
+
+        cal.set(Calendar.HOUR, date.getHours());
+        cal.set(Calendar.MINUTE, date.getMinutes());
+        cal.set(Calendar.SECOND, date.getSeconds());
+        dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cal.getTime());
+
+        return dateStr;
+    }
+
     public static String convertYearMonthDayToString(int year, int month, int day){
         String dateStr = "";
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        dateStr = new SimpleDateFormat("E, MMM d, yyyy").format(cal.getTime());
+
+        return dateStr;
+    }
+
+    public static String convertYearMonthDayToStringWith1900(int year, int month, int day){
+        String dateStr = "";
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year+1900);
         cal.set(Calendar.MONTH, month);
         cal.set(Calendar.DAY_OF_MONTH, day);
         dateStr = new SimpleDateFormat("E, MMM d, yyyy").format(cal.getTime());

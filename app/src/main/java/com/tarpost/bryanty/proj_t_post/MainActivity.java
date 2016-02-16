@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -86,11 +87,13 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         //check user is first time or not
-        SharedPreferences sharedPreferences = getApplicationContext()
-                .getSharedPreferences("userLogin", Context.MODE_PRIVATE);
-        if(sharedPreferences.getBoolean("firstTime", false)){
-            Intent intent = new Intent(this, Intro.class);
-            startActivity(intent);
+        if(Build.VERSION.SDK_INT >= 21){
+            SharedPreferences sharedPreferences = getApplicationContext()
+                    .getSharedPreferences("userLogin", Context.MODE_PRIVATE);
+            if(sharedPreferences.getBoolean("firstTime", false)){
+                Intent intent = new Intent(this, Intro.class);
+                startActivity(intent);
+            }
         }
 
         //initial toolbar
@@ -150,17 +153,17 @@ public class MainActivity extends ActionBarActivity {
 
         //delete old offline data
         DbHelper dbHelper = new DbHelper(this);
-        dbHelper.deleteOldPost();
-        dbHelper.deleteOldEvent();
+//        dbHelper.deleteOldPost();
+//        dbHelper.deleteOldEvent();
 
         //setup notification
-        if(UserUtil.checkNotificationOnOff(this)){
-            Log.v("NotificationOnOff","Receive notification On");
-            events = new ArrayList<Event>();
-            setupNotification();
-        }else{
-            Log.v("NotificationOnOff","Receive notification Off");
-        }
+//        if(UserUtil.checkNotificationOnOff(this)){
+//            Log.v("NotificationOnOff","Receive notification On");
+//            events = new ArrayList<Event>();
+//            setupNotification();
+//        }else{
+//            Log.v("NotificationOnOff","Receive notification Off");
+//        }
 
     }
 

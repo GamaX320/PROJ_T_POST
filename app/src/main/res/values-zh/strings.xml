@@ -1,0 +1,210 @@
+<resources>
+    <string name="app_name">TARPost</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">设置</string>
+    <string name="nav_item_home">主页</string>
+    <string name="nav_item_post">我的帖子</string>
+    <string name="nav_item_event">活动</string>
+    <string name="nav_item_event_my">我的活动</string>
+    <string name="nav_item_eventJoin">参加活动</string>
+    <string name="nav_item_bookmark">书签</string>
+    <string name="nav_item_subscription">订阅</string>
+    <string name="nav_item_settings">设置</string>
+    <string name="nav_item_logout">登出</string>
+    <string name="nav_item_feedback">反馈</string>
+
+    <string-array name="navigation_drawer_item">
+        <item>主页</item>
+        <item>我的帖子</item>
+        <item>书签</item>
+        <item>订阅</item>
+        <item>设置</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_add_information">添加帖子</string>
+    <string name="title_activity_login">登录</string>
+    <string name="title_activity_register">注册</string>
+    <string name="title_activity_post_more_details">帖子详细</string>
+    <string name="title_activity_event_more_details">活动详细</string>
+    <string name="title_activity_search_result">搜索结果</string>
+    <string name="title_activity_add_event">添加活动</string>
+    <string name="title_activity_user_profile">用户资料</string>
+    <string name="title_activity_user_profile_action">用户操作</string>
+    <string name="title_activity_post_more_details_collapsing">PostMoreDetailsCollapsingActivity
+    </string>
+    <string name="title_activity_post_more_details_action">PostMoreDetailsActionActivity</string>
+    <string name="title_activity_post_settings">设置</string>
+    <string name="title_activity_forget_password">忘了密码</string>
+    <string name="title_activity_intro">简介</string>
+
+    <string name="text_search">搜索</string>
+
+    <string name="text_title_clear_offline">清除离线数据</string>
+    <string name="text_content_clear_offline">这将清除所有脱机数据</string>
+    <string name="text_title_theme">主题颜色</string>
+    <string name="text_content_theme">选择颜色主题应用</string>
+    <string name="text_info_theme">重新应用程序才能生效</string>
+    <string name="text_title_notification_on_off">通知提醒</string>
+    <string name="text_content_notification_on_off">收到通知提醒事件你加入</string>
+
+    <string-array name="theme_color_items">
+        <item>红色</item>
+        <item>紫色</item>
+        <item>靛青色</item>
+        <item>蓝色</item>
+        <item>蒂尔色</item>
+        <item>橙色</item>
+        <item>棕色</item>
+        <item>灰色</item>
+    </string-array>
+
+    <string-array name="theme_color_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
+    <string name="text_dialog_confirm_title">确认</string>
+    <string name="text_dialog_confirm_content">你确定要执行?</string>
+    <string name="text_dialog_confirm_yes">是</string>
+    <string name="text_dialog_confirm_no">不</string>
+    <string name="text_dialog_confirm_cancel">取消</string>
+    <string name="text_dialog_adding">添加...</string>
+    <string name="text_dialog_updating">更新...</string>
+    <string name="text_dialog_removing">删除...</string>
+
+    <string name="text_message_insert_user_success">创建用户成功.请检查您的激活邮件</string>
+    <string name="text_message_insert_user_failed">无法创建用户</string>
+    <string name="text_message_insert_success">成功添加</string>
+    <string name="text_message_insert_failed">失败添加</string>
+    <string name="text_message_update_success">成功更新</string>
+    <string name="text_message_update_failed">失败更新</string>
+    <string name="text_message_delete_success">成功删除</string>
+    <string name="text_message_delete_failed">失败删除</string>
+    <string name="text_message_unsubscribe">成功退订</string>
+    <string name="text_message_subscribe">成功订阅</string>
+    <string name="text_message_join_event">成功参加活动</string>
+    <string name="text_message_join_event_failed">失败参加活动</string>
+    <string name="text_message_unjoin_event">未加入活动成功</string>
+    <string name="text_message_unjoin_event_failed">失败未加入活动</string>
+    <string name="text_message_no_items_available">没有更多的项目</string>
+    <string name="text_message_fetch_offline_data">获取的离线数据</string>
+    <string name="text_message_clear_offline_data">清除脱机数据成功</string>
+    <string name="text_message_update_password">新密码重置成功</string>
+    <string name="text_message_update_password_failed">无法重置新密码</string>
+
+
+    <string name="text_success_login">登录成功</string>
+    <string name="text_error_required">必须填写</string>
+    <string name="text_error_login">您输入了一个无效的用户名或密码</string>
+
+    <string name="text_intro_title1">欢迎TARPost</string>
+    <string name="text_intro_content1">TARPost 是一个应用程序允许您分发信息</string>
+    <string name="text_intro_title2">Post</string>
+    <string name="text_intro_content2">您可以即时发布的信息或事件</string>
+    <string name="text_intro_title3">Search</string>
+    <string name="text_intro_content3">您可以搜索的人，活动，即时发布</string>
+    <string name="text_intro_title4">Bookmarks</string>
+    <string name="text_intro_content4">You can bookmarks any post for future use even you
+        are offline</string>
+
+    <string name="text_skip">Skip</string>
+
+
+    <string name="text_create_post">Create Post</string>
+    <string name="text_modify_post">Modify Post</string>
+    <string name="text_select_image">Select Image</string>
+    <string name="text_email">Email</string>
+    <string name="text_password">Password</string>
+    <string name="text_login">Login</string>
+    <string name="text_send_new_password">Send New Password</string>
+    <string name="text_forget_password">Forget Password?</string>
+    <string name="text_forget_password_content">To reset your password, enter your email and we
+        will send you a new password</string>
+    <string name="text_signUp">No account yet? Click here to Sign Up</string>
+    <string name="text_name">Name</string>
+    <string name="text_phoneNo">Phone No</string>
+    <string name="text_avatarPic">Avatar Picture</string>
+    <string name="text_coverPic">Cover Picture</string>
+    <string name="text_faculty">Faculty</string>
+    <string name="text_course">Course</string>
+    <string name="text_description">Description</string>
+    <string name="text_bookmark">Bookmark</string>
+    <string name="text_share">Share</string>
+    <string name="text_title">Title</string>
+    <string name="text_content">Content</string>
+    <string name="text_image">Image</string>
+    <string name="text_duration">Duration</string>
+    <string name="text_startTime">Start Time</string>
+    <string name="text_endTime">End Time</string>
+    <string name="text_location">Location</string>
+    <string name="text_event_details">Event Details</string>
+    <string name="text_members">Members</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+    <string name="pref_title_vibrate">Vibrate</string>
+
+
+
+</resources>

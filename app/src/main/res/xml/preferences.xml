@@ -15,10 +15,10 @@
         android:entries="@array/theme_color_items"
         android:entryValues="@array/theme_color_values" />
 
-    <CheckBoxPreference android:title="@string/text_title_notification_on_off"
+    <!--<CheckBoxPreference android:title="@string/text_title_notification_on_off"
                         android:defaultValue="true"
                         android:summary="@string/text_content_notification_on_off"
-                        android:key="notificationOnOff" />
+                        android:key="notificationOnOff" />-->
 
     <Preference
         android:title="@string/text_title_clear_offline"

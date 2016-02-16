@@ -162,14 +162,11 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onLongClick(View view, int position) {
-//                Event event = event.get(position);
-//                Toast.makeText(getActivity(), event.getTitle() + " is selected!", Toast
-//                        .LENGTH_SHORT)
-//                        .show();
-//                Intent intent = new Intent(getActivity(), PostMoreDetailsActionActivity.class);
-//                intent.putExtra("mode", "MODIFY");
-//                intent.putExtra("detailsEvent", event);
-//                startActivity(intent);
+                Event event = events.get(position);
+                Intent intent = new Intent(getActivity(), AddEventActivity.class);
+                intent.putExtra("mode", "MODIFY");
+                intent.putExtra("detailsEvent", event);
+                startActivity(intent);
             }
         }));
 
@@ -208,24 +205,35 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
                             event.setContent(jsonObject.getString("content"));
                             event.setImageUrl(jsonObject.getString("image"));
 
-                            event.setLocationLat(jsonObject.getDouble("locationLat"));
-                            event.setLocationLng(jsonObject.getDouble("locationLng"));
+                            if(jsonObject.getString("locationLat") != null &&
+                                    jsonObject.getString("locationLat") != "" &&
+                                    jsonObject.getString("locationLat") != "null"){
+                                event.setLocationLat(jsonObject.getDouble("locationLat"));
+                            }
+
+                            if(jsonObject.getString("locationLng") != null &&
+                                    jsonObject.getString("locationLng") != "" &&
+                                    jsonObject.getString("locationLng") != "null"){
+                                event.setLocationLng(jsonObject.getDouble("locationLng"));
+                            }
 
                             //TODO: If dont have internet access might occur fc
-                            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-                            try {
-                                List<Address> addresses = geocoder.getFromLocation(event.getLocationLat(),
-                                        event.getLocationLng(),1);
+                            if(event.getLocationLat() != null && event.getLocationLng() != null){
+                                Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                                try {
+                                    List<Address> addresses = geocoder.getFromLocation(event.getLocationLat(),
+                                            event.getLocationLng(),1);
 
-                                if(addresses.size() > 0){
-                                    Log.v("location","location result > "+addresses.get(0).getLocality());
-                                    Log.v("location","location result > "+addresses.get(0)
-                                            .getAddressLine(0));
+                                    if(addresses.size() > 0){
+                                        Log.v("location","location result > "+addresses.get(0).getLocality());
+                                        Log.v("location","location result > "+addresses.get(0)
+                                                .getAddressLine(0));
 
-                                    event.setLocation(addresses.get(0).getLocality());
+                                        event.setLocation(addresses.get(0).getLocality());
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (IOException e) {
-                                e.printStackTrace();
                             }
 
                             event.setStartDateTime(DateUtil.convertStringToDate(jsonObject.getString("startDateTime")));

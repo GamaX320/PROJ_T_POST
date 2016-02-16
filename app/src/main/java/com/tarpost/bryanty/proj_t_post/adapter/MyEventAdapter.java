@@ -25,6 +25,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.tarpost.bryanty.proj_t_post.R;
+import com.tarpost.bryanty.proj_t_post.activity.AddEventActivity;
 import com.tarpost.bryanty.proj_t_post.activity.EventMoreDetailsActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.DateUtil;
@@ -71,23 +72,25 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
         holder.content.setText(currentItem.getContent());
         holder.startDateTime.setText(DateUtil.convertDateToString(currentItem.getStartDateTime()));
         holder.endDateTime.setText(DateUtil.convertDateToString(currentItem.getEndDateTime()));
-        Geocoder geocoder = new Geocoder(holder.itemView.getContext(), Locale.getDefault());
 
-        //TODO: If dont have internet access might occur fc
-        try {
-            List<Address> addresses = geocoder.getFromLocation(currentItem.getLocationLat(),
-                    currentItem.getLocationLng(),1);
+        if(currentItem.getLocationLat() != null && currentItem.getLocationLng() != null){
+            //TODO: If dont have internet access might occur fc
+            Geocoder geocoder = new Geocoder(holder.itemView.getContext(), Locale.getDefault());
+            try {
+                List<Address> addresses = geocoder.getFromLocation(currentItem.getLocationLat(),
+                        currentItem.getLocationLng(),1);
 
-            if(addresses.size() > 0){
-                Log.v("location", "location result > " + addresses.get(0).getLocality());
-                Log.v("location","location result > "+addresses.get(0)
-                        .getAddressLine(0));
+                if(addresses.size() > 0){
+                    Log.v("location", "location result > " + addresses.get(0).getLocality());
+                    Log.v("location","location result > "+addresses.get(0)
+                            .getAddressLine(0));
 
-                currentItem.setLocation(addresses.get(0).getLocality());
-                holder.location.setText(currentItem.getLocation());
+                    currentItem.setLocation(addresses.get(0).getLocality());
+                    holder.location.setText(currentItem.getLocation());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
@@ -173,10 +176,10 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
         public void onClick(final View v){
 
             if(v.getId() == modify.getId()) {
-//                Intent intent = new Intent(v.getContext(), PostMoreDetailsActionActivity.class);
-//                intent.putExtra("mode", "MODIFY");
-//                intent.putExtra("detailsPost", post);
-//                v.getContext().startActivity(intent);
+                Intent intent = new Intent(v.getContext(), AddEventActivity.class);
+                intent.putExtra("mode", "MODIFY");
+                intent.putExtra("detailsEvent", event);
+                v.getContext().startActivity(intent);
 
             }else if(v.getId() == delete.getId()){
                 AlertDialog alertDialog = new AlertDialog.Builder(v.getContext())

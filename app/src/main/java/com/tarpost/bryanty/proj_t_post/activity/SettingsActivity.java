@@ -70,7 +70,8 @@ public class SettingsActivity extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+//                AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                AlertDialog alertDialog = new AlertDialog.Builder(preference.getContext())
                         .setTitle(getResources().getString(R.string
                                 .text_dialog_confirm_title))
                         .setMessage(getResources().getString(R.string

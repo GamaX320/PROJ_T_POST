@@ -316,7 +316,10 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()){
             case R.id.button_add:
-                startActivity(new Intent(getActivity(), AddEventActivity.class));
+//                startActivity(new Intent(getActivity(), AddEventActivity.class));
+                Intent intent = new Intent(getActivity(), AddEventActivity.class);
+                intent.putExtra("mode", "NEW");
+                startActivity(intent);
                 break;
         }
     }

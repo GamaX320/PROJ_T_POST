@@ -40,7 +40,7 @@
             android:maxLines="10"
             app:met_floatingLabel="normal"
             app:met_iconLeft="@drawable/ic_post"
-            app:met_maxCharacters="255"
+            app:met_maxCharacters="500"
             android:layout_marginRight="10dp"
             android:hint="Content" />
 
@@ -114,7 +114,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:text="Sun,Jan 31,2016"
         android:gravity="center"
         android:textSize="16dip"
         android:onClick="datePicker"
@@ -127,7 +126,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="9.30 AM"
             android:gravity="center"
             android:textSize="16dip"
             android:onClick="timePicker"
@@ -159,7 +157,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="27dp"
-                android:text="Sun,Jan 31,2016"
                 android:gravity="center"
                 android:textSize="16dip"
                 android:onClick="datePicker"
@@ -172,7 +169,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="13.30 AM"
                 android:gravity="center"
                 android:textSize="16dip"
                 android:onClick="timePicker"
@@ -214,7 +210,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/floating_action_button_margin"
             android:src="@mipmap/ic_done"
-            android:onClick="addEvent"/>
+            android:onClick="eventAction"/>
 
     </LinearLayout>
 

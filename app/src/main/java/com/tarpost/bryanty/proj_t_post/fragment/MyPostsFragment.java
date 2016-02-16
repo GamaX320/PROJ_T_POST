@@ -164,8 +164,8 @@ public class MyPostsFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onLongClick(View view, int position) {
                 Post post = posts.get(position);
-                Toast.makeText(getActivity(), post.getTitle() + " is selected!", Toast.LENGTH_SHORT)
-                        .show();
+//                Toast.makeText(getActivity(), post.getTitle() + " is selected!", Toast.LENGTH_SHORT)
+//                        .show();
 //                Intent intent = new Intent(getActivity(), PostMoreDetailsActivity.class);
                 Intent intent = new Intent(getActivity(), PostMoreDetailsActionActivity.class);
                 intent.putExtra("mode", "MODIFY");

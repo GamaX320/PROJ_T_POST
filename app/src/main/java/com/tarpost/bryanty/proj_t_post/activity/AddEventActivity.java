@@ -83,9 +83,14 @@ public class AddEventActivity  extends ActionBarActivity {
     private static final String ADD_EVENT_URL = "http://projx320.webege" +
             ".com/tarpost/php/insertEvent.php";
 
+    private static final String UPDATE_EVENT_URL = "http://projx320.webege" +
+            ".com/tarpost/php/updateEvent.php";
+
     //JSON element ids from repsonse of php script:
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+
+    private String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,18 +119,44 @@ public class AddEventActivity  extends ActionBarActivity {
         minute_x = c.get(Calendar.MINUTE);
         second_x = c.get(Calendar.SECOND);
 
+        startDateButton.setText(DateUtil.convertYearMonthDayToString(year_x, month_x, day_x));
+        endDateButton.setText(DateUtil.convertYearMonthDayToString(year_x, month_x, day_x));
+        startTimeButton.setText(DateUtil.convertHourMinuteToString(hour_x, minute_x));
+        endTimeButton.setText(DateUtil.convertHourMinuteToString(hour_x, minute_x));
+
         event = new Event();
         startDateTime= new Date();
         endDateTime = new Date();
+
+        startDateTime.setYear(startDateTime.getYear()+1900);
+        endDateTime.setYear(endDateTime.getYear()+1900);
 
         //initial components
         eventTitle = (EditText)findViewById(R.id.eventTitle);
         eventContent = (EditText)findViewById(R.id.eventContent);
         imageView = (ImageView)findViewById(R.id.eventImageView);
 
-        pdProgressAdd = new ProgressDialog(this);
-        pdProgressAdd.setMessage(getResources().getString(R.string.text_dialog_adding));
-        pdProgressAdd.setCancelable(false);
+//        pdProgressAdd = new ProgressDialog(this);
+//        pdProgressAdd.setMessage(getResources().getString(R.string.text_dialog_adding));
+//        pdProgressAdd.setCancelable(false);
+
+        //check mode NEW or MODIFY
+        Bundle bundle= getIntent().getExtras();
+        mode= bundle.getString("mode");
+
+        if(mode.equals("NEW")){
+            pdProgressAdd = new ProgressDialog(this);
+            pdProgressAdd.setMessage(getResources().getString(R.string.text_dialog_adding));
+            pdProgressAdd.setCancelable(false);
+
+        }else if(mode.equals("MODIFY")){
+            pdProgressAdd = new ProgressDialog(this);
+            pdProgressAdd.setMessage(getResources().getString(R.string.text_dialog_updating));
+            pdProgressAdd.setCancelable(false);
+
+            getEvent();
+        }
+
     }
 
     public void uploadImage(View v){
@@ -276,7 +307,11 @@ public class AddEventActivity  extends ActionBarActivity {
 
                 final List<String> addressList = new ArrayList<String>();
                 for(int i = 0; i < addresses.size() ; i++){
-                    addressList.add(addresses.get(i).getLocality());
+//                    addressList.add(addresses.get(i).getLocality());
+                    addressList.add(addresses.get(i).getLocality()+" "
+                            +addresses.get(i).getAdminArea()+" "
+                            +addresses.get(i).getCountryName()+" "
+                            +addresses.get(i).getPostalCode()+" ");
                 }
 
                 CharSequence[] charAddresses = addressList.toArray(new CharSequence[addressList.size
@@ -288,22 +323,23 @@ public class AddEventActivity  extends ActionBarActivity {
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                                Toast.makeText(AddEventActivity.this, "selected location> "+text,
-                                        Toast.LENGTH_LONG)
-                                        .show();
-
-                                for(int j = 0 ; j < addresses.size() ; j++){
-                                    if(addresses.get(j).getLocality().equals(text)){
-                                        event.setLocationLat(addresses.get(j).getLatitude());
-                                        event.setLocationLng(addresses.get(j).getLongitude());
-
-                                        Log.v("location", "location2 getLatitude > " + addresses
-                                                .get(j).getLatitude());
-                                        Log.v("location", "location2 getLongitude > " + addresses
-                                                .get(j)
-                                                .getLongitude());
-                                    }
-                                }
+                                event.setLocationLat(addresses.get(which).getLatitude());
+                                event.setLocationLng(addresses.get(which).getLongitude());
+                                eventLocation.setText(text.toString());
+//                                for(int j = 0 ; j < addresses.size() ; j++){
+//                                    if(addresses.get(j).getLocality().equals(text)){
+//                                        event.setLocationLat(addresses.get(j).getLatitude());
+//                                        event.setLocationLng(addresses.get(j).getLongitude());
+//
+//                                        Log.v("location", "location2 getLatitude > " + addresses
+//                                                .get(j).getLatitude());
+//                                        Log.v("location", "location2 getLongitude > " + addresses
+//                                                .get(j)
+//                                                .getLongitude());
+//
+//                                        eventLocation.setText(addresses.get(j).getLocality().toString());
+//                                    }
+//                                }
                             }
                         })
                         .positiveText(R.string.text_dialog_confirm_cancel)
@@ -315,9 +351,36 @@ public class AddEventActivity  extends ActionBarActivity {
             e.printStackTrace();
         }
     }
+    public void eventAction(View view){
+        //Showing progress dialog
+        pdProgressAdd.show();
+
+        if(eventTitle.getText().toString().equals("")){
+            pdProgressAdd.dismiss();
+            eventTitle.setError(getResources().getString(R.string.text_error_required));
+            eventTitle.requestFocus();
+            return;
+        }
+
+        if(eventContent.getText().toString().equals("")){
+            pdProgressAdd.dismiss();
+            eventContent.setError(getResources().getString(R.string.text_error_required));
+            eventContent.requestFocus();
+            return;
+        }
+
+        if(mode.equals("NEW")){
+            addEvent();
+        }else if(mode.equals("MODIFY")){
+            updateEvent();
+        }
+
+
+    }
 
     //add event onClick listener
-    public void addEvent(View view){
+//    public void addEvent(View view){
+    public void addEvent(){
         pdProgressAdd.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, ADD_EVENT_URL
@@ -327,7 +390,8 @@ public class AddEventActivity  extends ActionBarActivity {
                 pdProgressAdd.dismiss();
                 eventTitle.setText("");
                 eventContent.setText("");
-                Log.d("response" ,"Register Response: " + response.toString());
+                eventLocation.setText("");
+                Log.d("response" ,"Add Response: " + response.toString());
 
             }
         }, new Response.ErrorListener() {
@@ -350,14 +414,20 @@ public class AddEventActivity  extends ActionBarActivity {
                 params.put("content", eventContent.getText().toString());
 
                 //set image param
-                params.put("image", getStringImage(bitmap));
+                if(bitmap != null){
+                    params.put("image", getStringImage(bitmap));
+                }
 
-                params.put("startDateTime", DateUtil.convertDateToString(startDateTime));
-                params.put("endDateTime", DateUtil.convertDateToString(endDateTime));
+                params.put("startDateTime", DateUtil.convertDateToStringWithout1900(startDateTime));
+                params.put("endDateTime", DateUtil.convertDateToStringWithout1900(endDateTime));
 
-                //TODO: set location latitude and longtitude
-                params.put("locationLat", getStringImage(bitmap));
-                params.put("locationLng", getStringImage(bitmap));
+                if(event.getLocationLat() != null){
+                    params.put("locationLat", event.getLocationLat().toString());
+                }
+
+                if(event.getLocationLng() != null){
+                    params.put("locationLng", event.getLocationLng().toString());
+                }
 
                 return params;
             }
@@ -370,4 +440,116 @@ public class AddEventActivity  extends ActionBarActivity {
         MyApplication.getInstance().addToReqQueue(stringRequest);
     }
 
+    public void updateEvent(){
+        pdProgressAdd.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPDATE_EVENT_URL
+                , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                pdProgressAdd.dismiss();
+                eventTitle.setText("");
+                eventContent.setText("");
+                eventLocation.setText("");
+
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.text_message_update_success), Toast
+                        .LENGTH_LONG).show();
+
+                finish();
+                Log.d("response" ,"Update Response: " + response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pdProgressAdd.dismiss();
+                Toast.makeText(getApplicationContext(), "Failed to insert", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Reason failed > "+error, Toast
+                        .LENGTH_SHORT).show();
+                Log.d("response" ,"Error Response: " + error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                UserUtil userUtil = new UserUtil(getApplication().getApplicationContext());
+
+                params.put("creatorId", userUtil.getUserId());
+                params.put("eventId", event.getEventId().toString());
+                params.put("title", eventTitle.getText().toString());
+                params.put("content", eventContent.getText().toString());
+
+                //set image param
+                if(bitmap != null){
+                    params.put("image", getStringImage(bitmap));
+                }
+
+                params.put("startDateTime", DateUtil.convertDateToStringWithout1900(startDateTime));
+                params.put("endDateTime", DateUtil.convertDateToStringWithout1900(endDateTime));
+
+                //TODO: set location latitude and longtitude
+                if(event.getLocationLat() != null){
+                    params.put("locationLat", event.getLocationLat().toString());
+                }
+
+                if(event.getLocationLng() != null){
+                    params.put("locationLng", event.getLocationLng().toString());
+                }
+
+                return params;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // Adding request to request queue
+        MyApplication.getInstance().addToReqQueue(stringRequest);
+    }
+
+    private void getEvent(){
+        Bundle bundle= getIntent().getExtras();
+        event= bundle.getParcelable("detailsEvent");
+
+        eventTitle.setText(event.getTitle());
+        eventContent.setText(event.getContent());
+//        if(event.getStartDateTime() != null){
+//            startDateButton.setText(DateUtil.convertYearMonthDayToString(event.getStartDateTime().getYear(),
+//                    event.getStartDateTime().getMonth(), event.getStartDateTime().getDate()));
+//            startTimeButton.setText(DateUtil.convertHourMinuteToString(event.getStartDateTime()
+//                    .getHours(), event.getStartDateTime().getMinutes()));
+//            startDateTime = event.getStartDateTime();
+//        }
+//        if(event.getEndDateTime() != null){
+//            endDateButton.setText(DateUtil.convertYearMonthDayToString(event.getEndDateTime().getYear(),
+//                    event.getEndDateTime().getMonth(), event.getEndDateTime().getDate()));
+//            endTimeButton.setText(DateUtil.convertHourMinuteToString(event.getEndDateTime()
+//                    .getHours(), event.getEndDateTime().getMinutes()));
+//            endDateTime = event.getEndDateTime();
+//
+//        }
+
+        if(event.getStartDateTimeStr() != null){
+            Date startDateTime = DateUtil.convertStringToDate(event.getStartDateTimeStr());
+            startDateButton.setText(DateUtil.convertYearMonthDayToStringWith1900(startDateTime.getYear(),
+                    startDateTime.getMonth(), startDateTime.getDate()));
+            startTimeButton.setText(DateUtil.convertHourMinuteToString(startDateTime.getHours(),
+                    startDateTime.getMinutes()));
+            this.startDateTime = startDateTime;
+        }
+
+        if(event.getEndDateTimeStr() != null){
+            Date endDateTime = DateUtil.convertStringToDate(event.getEndDateTimeStr());
+            endDateButton.setText(DateUtil.convertYearMonthDayToStringWith1900(endDateTime.getYear(),
+                    endDateTime.getMonth(), endDateTime.getDate()));
+            endTimeButton.setText(DateUtil.convertHourMinuteToString(endDateTime.getHours(),
+                    endDateTime.getMinutes()));
+            this.endDateTime = endDateTime;
+        }
+
+        eventLocation.setText(event.getLocation());
+
+
+
+    }
 }
