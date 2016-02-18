@@ -113,42 +113,42 @@
     <string name="text_intro_title3">Search</string>
     <string name="text_intro_content3">您可以搜索的人，活动，即时发布</string>
     <string name="text_intro_title4">Bookmarks</string>
-    <string name="text_intro_content4">You can bookmarks any post for future use even you
-        are offline</string>
+    <string name="text_intro_content4">您可以添加书签以备将来使用任何职位连你
+        处于离线状态</string>
 
-    <string name="text_skip">Skip</string>
+    <string name="text_skip">跳过</string>
 
 
-    <string name="text_create_post">Create Post</string>
-    <string name="text_modify_post">Modify Post</string>
-    <string name="text_select_image">Select Image</string>
-    <string name="text_email">Email</string>
-    <string name="text_password">Password</string>
-    <string name="text_login">Login</string>
-    <string name="text_send_new_password">Send New Password</string>
-    <string name="text_forget_password">Forget Password?</string>
-    <string name="text_forget_password_content">To reset your password, enter your email and we
-        will send you a new password</string>
-    <string name="text_signUp">No account yet? Click here to Sign Up</string>
-    <string name="text_name">Name</string>
-    <string name="text_phoneNo">Phone No</string>
-    <string name="text_avatarPic">Avatar Picture</string>
-    <string name="text_coverPic">Cover Picture</string>
-    <string name="text_faculty">Faculty</string>
-    <string name="text_course">Course</string>
-    <string name="text_description">Description</string>
-    <string name="text_bookmark">Bookmark</string>
-    <string name="text_share">Share</string>
-    <string name="text_title">Title</string>
-    <string name="text_content">Content</string>
-    <string name="text_image">Image</string>
-    <string name="text_duration">Duration</string>
-    <string name="text_startTime">Start Time</string>
-    <string name="text_endTime">End Time</string>
-    <string name="text_location">Location</string>
-    <string name="text_event_details">Event Details</string>
-    <string name="text_members">Members</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="text_create_post">创建帖子</string>
+    <string name="text_modify_post">修改帖子</string>
+    <string name="text_select_image">选择图片</string>
+    <string name="text_email">电子邮件</string>
+    <string name="text_password">密码</string>
+    <string name="text_login">登录</string>
+    <string name="text_send_new_password">发送新密码</string>
+    <string name="text_forget_password">忘记密码?</string>
+    <string name="text_forget_password_content">要重置密码,请输入您的电子邮件,我们
+        会送你一个新的密码</string>
+    <string name="text_signUp">没有帐号? 点击这里注册</string>
+    <string name="text_name">姓名</string>
+    <string name="text_phoneNo">电话号码</string>
+    <string name="text_avatarPic">头像图片</string>
+    <string name="text_coverPic">封面图片</string>
+    <string name="text_faculty">学院系</string>
+    <string name="text_course">课程</string>
+    <string name="text_description">描述</string>
+    <string name="text_bookmark">书签</string>
+    <string name="text_share">分享</string>
+    <string name="text_title">标题</string>
+    <string name="text_content">内容</string>
+    <string name="text_image">图像</string>
+    <string name="text_duration">为期</string>
+    <string name="text_startTime">开始时间</string>
+    <string name="text_endTime">结束时间</string>
+    <string name="text_location">地点</string>
+    <string name="text_event_details">活动详情</string>
+    <string name="text_members">会员</string>
+    <string name="title_activity_settings">设置</string>
 
     <!-- Strings related to Settings -->
 

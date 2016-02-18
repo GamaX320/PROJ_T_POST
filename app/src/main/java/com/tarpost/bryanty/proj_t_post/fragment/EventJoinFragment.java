@@ -58,6 +58,8 @@ public class EventJoinFragment extends Fragment{
 
     private List<Event> events;
 
+    private  DbHelper dbHelper;
+
     public EventJoinFragment() {
         // Required empty public constructor
     }
@@ -85,6 +87,8 @@ public class EventJoinFragment extends Fragment{
         events= new ArrayList<>();
 
         setupRecyclerView(rv_eventJoin);
+
+        dbHelper = new DbHelper(getActivity());
 
         return view;
     }
@@ -202,7 +206,7 @@ public class EventJoinFragment extends Fragment{
 
                             //Offline data
                             Log.d("Offline Insert", "SQLITE Inserting...");
-                            DbHelper dbHelper = new DbHelper(getActivity());
+//                            DbHelper dbHelper = new DbHelper(getActivity());
                             dbHelper.addEvent(event);
 
                             events.add(event);

@@ -185,7 +185,7 @@ public class DbHelper extends SQLiteOpenHelper {
     //Get all posts record
     public List<Post> getAllPost(){
         List<Post> posts = new ArrayList<Post>();
-//        String query = "SELECT * FROM "+TABLE_POST;
+//        String query = "SELECT * FROM "+TABLE_POST; DESC
         String query = "SELECT * FROM "+TABLE_POST+" WHERE "+COLUMN_TYPE+" == 'P' ORDER BY " +
                 ""+COLUMN_UPDATEDATETIME+" DESC";
         SQLiteDatabase db = this.getWritableDatabase();

@@ -70,6 +70,8 @@ public class BookmarksFragment extends Fragment{
 
     private List<Post> posts;
 
+    private DbHelper dbHelper;
+
     public BookmarksFragment() {
         // Required empty public constructor
     }
@@ -92,6 +94,8 @@ public class BookmarksFragment extends Fragment{
         posts= new ArrayList<>();
 
         setupRecyclerView(rv_bookmarks);
+
+        dbHelper = new DbHelper(getActivity());
 
         return view;
     }
@@ -203,7 +207,7 @@ public class BookmarksFragment extends Fragment{
 
                             //Offline data
                             Log.d("Offline Insert", "SQLITE Inserting...");
-                            DbHelper dbHelper = new DbHelper(getActivity());
+//                            DbHelper dbHelper = new DbHelper(getActivity());
                             dbHelper.addPost(post);
 
                             posts.add(post);

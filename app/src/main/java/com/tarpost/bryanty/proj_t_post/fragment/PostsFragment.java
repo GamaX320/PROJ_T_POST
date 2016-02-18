@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.tarpost.bryanty.proj_t_post.MainActivity;
 import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.activity.AddInformationActivity;
 import com.tarpost.bryanty.proj_t_post.activity.PostMoreDetailsActionActivity;
@@ -82,6 +83,8 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
 
     private int page=1;
 
+    private DbHelper dbHelper;
+
     public PostsFragment() {
         // Required empty public constructor
     }
@@ -89,6 +92,7 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbHelper = new DbHelper(getActivity());
     }
 
     @Override
@@ -136,7 +140,8 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
                             +" Title: "+object.getTitle()
                             +" Content: "+object.getContent()
                             +" Type: "+object.getType()
-                            +" Added: "+ object.getAddedDate());
+                            +" Added: "+ object.getAddedDate()
+                            +" Updated: "+ object.getUpdateDateTime());
                 }
 
                 Toast.makeText(getActivity(), getResources().getString(R.string.text_message_fetch_offline_data), Toast
@@ -258,7 +263,7 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
 
                             //Offline data
                             Log.d("Offline Insert", "SQLITE Inserting...");
-                            DbHelper dbHelper = new DbHelper(getActivity());
+//                            DbHelper dbHelper = new DbHelper(getActivity());
                             dbHelper.addPost(post);
 
 //                            Log.d("Offline Read", "Retrieve...");

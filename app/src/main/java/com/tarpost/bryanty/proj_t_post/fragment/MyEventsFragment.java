@@ -70,6 +70,7 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
 
     private List<Event> events;
 
+    private  DbHelper dbHelper;
     public MyEventsFragment() {
         // Required empty public constructor
     }
@@ -96,6 +97,8 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
         //initial button add new
         button_add= (FloatingActionButton)view.findViewById(R.id.button_add_event);
         button_add.setOnClickListener(this);
+
+        dbHelper = new DbHelper(getActivity());
 
         return view;
     }
@@ -249,7 +252,7 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
 
                             //Offline data
                             Log.d("Offline Insert", "SQLITE Inserting...");
-                            DbHelper dbHelper = new DbHelper(getActivity());
+//                            DbHelper dbHelper = new DbHelper(getActivity());
                             dbHelper.addEvent(event);
 
                             events.add(event);

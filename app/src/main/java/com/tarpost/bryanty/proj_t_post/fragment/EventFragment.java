@@ -78,6 +78,8 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
     private int page=1;
 
+    private  DbHelper dbHelper;
+
     public EventFragment() {
         // Required empty public constructor
     }
@@ -109,6 +111,8 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         //initial button add new
         button_add= (FloatingActionButton)view.findViewById(R.id.button_add);
         button_add.setOnClickListener(this);
+
+        dbHelper = new DbHelper(getActivity());
 
         return view;
     }
@@ -269,7 +273,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
                             //Offline data
                             Log.d("Offline Insert", "SQLITE Inserting...");
-                            DbHelper dbHelper = new DbHelper(getActivity());
+//                            DbHelper dbHelper = new DbHelper(getActivity());
                             dbHelper.addEvent(event);
 
                             // items.add(post);

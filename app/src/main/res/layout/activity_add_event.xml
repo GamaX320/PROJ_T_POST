@@ -68,7 +68,6 @@
                 android:layout_weight="1"
                 android:scaleType="fitXY"
                 android:padding="1dp"
-                android:tint="@android:color/darker_gray"
                 android:src="@drawable/ic_image"/>
 
             <Button
