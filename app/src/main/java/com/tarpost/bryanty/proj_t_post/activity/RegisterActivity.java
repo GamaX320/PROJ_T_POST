@@ -192,17 +192,28 @@ public class RegisterActivity extends ActionBarActivity {
             @Override
             public void onResponse(String response) {
                 pdProgressAdd.dismiss();
-                etName.setText("");
-                etEmail.setText("");
-                etPassword.setText("");
-                etPhone.setText("");
-                etFaculty.setText("");
-                etCourse.setText("");
-                etDescription.setText("");
 
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.text_message_insert_user_success), Toast
-                        .LENGTH_LONG)
-                        .show();
+                //{"success":0,"message":"Duplicate email found"}
+                String result = response.substring(11,12);
+                if(result.equals("1")){
+
+                    etName.setText("");
+                    etEmail.setText("");
+                    etPassword.setText("");
+                    etPhone.setText("");
+                    etFaculty.setText("");
+                    etCourse.setText("");
+                    etDescription.setText("");
+
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.text_message_insert_user_success), Toast
+                            .LENGTH_LONG)
+                            .show();
+                }else if(result.equals("0")){
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.text_message_insert_user_duplicate), Toast
+                            .LENGTH_LONG)
+                            .show();
+                }
+
 
                 Log.d("response", "Register Response: " + response.toString());
 

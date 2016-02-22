@@ -82,6 +82,7 @@
     <string name="text_dialog_removing">删除...</string>
 
     <string name="text_message_insert_user_success">创建用户成功.请检查您的激活邮件</string>
+    <string name="text_message_insert_user_duplicate">重复的电子邮件发现</string>
     <string name="text_message_insert_user_failed">无法创建用户</string>
     <string name="text_message_insert_success">成功添加</string>
     <string name="text_message_insert_failed">失败添加</string>

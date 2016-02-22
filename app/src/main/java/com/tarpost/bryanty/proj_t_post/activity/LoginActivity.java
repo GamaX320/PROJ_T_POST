@@ -109,6 +109,20 @@ public class LoginActivity extends ActionBarActivity {
         //Showing progress dialog
         pdProgressAdd.show();
 
+        if(etEmail.getText().toString().equals("")){
+            pdProgressAdd.dismiss();
+            etEmail.setError(getResources().getString(R.string.text_error_required));
+            etEmail.requestFocus();
+            return;
+        }
+
+        if(etPassword.getText().toString().equals("")){
+            pdProgressAdd.dismiss();
+            etPassword.setError(getResources().getString(R.string.text_error_required));
+            etPassword.requestFocus();
+            return;
+        }
+
         // Adding request to request queue
         String testUrl = "http://projx320.webege.com/tarpost/php/checkUserLogin2" +
                 ".php"+"?email="+etEmail.getText().toString()+"&password="+etPassword.getText().toString();

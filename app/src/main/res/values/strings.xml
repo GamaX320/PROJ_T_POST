@@ -90,6 +90,7 @@
 
     <string name="text_message_insert_user_success">Create User Successfully. Please check
         your email for activation</string>
+    <string name="text_message_insert_user_duplicate">Duplicate email found</string>
     <string name="text_message_insert_user_failed">Failed to create user</string>
     <string name="text_message_insert_success">Inserted Successfully</string>
     <string name="text_message_insert_failed">Failed to insert</string>
