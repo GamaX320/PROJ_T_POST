@@ -67,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:hint="@string/text_phoneNo"
+                    android:digits="0123456789+"
                     app:met_floatingLabel="normal"
                     app:met_iconLeft="@drawable/ic_phone"/>
 

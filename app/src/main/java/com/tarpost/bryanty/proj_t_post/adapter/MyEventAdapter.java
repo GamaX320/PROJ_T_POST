@@ -29,6 +29,7 @@ import com.tarpost.bryanty.proj_t_post.activity.AddEventActivity;
 import com.tarpost.bryanty.proj_t_post.activity.EventMoreDetailsActivity;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.DateUtil;
+import com.tarpost.bryanty.proj_t_post.common.UserUtil;
 import com.tarpost.bryanty.proj_t_post.object.Event;
 
 import java.io.IOException;

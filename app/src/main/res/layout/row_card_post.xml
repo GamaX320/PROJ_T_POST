@@ -107,7 +107,7 @@
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageView_image"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:scaleType="centerCrop"/>

@@ -92,6 +92,7 @@
     <string name="text_message_unsubscribe">成功退订</string>
     <string name="text_message_subscribe">成功订阅</string>
     <string name="text_message_join_event">成功参加活动</string>
+    <string name="text_message_already_joined_event">你已经参加了活动</string>
     <string name="text_message_join_event_failed">失败参加活动</string>
     <string name="text_message_unjoin_event">未加入活动成功</string>
     <string name="text_message_unjoin_event_failed">失败未加入活动</string>

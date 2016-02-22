@@ -484,8 +484,8 @@ public class AddEventActivity  extends ActionBarActivity {
                     params.put("image", getStringImage(bitmap));
                 }
 
-                params.put("startDateTime", DateUtil.convertDateToStringWithout1900(startDateTime));
-                params.put("endDateTime", DateUtil.convertDateToStringWithout1900(endDateTime));
+                params.put("startDateTime", DateUtil.convertDateToString(startDateTime));
+                params.put("endDateTime", DateUtil.convertDateToString(endDateTime));
 
                 //TODO: set location latitude and longtitude
                 if(event.getLocationLat() != null){

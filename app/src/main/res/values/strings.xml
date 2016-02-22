@@ -100,6 +100,7 @@
     <string name="text_message_unsubscribe">Unsubscribe Successfully</string>
     <string name="text_message_subscribe">Subscribe Successfully</string>
     <string name="text_message_join_event">Join Event Successfully</string>
+    <string name="text_message_already_joined_event">You already joined the event</string>
     <string name="text_message_join_event_failed">Failed to join event</string>
     <string name="text_message_unjoin_event">Un-join Event Successfully</string>
     <string name="text_message_unjoin_event_failed">Failed to un-join event</string>

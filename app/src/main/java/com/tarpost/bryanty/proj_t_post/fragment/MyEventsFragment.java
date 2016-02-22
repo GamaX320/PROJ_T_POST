@@ -1,5 +1,6 @@
 package com.tarpost.bryanty.proj_t_post.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -71,6 +72,9 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
     private List<Event> events;
 
     private  DbHelper dbHelper;
+
+    private Activity myActivity;
+
     public MyEventsFragment() {
         // Required empty public constructor
     }
@@ -99,6 +103,8 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
         button_add.setOnClickListener(this);
 
         dbHelper = new DbHelper(getActivity());
+
+        myActivity = getActivity();
 
         return view;
     }
@@ -222,7 +228,11 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
 
                             //TODO: If dont have internet access might occur fc
                             if(event.getLocationLat() != null && event.getLocationLng() != null){
-                                Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+
+                                Geocoder geocoder = new Geocoder(myActivity, Locale.getDefault());
+
+//                                Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+
                                 try {
                                     List<Address> addresses = geocoder.getFromLocation(event.getLocationLat(),
                                             event.getLocationLng(),1);

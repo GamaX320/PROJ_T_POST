@@ -75,21 +75,24 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.content.setText(currentItem.getContent());
         holder.startDateTime.setText(DateUtil.convertDateToString(currentItem.getStartDateTime()));
         holder.endDateTime.setText(DateUtil.convertDateToString(currentItem.getEndDateTime()));
-        Geocoder geocoder = new Geocoder(holder.itemView.getContext(), Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(currentItem.getLocationLat(),
-                    currentItem.getLocationLng(),1);
 
-            if(addresses.size() > 0){
-                Log.v("location", "location result > " + addresses.get(0).getLocality());
-                Log.v("location","location result > "+addresses.get(0)
-                        .getAddressLine(0));
+        if(currentItem.getLocationLat() != null && currentItem.getLocationLng() != null){
+            Geocoder geocoder = new Geocoder(holder.itemView.getContext(), Locale.getDefault());
+            try {
+                List<Address> addresses = geocoder.getFromLocation(currentItem.getLocationLat(),
+                        currentItem.getLocationLng(),1);
 
-                currentItem.setLocation(addresses.get(0).getLocality());
-                holder.location.setText(currentItem.getLocation());
+                if(addresses.size() > 0){
+                    Log.v("location", "location result > " + addresses.get(0).getLocality());
+                    Log.v("location","location result > "+addresses.get(0)
+                            .getAddressLine(0));
+
+                    currentItem.setLocation(addresses.get(0).getLocality());
+                    holder.location.setText(currentItem.getLocation());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         ImageLoader imageLoader = MyApplication.getInstance().getImageLoader();
@@ -199,10 +202,20 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                                     public void onResponse(String response) {
                                         pdProgressAdd.dismiss();
 
-                                        Toast.makeText(v.getContext(), v.getResources().getString
-                                                (R.string.text_message_join_event), Toast
-                                                .LENGTH_LONG)
-                                                .show();
+                                        //{"success":0}
+                                        String result = response.substring(11, 12);
+                                        if (result.equals("1")) {
+                                            Toast.makeText(v.getContext(), v.getResources().getString
+                                                    (R.string.text_message_join_event), Toast
+                                                    .LENGTH_LONG)
+                                                    .show();
+                                        }else {
+                                            //failed to insert record
+                                            Toast.makeText(v.getContext(), v.getResources().getString
+                                                    (R.string.text_message_already_joined_event), Toast
+                                                    .LENGTH_LONG)
+                                                    .show();
+                                        }
 
                                     }
                                 }, new Response.ErrorListener() {
@@ -220,7 +233,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                                         Map<String, String> params = new HashMap<String, String>();
                                         SharedPreferences sharedPreferences = v.getContext()
                                                 .getSharedPreferences("userLogin", Context.MODE_PRIVATE);
-                                        params.put("eventMemId", sharedPreferences.getString("userId",null));
+                                        params.put("eventMemId", sharedPreferences.getString("userId", null));
                                         params.put("eventId", event.getEventId().toString());
 
                                         return params;
