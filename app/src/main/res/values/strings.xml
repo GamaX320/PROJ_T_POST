@@ -115,6 +115,7 @@
     <string name="text_success_login">Login Successfully</string>
     <string name="text_error_required">This field required</string>
     <string name="text_error_login">You have entered an invalid username or password</string>
+    <string name="text_error_event_date">Start date time cannot greater than end date time</string>
 
     <string name="text_intro_title1">Welcome to TARPost</string>
     <string name="text_intro_content1">TARPost is an application allow you to distribute

@@ -107,6 +107,7 @@
     <string name="text_success_login">登录成功</string>
     <string name="text_error_required">必须填写</string>
     <string name="text_error_login">您输入了一个无效的用户名或密码</string>
+    <string name="text_error_event_date">开始日期不能超过结束日期</string>
 
     <string name="text_intro_title1">欢迎TARPost</string>
     <string name="text_intro_content1">TARPost 是一个应用程序允许您分发信息</string>

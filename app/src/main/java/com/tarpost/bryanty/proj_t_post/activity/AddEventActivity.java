@@ -369,6 +369,17 @@ public class AddEventActivity  extends ActionBarActivity {
             return;
         }
 
+        if(startDateTime.before(endDateTime)){
+
+        }else if(startDateTime.equals(endDateTime)){
+
+        }else{
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.text_error_event_date), Toast
+                    .LENGTH_LONG).show();
+            pdProgressAdd.dismiss();
+            return;
+        }
+
         if(mode.equals("NEW")){
             addEvent();
         }else if(mode.equals("MODIFY")){
@@ -423,10 +434,14 @@ public class AddEventActivity  extends ActionBarActivity {
 
                 if(event.getLocationLat() != null){
                     params.put("locationLat", event.getLocationLat().toString());
+                }else{
+                    params.put("locationLat", "0.0");
                 }
 
                 if(event.getLocationLng() != null){
                     params.put("locationLng", event.getLocationLng().toString());
+                }else{
+                    params.put("locationLng", "0.0");
                 }
 
                 return params;
@@ -484,8 +499,8 @@ public class AddEventActivity  extends ActionBarActivity {
                     params.put("image", getStringImage(bitmap));
                 }
 
-                params.put("startDateTime", DateUtil.convertDateToString(startDateTime));
-                params.put("endDateTime", DateUtil.convertDateToString(endDateTime));
+                params.put("startDateTime", DateUtil.convertDateToStringWithout1900(startDateTime));
+                params.put("endDateTime", DateUtil.convertDateToStringWithout1900(endDateTime));
 
                 //TODO: set location latitude and longtitude
                 if(event.getLocationLat() != null){
