@@ -161,6 +161,7 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
                 progressBar.setVisibility(View.VISIBLE);
                 events.removeAll(events);
                 getData();
+                adapter.notifyDataSetChanged();
             }
         });
 

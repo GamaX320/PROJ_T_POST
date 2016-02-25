@@ -157,6 +157,7 @@ public class MyPostsFragment extends Fragment implements View.OnClickListener{
                 progressBar.setVisibility(View.VISIBLE);
                 posts.removeAll(posts);
                 getData();
+                adapter.notifyDataSetChanged();
             }
         });
 

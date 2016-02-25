@@ -167,6 +167,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                 page = 1;
                 events.removeAll(events);
                 getData();
+                adapter.notifyDataSetChanged();
             }
         });
 

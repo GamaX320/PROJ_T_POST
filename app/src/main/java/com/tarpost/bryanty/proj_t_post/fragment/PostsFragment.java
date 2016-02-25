@@ -176,6 +176,7 @@ public class PostsFragment extends Fragment implements View.OnClickListener{
                 page = 1;
                 posts.removeAll(posts);
                 getData();
+                adapter.notifyDataSetChanged();
             }
         });
 

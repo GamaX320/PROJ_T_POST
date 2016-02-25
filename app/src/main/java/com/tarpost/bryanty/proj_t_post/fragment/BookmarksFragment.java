@@ -141,6 +141,7 @@ public class BookmarksFragment extends Fragment{
                 progressBar.setVisibility(View.VISIBLE);
                 posts.removeAll(posts);
                 getData();
+                adapter.notifyDataSetChanged();
             }
         });
 

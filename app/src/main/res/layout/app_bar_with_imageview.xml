@@ -27,7 +27,18 @@
             android:onClick="uploadImage"
             android:orientation="horizontal"
             app:layout_collapseMode="parallax"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_image"
+                android:scaleType="fitStart"
+                android:layout_weight="1"
+                android:paddingLeft="12dp"
+                android:layout_gravity="bottom|start"/>
+
+            </LinearLayout>
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/toolbar_imageBackground_temp"

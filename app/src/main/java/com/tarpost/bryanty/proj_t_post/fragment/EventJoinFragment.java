@@ -153,6 +153,7 @@ public class EventJoinFragment extends Fragment{
                 progressBar.setVisibility(View.VISIBLE);
                 events.removeAll(events);
                 getData();
+                adapter.notifyDataSetChanged();
             }
         });
 
