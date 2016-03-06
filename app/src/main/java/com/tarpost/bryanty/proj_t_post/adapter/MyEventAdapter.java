@@ -185,9 +185,9 @@ public class MyEventAdapter extends RecyclerView.Adapter<MyEventAdapter.ViewHold
             }else if(v.getId() == delete.getId()){
                 AlertDialog alertDialog = new AlertDialog.Builder(v.getContext())
                         .setTitle(v.getResources().getString(R.string
-                                .text_dialog_confirm_title))
+                                .text_dialog_delete_event_title))
                         .setMessage(v.getResources().getString(R.string
-                                .text_dialog_confirm_content))
+                                .text_dialog_delete_content))
                         .setPositiveButton(R.string.text_dialog_confirm_yes, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {

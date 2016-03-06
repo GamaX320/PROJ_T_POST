@@ -57,7 +57,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         btSend = (Button)findViewById(R.id.button_send_new_password);
 
         pdProgress = new ProgressDialog(this);
-        pdProgress.setMessage("Reset New Password...");
+        pdProgress.setMessage("Reset Password...");
         pdProgress.setCancelable(false);
 
     }

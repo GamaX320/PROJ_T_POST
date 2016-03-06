@@ -82,7 +82,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R
                 .id.collapsing_toolbar_profile);
-        collapsingToolbarLayout.setTitle("Sample");
+        collapsingToolbarLayout.setTitle(" ");
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarStyle);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarStyle);
 
@@ -274,8 +274,8 @@ public class UserProfileActivity extends AppCompatActivity {
         if(user.getFollowing().equals("1")){
             //Unfollowing the user
             AlertDialog alertDialog = new AlertDialog.Builder(this)
-                    .setTitle(getResources().getString(R.string.text_dialog_confirm_title))
-                    .setMessage(getResources().getString(R.string.text_dialog_confirm_content))
+                    .setTitle(getResources().getString(R.string.text_dialog_unsubscribe_title))
+                    .setMessage(getResources().getString(R.string.text_dialog_unsubscribe_content))
                     .setPositiveButton(R.string.text_dialog_confirm_yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -290,8 +290,8 @@ public class UserProfileActivity extends AppCompatActivity {
         }else{
             //following the user
             AlertDialog alertDialog = new AlertDialog.Builder(this)
-                    .setTitle(getResources().getString(R.string.text_dialog_confirm_title))
-                    .setMessage(getResources().getString(R.string.text_dialog_confirm_content))
+                    .setTitle(getResources().getString(R.string.text_dialog_subscribe_title))
+                    .setMessage(getResources().getString(R.string.text_dialog_subscribe_content))
                     .setPositiveButton(R.string.text_dialog_confirm_yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {

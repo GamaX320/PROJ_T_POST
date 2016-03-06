@@ -88,6 +88,33 @@
     <string name="text_dialog_updating">Updating...</string>
     <string name="text_dialog_removing">Removing...</string>
 
+    //TODO: string label
+    <string name="text_dialog_create_post_title">Create Post</string>
+    <string name="text_dialog_create_event_title">Create Event</string>
+    <string name="text_dialog_create_user_title">Create User</string>
+    <string name="text_dialog_create_content">Are you confirm to create this?</string>
+
+    <string name="text_dialog_modify_post_title">Modify Post</string>
+    <string name="text_dialog_modify_event_title">Modify Event</string>
+    <string name="text_dialog_modify_user_title">Modify User</string>
+    <string name="text_dialog_modify_content">Are you confirm to modify this?</string>
+
+    <string name="text_dialog_delete_post_title">Delete Post</string>
+    <string name="text_dialog_delete_event_title">Delete Event</string>
+    <string name="text_dialog_delete_user_title">Delete User</string>
+    <string name="text_dialog_delete_content">Are you confirm to delete this?</string>
+
+    <string name="text_dialog_join_event_title">Join Event</string>
+    <string name="text_dialog_join_event_content">Are you confirm to join this?</string>
+    <string name="text_dialog_skip_event_title">Skip Event</string>
+    <string name="text_dialog_skip_event_content">Are you confirm to skip this?</string>
+    <string name="text_dialog_subscribe_title">Subscript</string>
+    <string name="text_dialog_subscribe_content">Are you confirm to subscript this?</string>
+    <string name="text_dialog_unsubscribe_title">Un-subscript</string>
+    <string name="text_dialog_unsubscribe_content">Are you confirm to un-subscript this?</string>
+    <string name="text_dialog_bookmark_title">Bookmark</string>
+    <string name="text_dialog_bookmark_content">Are you confirm to delete this bookmark?</string>
+
     <string name="text_message_insert_user_success">Create User Successfully. Please check
         your email for activation</string>
     <string name="text_message_insert_user_duplicate">Duplicate email found</string>
@@ -143,6 +170,9 @@
         will send you a new password</string>
     <string name="text_signUp">No account yet? Click here to Sign Up</string>
     <string name="text_name">Name</string>
+    <string name="text_name_required">* Name</string>
+    <string name="text_email_required">* Email</string>
+    <string name="text_password_required">* Password</string>
     <string name="text_phoneNo">Phone No</string>
     <string name="text_avatarPic">Avatar Picture</string>
     <string name="text_coverPic">Cover Picture</string>

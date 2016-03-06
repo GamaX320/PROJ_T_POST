@@ -56,7 +56,7 @@
             app:met_floatingLabel="normal"
             app:met_iconLeft="@drawable/ic_username"
             android:layout_marginRight="10dp"
-            android:hint="@string/text_name" />
+            android:hint="@string/text_name_required" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/userEmail"
@@ -65,7 +65,7 @@
             app:met_floatingLabel="normal"
             app:met_iconLeft="@drawable/ic_email"
             android:layout_marginRight="10dp"
-            android:hint="@string/text_email" />
+            android:hint="@string/text_email_required" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/userPassword"
@@ -74,7 +74,7 @@
             app:met_floatingLabel="normal"
             app:met_iconLeft="@drawable/ic_password"
             android:layout_marginRight="10dp"
-            android:hint="@string/text_password"
+            android:hint="@string/text_password_required"
             android:inputType="textPassword"/>
 
         <com.rengwuxian.materialedittext.MaterialEditText
