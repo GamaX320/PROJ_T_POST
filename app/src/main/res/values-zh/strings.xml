@@ -81,6 +81,32 @@
     <string name="text_dialog_updating">更新...</string>
     <string name="text_dialog_removing">删除...</string>
 
+    <string name="text_dialog_create_post_title">创建帖子</string>
+    <string name="text_dialog_create_event_title">创建活动</string>
+    <string name="text_dialog_create_user_title">创建用户</string>
+    <string name="text_dialog_create_content">你确认创建?</string>
+
+    <string name="text_dialog_modify_post_title">更新帖子</string>
+    <string name="text_dialog_modify_event_title">更新活动</string>
+    <string name="text_dialog_modify_user_title">更新用户</string>
+    <string name="text_dialog_modify_content">你确认更新?</string>
+
+    <string name="text_dialog_delete_post_title">删除帖子</string>
+    <string name="text_dialog_delete_event_title">删除活动</string>
+    <string name="text_dialog_delete_user_title">删除用户</string>
+    <string name="text_dialog_delete_content">你确认删除?</string>
+
+    <string name="text_dialog_join_event_title">加入活动</string>
+    <string name="text_dialog_join_event_content">你确认加入?</string>
+    <string name="text_dialog_skip_event_title">退出活动</string>
+    <string name="text_dialog_skip_event_content">你确认退出?</string>
+    <string name="text_dialog_subscribe_title">订阅</string>
+    <string name="text_dialog_subscribe_content">你确认订阅?</string>
+    <string name="text_dialog_unsubscribe_title">退订</string>
+    <string name="text_dialog_unsubscribe_content">你确认退订?</string>
+    <string name="text_dialog_bookmark_title">书签</string>
+    <string name="text_dialog_bookmark_content">你确认删除书签?</string>
+
     <string name="text_message_insert_user_success">创建用户成功.请检查您的激活邮件</string>
     <string name="text_message_insert_user_duplicate">重复的电子邮件发现</string>
     <string name="text_message_insert_user_failed">无法创建用户</string>
