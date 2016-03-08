@@ -12,6 +12,8 @@ public class User implements Parcelable {
 
     String userId, name, email, password, phoneNo, avatarUrl, coverUrl, faculty, course,
             description, gender, status, following;
+    String facultyId, facultyName;
+    String courseId, courseName;
 
     private Date createDateTime, updateDateTime;
 
@@ -32,6 +34,11 @@ public class User implements Parcelable {
         gender = in.readString();
         status = in.readString();
         following = in.readString();
+        facultyId = in.readString();
+        facultyName = in.readString();
+        courseId = in.readString();
+        courseName = in.readString();
+
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -166,6 +173,38 @@ public class User implements Parcelable {
         this.following = following;
     }
 
+    public String getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(String facultyId) {
+        this.facultyId = facultyId;
+    }
+
+    public String getFacultyName() {
+        return facultyName;
+    }
+
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -186,5 +225,9 @@ public class User implements Parcelable {
         dest.writeString(gender);
         dest.writeString(status);
         dest.writeString(following);
+        dest.writeString(facultyId);
+        dest.writeString(facultyName);
+        dest.writeString(courseId);
+        dest.writeString(courseName);
     }
 }

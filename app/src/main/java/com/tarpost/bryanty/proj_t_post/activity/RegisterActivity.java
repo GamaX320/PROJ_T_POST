@@ -15,10 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -27,14 +30,23 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
+import com.tarpost.bryanty.proj_t_post.object.Course;
+import com.tarpost.bryanty.proj_t_post.object.Faculty;
 import com.tarpost.bryanty.proj_t_post.object.User;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -45,6 +57,7 @@ public class RegisterActivity extends ActionBarActivity {
     private User user;
     private EditText etName, etEmail, etPassword, etPhone, etFaculty, etCourse, etDescription;
     private FloatingActionButton btSubmit;
+    private Spinner spFaculty,spCourse;
 
     //Image components
     private CircleImageView ivAvatar;
@@ -60,6 +73,16 @@ public class RegisterActivity extends ActionBarActivity {
     //http://localhost/tarpost/insertUserWithEmail.php
     private static final String ADD_USER_URL = "http://projx320.webege" +
             ".com/tarpost/php/insertUserWithEmail.php";
+
+    private static final String GET_FACULTY = "http://projx320.webege" +
+            ".com/tarpost/php/getAllFaculty.php";
+    private List<Faculty> facultyList;
+
+    private static final String GET_COURSE = "http://projx320.webege" +
+            ".com/tarpost/php/getAllFacultyCourse.php";
+    private List<Course> courseList;
+    private String facultyId;
+    private String courseId;
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -86,7 +109,35 @@ public class RegisterActivity extends ActionBarActivity {
         ivAvatar = (CircleImageView)findViewById(R.id.circleImageView_userAvatar);
         ivCover = (LinearLayout)findViewById(R.id.linerLayout_userCover);
 
+        spFaculty = (Spinner)findViewById(R.id.userFacultySpinner);
+        spCourse = (Spinner)findViewById(R.id.userCourseSpinner);
+
         user = new User();
+        facultyList = new ArrayList<Faculty>();
+        courseList = new ArrayList<Course>();
+
+        getFaculty();
+        spFaculty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(
+//                        RegisterActivity.this,
+//                        parent.getItemAtPosition(position).toString() + " Selected",
+//                        Toast.LENGTH_LONG).show();
+                Log.d("faculty", "selected faculty id: " + facultyList.get(position).getFacultyId());
+
+                facultyId = facultyList.get(position).getFacultyId();
+                courseList = new ArrayList<Course>();
+                spCourse.setAdapter(null);
+                getCourse();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 //        user.setName(etName.getText().toString());
 //        user.setEmail(etEmail.getText().toString());
 //        user.setPassword(etPassword.getText().toString());
@@ -160,6 +211,154 @@ public class RegisterActivity extends ActionBarActivity {
         byte[] imageBytes = outputStream.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
+    }
+
+    public void getFaculty(){
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                GET_FACULTY, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try{
+                    int success = response.getInt("success");
+
+                    if(success > 0){
+
+                        JSONArray jsonArray = response.getJSONArray("faculty");
+
+                        for(int i = 0 ; i < jsonArray.length() ; i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            Faculty faculty = new Faculty();
+                            faculty.setFacultyId(jsonObject.getString("facultyId"));
+                            faculty.setName(jsonObject.getString("name"));
+
+                            facultyList.add(faculty);
+                        }
+
+                        if(facultyList != null && facultyList.size() >0){
+                            setFacultyData();
+                        }
+
+                    }
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("response", "Error Response: " + error.toString());
+            }
+        });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        MyApplication.getInstance().addToReqQueue(jsonObjectRequest);
+
+    }
+
+    public void setFacultyData(){
+        List<String> labels= new ArrayList<String>();
+
+        for(Faculty faculty : facultyList){
+            labels.add(faculty.getName());
+        }
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, labels);
+
+        // Drop down layout style - list view with radio button
+        spinnerAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spFaculty.setAdapter(spinnerAdapter);
+
+    }
+
+    public void getCourse(){
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                GET_COURSE+"?facultyId="+facultyId, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try{
+                    int success = response.getInt("success");
+
+                    if(success > 0){
+
+                        JSONArray jsonArray = response.getJSONArray("course");
+
+                        for(int i = 0 ; i < jsonArray.length() ; i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            Course course = new Course();
+                            course.setCourseId(jsonObject.getString("courseId"));
+                            course.setFacultyId(jsonObject.getString("facultyId"));
+                            course.setName(jsonObject.getString("name"));
+
+                            courseList.add(course);
+                        }
+
+                        if(courseList != null && courseList.size() >0){
+                            setCourseData();
+                        }
+
+                    }
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("response", "Error Response: " + error.toString());
+            }
+        });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        MyApplication.getInstance().addToReqQueue(jsonObjectRequest);
+
+    }
+
+    public void setCourseData(){
+        List<String> labels= new ArrayList<String>();
+
+        for(Course course : courseList){
+            labels.add(course.getName());
+        }
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, labels);
+
+        // Drop down layout style - list view with radio button
+        spinnerAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spCourse.setAdapter(spinnerAdapter);
+
+        spCourse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("faculty", "selected course id: " + courseList.get(position).getCourseId());
+                courseId = courseList.get(position).getCourseId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     public void addUser(View v) {
@@ -238,8 +437,10 @@ public class RegisterActivity extends ActionBarActivity {
                 params.put("email", etEmail.getText().toString());
                 params.put("password", etPassword.getText().toString());
                 params.put("phoneNo", etPhone.getText().toString());
-                params.put("faculty", etFaculty.getText().toString());
-                params.put("course", etCourse.getText().toString());
+//                params.put("faculty", etFaculty.getText().toString());
+//                params.put("course", etCourse.getText().toString());
+                params.put("faculty", facultyId);
+                params.put("course", courseId);
                 params.put("description", etDescription.getText().toString());
 
                 //set image param

@@ -78,7 +78,14 @@
                     android:layout_marginRight="10dp"
                     android:hint="@string/text_faculty"
                     app:met_floatingLabel="normal"
-                    app:met_iconLeft="@drawable/ic_faculty"/>
+                    app:met_iconLeft="@drawable/ic_faculty"
+                    android:editable="false"
+                    app:met_hideUnderline="true"/>
+
+                <Spinner android:id="@+id/profileUserFacultySpinnerAction"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="10dp"/>
 
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/profileUserCourseAction"
@@ -87,7 +94,14 @@
                     android:layout_marginRight="10dp"
                     android:hint="@string/text_course"
                     app:met_floatingLabel="normal"
-                    app:met_iconLeft="@drawable/ic_course"/>
+                    app:met_iconLeft="@drawable/ic_course"
+                    android:editable="false"
+                    app:met_hideUnderline="true"/>
+
+                <Spinner android:id="@+id/profileUserCourseSpinnerAction"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="10dp"/>
 
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/profileUserDescriptionAction"

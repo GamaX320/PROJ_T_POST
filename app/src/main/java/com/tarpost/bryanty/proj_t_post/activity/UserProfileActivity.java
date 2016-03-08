@@ -149,6 +149,8 @@ public class UserProfileActivity extends AppCompatActivity {
                             user.setCoverUrl(jsonObject.getString("coverPic"));
                             user.setFaculty(jsonObject.getString("faculty"));
                             user.setCourse(jsonObject.getString("course"));
+                            user.setFacultyId(jsonObject.getString("facultyId"));
+                            user.setCourseId(jsonObject.getString("courseId"));
                             user.setDescription(jsonObject.getString("description"));
                             user.setStatus(jsonObject.getString("status"));
                             user.setFollowing(jsonObject.getString("following"));
