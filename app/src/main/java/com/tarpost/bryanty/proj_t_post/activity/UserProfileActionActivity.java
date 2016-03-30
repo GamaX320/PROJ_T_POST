@@ -197,6 +197,9 @@ public class UserProfileActionActivity extends AppCompatActivity {
 //        userCourse.setText(user.getCourse());
         userDescription.setText(user.getDescription());
 
+        facultyId = user.getFacultyId();
+        courseId = user.getCourseId();
+
         getFaculty();
         spFaculty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

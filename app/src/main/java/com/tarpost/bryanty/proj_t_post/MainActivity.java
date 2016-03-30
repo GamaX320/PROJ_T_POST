@@ -56,6 +56,7 @@ import com.tarpost.bryanty.proj_t_post.fragment.SubscriptionFragment;
 import com.tarpost.bryanty.proj_t_post.notification.NotificationReceiver;
 import com.tarpost.bryanty.proj_t_post.notification.NotificationService;
 import com.tarpost.bryanty.proj_t_post.object.Event;
+import com.tarpost.bryanty.proj_t_post.object.Post;
 import com.tarpost.bryanty.proj_t_post.slide.Intro;
 import com.tarpost.bryanty.proj_t_post.sqlite.DbHelper;
 
@@ -164,6 +165,17 @@ public class MainActivity extends ActionBarActivity {
 //        }else{
 //            Log.v("NotificationOnOff","Receive notification Off");
 //        }
+
+
+        Bundle bundle= getIntent().getExtras();
+        if(bundle != null){
+            Boolean newPost= bundle.getBoolean("newPost");
+
+            if(newPost != null && newPost == true){
+                mNavigationView.getMenu().getItem(1).setChecked(true);
+                getContent(R.id.navigation_item_post);
+            }
+        }
 
     }
 

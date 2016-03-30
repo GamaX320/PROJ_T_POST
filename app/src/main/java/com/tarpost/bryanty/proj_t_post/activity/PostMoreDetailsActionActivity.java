@@ -30,10 +30,12 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
+import com.tarpost.bryanty.proj_t_post.MainActivity;
 import com.tarpost.bryanty.proj_t_post.R;
 import com.tarpost.bryanty.proj_t_post.application.MyApplication;
 import com.tarpost.bryanty.proj_t_post.common.DateUtil;
 import com.tarpost.bryanty.proj_t_post.common.UserUtil;
+import com.tarpost.bryanty.proj_t_post.fragment.MyPostsFragment;
 import com.tarpost.bryanty.proj_t_post.object.Post;
 
 import org.json.JSONArray;
@@ -201,6 +203,10 @@ public class PostMoreDetailsActionActivity extends AppCompatActivity {
 
                 Log.d("response", "Response: " + response.toString());
 
+                //on the spot change
+                Intent intent = new Intent(PostMoreDetailsActionActivity.this, MainActivity.class);
+                intent.putExtra("newPost", true);
+                startActivity(intent);
             }
         }, new Response.ErrorListener() {
             @Override
